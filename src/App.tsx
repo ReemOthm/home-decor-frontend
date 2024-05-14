@@ -31,19 +31,21 @@ function App() {
     queryFn: getProducts
   })
 
+
+  
+
   return (
     <div className="App">
       <h1 className="text-2xl uppercase mb-10">Products</h1>
-
       <section className="flex flex-col md:flex-row gap-4 justify-between max-w-6xl mx-auto">
         {data?.map((product) => (
           <Card key={product.id} className="w-[350px]">
             <CardHeader>
-              <CardTitle>{product.name}</CardTitle>
-              <CardDescription>Some Description here</CardDescription>
+              {/* <img src={product.image}/> */}
             </CardHeader>
             <CardContent>
-              <p>Card Content Here</p>
+              <CardTitle>{product.name}</CardTitle>
+              <CardDescription>Some Description here</CardDescription>
             </CardContent>
             <CardFooter>
               <Button className="w-full">Add to cart</Button>
