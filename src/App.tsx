@@ -1,14 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
+import { Button, Card, CardActions, CardContent, Typography } from "@mui/material"
 
-import { Button } from "./components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "./components/ui/card"
 import { Product } from "./types"
 import api from "./api"
 
@@ -32,28 +24,27 @@ function App() {
   })
 
 
-  
-
   return (
     <div className="App">
-      <h1 className="text-2xl uppercase mb-10">Products</h1>
-      <section className="flex flex-col md:flex-row gap-4 justify-between max-w-6xl mx-auto">
+      <h1>cgv</h1>
+      <section>
         {data?.map((product) => (
-          <Card key={product.id} className="w-[350px]">
-            <CardHeader>
-              {/* <img src={product.image}/> */}
-            </CardHeader>
+          <Card key={product.id} sx={{ maxWidth: 345 }}>
             <CardContent>
-              <CardTitle>{product.name}</CardTitle>
-              <CardDescription>Some Description here</CardDescription>
+              <Typography gutterBottom variant="h5" component="div">
+                {product.name}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                description goes here
+              </Typography>
             </CardContent>
-            <CardFooter>
-              <Button className="w-full">Add to cart</Button>
-            </CardFooter>
+            <CardActions>
+              <Button size="small">Add to cart</Button>
+            </CardActions>
           </Card>
         ))}
       </section>
-      {error && <p className="text-red-500">{error.message}</p>}
+      {error && <p >{error.message}</p>} 
     </div>
   )
 }
