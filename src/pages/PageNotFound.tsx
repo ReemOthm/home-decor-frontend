@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
-import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet";
+import { Button } from "@mui/material";
 
 const PageNotFound = ()=>{
     return (

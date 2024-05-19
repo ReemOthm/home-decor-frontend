@@ -1,10 +1,10 @@
 import {HTMLAttributes} from 'react';
 
-interface ColorCircles extends HTMLAttributes<HTMLSpanElement>{
+interface ColorCirclesProps extends HTMLAttributes<HTMLSpanElement>{
     color: string;
 }
 
-const ColorCircles = ({color , ...rest}:ColorCircles)=>{
+const ColorCircles = ({color , ...rest}:ColorCirclesProps)=>{
     return <span className='color--circle' style={{backgroundColor: color}} {...rest}/>
 } 
 
