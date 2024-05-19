@@ -1,12 +1,14 @@
+import { RouterProvider } from "react-router-dom";
+
 import "./App.css"
-import { Products } from "@/pages";
+import router from "./routes";
 
 function App() {
 
   return (
-    <div>
-      <Products />
-    </div>
+    <>
+      <RouterProvider router={router} />
+    </>
   )
 }
 

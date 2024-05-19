@@ -9,15 +9,14 @@ export const Products = ()=>{
 
     // Queries
     const { data, error, isLoading } = useApiQuery({queryKey: ["products"],method: "get" ,url: "/products"});
-    console.log(data);
-
+    
     if(isLoading) return <h1>Products are loading</h1>
     
     return (
         <Container>
             <Helmet title="Products" />
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 2, sm: 5, md: 7 }} justifyContent="center">                
-                {data?.map((product:Product) => ( 
+                {data.data.items?.map((product:Product) => ( 
                 <Grid item xs={2} sm={2} md={2} key={product.productID}>
                     <ProductCard product={product}  /> 
                 </Grid>

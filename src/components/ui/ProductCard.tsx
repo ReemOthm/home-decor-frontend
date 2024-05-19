@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import { Product } from "@/types";
 import ColorCircles from "@/components/ui/ColorCircle";
-import { discrptionSlice } from "@/lib/utils";
+import { capitalizeTitle, discrptionSlice } from "@/lib/utils";
 
 interface ProductCardProps {
     product: Product
@@ -18,10 +18,10 @@ const ProductCard = ({product}:ProductCardProps)=>{
             <CardMedia sx={{ height: 194 }} image={product.image} title={product.productName} />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    {discrptionSlice(product.productName)}
+                    {capitalizeTitle(product.productName)}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    {product.description}
+                    {discrptionSlice(product.description)}
                 </Typography>
                 <Stack direction="row" justifyContent="space-between" sx={{py:1}}>
                     <Typography>{product.price} SAR</Typography>
@@ -34,7 +34,7 @@ const ProductCard = ({product}:ProductCardProps)=>{
                 </Stack>
             </CardContent>
             <CardActions sx={{justifyContent: "center"}}>
-                <Link to={`products/${product.slug}`} >
+                <Link to={`${product.slug}`} >
                     <Button sx={{fontSize: 11}} variant="contained" endIcon={<VisibilityIcon />} size="small">Show Deatils</Button>
                 </Link>
                 <Button sx={{fontSize: 11}} variant="contained" endIcon={<ShoppingCartIcon />} size="small">Add to cart</Button>

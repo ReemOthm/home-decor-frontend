@@ -8,7 +8,7 @@ const useApiQuery = ({queryKey, method, url, config}: ApiQuery) =>{
         queryFn: async() => {
             if(method == 'get'){
                 const {data} = await api.get(url, config);
-                return data.data.items;
+                return data;
             } 
             else if(method == 'post'){
                 const {status} = await api.post(url, config);

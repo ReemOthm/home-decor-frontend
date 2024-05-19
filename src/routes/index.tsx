@@ -1,15 +1,16 @@
-import { ProductDetails } from "@/pages";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ProductDetails, Products } from "@/pages";
+import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 
 
-const index = ()=>{
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/products/:slug" element={<ProductDetails />}  />
-            </Routes>
-        </BrowserRouter>
+const router = createBrowserRouter(
+    createRoutesFromElements(
+        <>
+            <Route path="/">
+                <Route path="/products" element={<Products />}  />
+                <Route path="products/:slug" element={<ProductDetails />}  />
+            </Route>
+        </>
     )
-}
+)
 
-export default index;
+export default router;
