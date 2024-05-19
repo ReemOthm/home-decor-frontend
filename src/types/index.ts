@@ -10,13 +10,13 @@ export type ApiQuery = {
 }
 
 export type Product = {
-  id: string
-  name: string,
+  productID: string
+  productName: string,
   description: string,
   image: string,
   slug: string,
   categories: Category[],
-  color: string[],
+  colors: string[],
   price: number,
   quantity: number,
   createdAt: string

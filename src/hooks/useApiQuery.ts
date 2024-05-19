@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import api from "../api/index";
-import { Agit stapiQuery } from "@/types";
+import { ApiQuery } from "@/types";
 
 const useApiQuery = ({queryKey, method, url, config}: ApiQuery) =>{
     return useQuery({
