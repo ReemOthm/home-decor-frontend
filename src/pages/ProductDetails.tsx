@@ -1,7 +1,7 @@
-import { Button, Card, CardContent, CardMedia, Container, Stack, Typography } from "@mui/material";
+import { Button, Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
 import { ShoppingCartIcon } from "lucide-react";
 import { Helmet } from "react-helmet";
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 
 import ColorCircles from "@/components/ui/ColorCircle";
 import useApiQuery from "@/hooks/useApiQuery";
@@ -18,10 +18,10 @@ export const ProductDetails = ()=>{
         url: `products/:${slug}`}
     );
 
-    if(isLoading) return <h1>Products are loading</h1>
+    if(isLoading) return <h1>Product is loading</h1>
 
     return (
-        <Container>
+        <>
             <Helmet title={data?.data.productName} />
             { data &&             
                 <Card sx={{ display: 'flex', maxWidth: "70%", margin: "auto" }}>
@@ -38,9 +38,9 @@ export const ProductDetails = ()=>{
                         <Typography variant="subtitle1" color="text.secondary" component="div" sx={{pt: 2}}>
                         {data.data.description}
                         </Typography>
-                        <Stack direction="row" justifyContent="space-between" sx={{py:1}}>
+                        <Stack direction="row" justifyContent="space-between" alignItems="end" sx={{py:1}}>
                             <Typography>{data.data.price} SAR</Typography>
-                            {/* <Link to={"/"}>{product.category}</Link> */}
+                            <Link to={"/"}>{data.data.category.name}</Link>
                         </Stack>
                         <Stack direction="row" gap={1}>
                             {  data.data.colors.length > 0 &&
@@ -48,13 +48,17 @@ export const ProductDetails = ()=>{
                             }
                         </Stack>
                         <Stack sx={{mt: 4}}>
-                            <Button sx={{fontSize: 11}} variant="contained" endIcon={<ShoppingCartIcon />} size="small">Add to cart</Button>
+                            <Button sx={{fontSize: 11}} variant="contained" endIcon={<ShoppingCartIcon />} 
+                                disabled = {data.data.quantity == 0? true: false}
+                                size="small">
+                                    Add to cart
+                            </Button>
                         </Stack>
                     </CardContent>
                 </Card>
             }
             {error && <p >{error.message}</p>} 
-        </Container>
+        </>
     )
 }
 

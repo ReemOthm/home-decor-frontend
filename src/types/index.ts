@@ -15,7 +15,7 @@ export type Product = {
   description: string,
   image: string,
   slug: string,
-  categories: Category[],
+  category: Category,
   colors: string[],
   price: number,
   quantity: number,

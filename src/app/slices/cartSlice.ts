@@ -4,12 +4,12 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 const initialState = {
 }
 
-export const productsSlice = createSlice({
-    name: 'products',
+export const cartSlice = createSlice({
+    name: 'cart',
     initialState,
     reducers: {},
 })
 
-// export const {  } = productsSlice.actions
+// export const {  } = cartSlice.actions
 
-export default productsSlice.reducer
+export default cartSlice.reducer
