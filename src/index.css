@@ -4,3 +4,15 @@
     height: 20px;
     border-radius: 50%;
 }
+
+.search{
+    margin: 20px 0;
+}
+
+.no--product{
+    text-align: center;
+    font-size: 20px;
+    width: 50%;
+    margin: 150px auto;
+    background-color: rgb(232, 234, 236);
+}
