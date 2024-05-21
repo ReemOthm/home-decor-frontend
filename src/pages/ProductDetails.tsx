@@ -1,7 +1,7 @@
 import { Button, Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
 import { ShoppingCartIcon } from "lucide-react";
 import { Helmet } from "react-helmet";
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 import ColorCircles from "@/components/ui/ColorCircle";
 import useApiQuery from "@/hooks/useApiQuery";
@@ -40,7 +40,7 @@ export const ProductDetails = ()=>{
                         </Typography>
                         <Stack direction="row" justifyContent="space-between" alignItems="end" sx={{py:1}}>
                             <Typography>{data.data.price} SAR</Typography>
-                            <Link to={"/"}>{data.data.category.name}</Link>
+                            <Typography>{data.data.category.name}</Typography>
                         </Stack>
                         <Stack direction="row" gap={1}>
                             {  data.data.colors.length > 0 &&

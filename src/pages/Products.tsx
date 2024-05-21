@@ -4,21 +4,25 @@ import { useRef, useState } from "react";
 
 import useApiQuery from "./../hooks/useApiQuery";
 import ProductCard from "@/components/ui/ProductCard";
-import { Category, Product } from "@/types";
+import { Price, Product } from "@/types";
 
 export const Products = ()=>{
 
     const [pageNumber, setPageNumber] = useState(1);
     const [searchKeyword, setSearchKeyword] = useState<string>("");
     const [category, setCategory] = useState<string>("");
+    const [price, setPrice] = useState<Price>({
+        maxPrice: "",
+        minPrice: ""
+    });
 
     const keyword = useRef<HTMLInputElement>(null);
 
     // Queries
     const { data, error, isLoading } = useApiQuery({
-        queryKey: ["products", `${pageNumber}`, `${searchKeyword}`, `${category}`],
+        queryKey: ["products", `${pageNumber}`, `${searchKeyword}`, `${category}`, `${price.maxPrice}`, `${price.minPrice}`],
         method: "get" ,
-        url: `/products?keyword=${searchKeyword}&category=${category}&page=${pageNumber}`
+        url: `/products?keyword=${searchKeyword}&category=${category}&minPrice=${price.minPrice}&maxPrice=${price.maxPrice}&page=${pageNumber}`
     });
 
     const { data: categories} = useApiQuery({
@@ -28,6 +32,8 @@ export const Products = ()=>{
     });
 
     const categoryOptions = categories != null ? [{name: "All"}, ...categories.data] : null
+
+    const priceOptions = ["All","Less than 100", "Greater than 100"]
 
     const handlePageNumber = (event: React.ChangeEvent<unknown>,page: number)=> setPageNumber(page)
 
@@ -46,14 +52,23 @@ export const Products = ()=>{
 
     const handleFilterByCategory = (event: React.SyntheticEvent<Element, Event>, value: string | null)=> {
         setPageNumber(1)
-        
-        if(value != null)
-            setCategory(value)
 
-        if(value == "All")
-            setCategory("")
+        if(value != null) setCategory(value)
+            
+        if(value == "All") setCategory("")
     }
 
+    const handleFilterByPrice = (event: React.SyntheticEvent<Element, Event>, value: string | null)=> {
+        setPageNumber(1)
+
+        switch(value){
+            case "All": setPrice({maxPrice: "", minPrice: ""}) 
+            break;
+            case "Less than 100": setPrice({maxPrice: 100, minPrice: ""}) 
+            break
+            case "Greater than 100": setPrice({maxPrice: "", minPrice: 100}) 
+        }
+    }
 
     if(isLoading) return <h1>Products are loading</h1>
 
@@ -69,23 +84,41 @@ export const Products = ()=>{
                             <input type="submit" value="search" />
                         </form>
 
-                    { categoryOptions && categoryOptions.length > 0 &&
-                        <Autocomplete 
-                            sx={{width: "200px"}}
-                            onChange={handleFilterByCategory}
-                            size= "small"
-                            options={categoryOptions.map((category) => category.name)}
-                            renderInput={(params) => (
-                            <TextField 
-                                {...params}
-                                label="Filter by Category"
-                                InputProps={{
-                                ...params.InputProps,
-                                }}
+                        <Stack direction="row" gap={1}>
+                            <Autocomplete 
+                                sx={{width: "200px"}}
+                                onChange={handleFilterByPrice}
+                                size= "small"
+                                options={priceOptions.map((price) => price)}
+                                renderInput={(params) => (
+                                <TextField 
+                                    {...params}
+                                    label="Filter by Price"
+                                    InputProps={{
+                                    ...params.InputProps,
+                                    }}
+                                />
+                                )}
                             />
-                            )}
-                        />
-                    }    
+
+                            { categoryOptions && categoryOptions.length > 0 &&
+                                <Autocomplete 
+                                    sx={{width: "200px"}}
+                                    onChange={handleFilterByCategory}
+                                    size= "small"
+                                    options={categoryOptions.map((category) => category.name)}
+                                    renderInput={(params) => (
+                                    <TextField 
+                                        {...params}
+                                        label="Filter by Category"
+                                        InputProps={{
+                                        ...params.InputProps,
+                                        }}
+                                    />
+                                    )}
+                                />
+                            }  
+                        </Stack>
                     </Stack>
 
                     { data.items.length > 0 ?

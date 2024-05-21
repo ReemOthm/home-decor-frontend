@@ -31,4 +31,8 @@ export type Category = {
   createdAt: string
 }
 
+export type Price = {
+  maxPrice: "" | number,
+  minPrice: "" | number
+}
 
