@@ -1,6 +1,6 @@
-import { LoginForm, RegisterForm } from "./../types";
+import { LoginForm, SignupForm } from "./../types";
 
-export const RegisterFormData: RegisterForm[] = [
+export const SignupFormData: SignupForm[] = [
     {
         type: 'text',
         placeholder: "Enter a Username",
@@ -19,17 +19,17 @@ export const RegisterFormData: RegisterForm[] = [
     {
         type: 'text' ,
         placeholder: "Enter your first name",
-        name: 'first-name',
+        name: 'firstName',
     },
     {
         type: 'text' ,
         placeholder: "Enter your last name",
-        name: 'last-name',
+        name: 'lastName',
     },
     {
         type: 'number' ,
         placeholder: "Enter your phone number",
-        name: 'phone-number',
+        name: 'phoneNumber',
     },
     {
         type: 'text' ,
@@ -37,9 +37,9 @@ export const RegisterFormData: RegisterForm[] = [
         name: 'address',
     },
     {
-        type: 'text' ,
+        type: 'date' ,
         placeholder: "Enter your birth date",
-        name: 'birth-date',
+        name: 'birthDate',
     },
 ];
 
@@ -47,7 +47,7 @@ export const LoginFormData: LoginForm[] = [
     {
         type: 'email',
         placeholder: "Enter an Email",
-        name: 'identifier',
+        name: 'email',
     },
     {
         type: 'password',

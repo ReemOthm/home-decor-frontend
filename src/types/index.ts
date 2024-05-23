@@ -49,8 +49,8 @@ export type Price = {
 }
 
 export type inputs = 
-  'username' | 'email' | 'password' | 'first-name' |
-  'last-name' | 'address' | 'phone-number' | 'birth-date';
+  'username' | 'email' | 'password' | 'firstName' |
+  'lastName' | 'address' | 'phoneNumber' | 'birthDate';
 
 export type FormInput = {
   username: string,
@@ -60,15 +60,15 @@ export type FormInput = {
   lastName: string,
   address: string,
   phoneNumber: string,
-  birthDate: string,
+  birthDate: Date ,
 }
 
 export type LoginInput = {
-  identifier: string,
+  email: string,
   password: string
 }
 
-export type RegisterForm = {
+export type SignupForm = {
   type: string,
   placeholder: string,
   name: inputs,
@@ -77,5 +77,5 @@ export type RegisterForm = {
 export type LoginForm = {
   type: string,
   placeholder: string,
-  name: 'identifier' | 'password',
+  name: 'email' | 'password',
 } 
