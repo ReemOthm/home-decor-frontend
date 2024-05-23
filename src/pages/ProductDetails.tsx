@@ -49,7 +49,7 @@ export const ProductDetails = ()=>{
                         </Stack>
                         <Stack sx={{mt: 4}}>
                             <Button sx={{fontSize: 11}} variant="contained" endIcon={<ShoppingCartIcon />} 
-                                disabled = {data.data.quantity == 0? true: false}
+                                disabled = {data.data.quantity == 0 }
                                 size="small">
                                     Add to cart
                             </Button>

@@ -41,7 +41,7 @@ const ProductCard = ({product}:ProductCardProps)=>{
                     <Button sx={{fontSize: 11}} variant="contained" endIcon={<VisibilityIcon />} size="small">Show Deatils</Button>
                 </Link>
                 <Button sx={{fontSize: 11}} variant="contained" endIcon={<ShoppingCartIcon />} 
-                    size="small" disabled = {product.quantity == 0? true: false}
+                    size="small" disabled = {product.quantity == 0}
                 >
                     Add to cart 
                 </Button>
