@@ -1,11 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Stack, TextField } from "@mui/material"
-import { SubmitHandler, UseFormRegister, useForm } from "react-hook-form";
+import { Stack, TextField } from "@mui/material"
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import Password from "@/components/ui/Password"
 import { LoginFormData } from "@/data"
 import { LoginInput } from "@/types";
 import { loginSchema } from "@/validation";
+import LoadingBtn from "@/components/ui/LoadingBtn";
 
 export const Login = ()=>{
 
@@ -40,7 +41,7 @@ export const Login = ()=>{
             <form className="form--signup" onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={2} width={400}>
                     {LoginFormRender}
-                    <Button variant="contained" fullWidth type="submit">Signup</Button>
+                    <LoadingBtn title="Login" isLoding={false} />
                 </Stack>
             </form>
         </>

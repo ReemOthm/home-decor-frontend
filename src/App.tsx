@@ -1,8 +1,11 @@
 import { RouterProvider } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { Container } from "@mui/material";
+import router from "./routes";
 
 import "./App.css"
-import router from "./routes";
-import { Container } from "@mui/material";
 
 function App() {
 
@@ -11,6 +14,7 @@ function App() {
       <Container>
         <RouterProvider router={router} />
       </Container>
+      <ToastContainer />
     </>
   )
 }

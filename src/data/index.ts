@@ -53,6 +53,5 @@ export const LoginFormData: LoginForm[] = [
         type: 'password',
         placeholder: "Enter a password",
         name: 'password',
-    },
-    
+    },   
 ]
