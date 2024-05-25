@@ -41,6 +41,16 @@ export type User = {
   phoneNumber: number,
   address?: string,
   birthDate?: string,
+  createdAt: string,
+  orders: Order[]
+}
+
+export type Order = {
+  orderId: string,
+  status: string,
+  payment: string,
+  amount: number,
+  products: Product[],
   createdAt: string
 }
 

@@ -1,6 +1,7 @@
 import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 
-import { ProductDetails, Products, Signup, Login, Profile, UserInformation, UserOrder } from "@/pages";
+import { ProductDetails, Products, Signup, Login, Profile, UserInformation } from "@/pages";
+import UserOrder from './../pages/user/UserOrder';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
