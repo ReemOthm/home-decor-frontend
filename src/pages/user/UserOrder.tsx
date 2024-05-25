@@ -1,4 +1,4 @@
-import { TableRow, Typography, TableCell, IconButton, Box , Collapse, TableHead, TableBody, Table, Paper, TableContainer } from "@mui/material";
+import { TableRow, Typography, TableCell, IconButton, Box , Collapse, TableHead, TableBody, Table, Paper, TableContainer, Avatar } from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useState } from "react";
@@ -43,6 +43,7 @@ const Row = (props: { row: Order })=>{
                             <TableHead>
                                 <TableRow>
                                 <TableCell>Product Name</TableCell>
+                                <TableCell>Product Image</TableCell>
                                 <TableCell align="right">Quantity</TableCell>
                                 <TableCell align="right">Total Price ($)</TableCell>
                                 </TableRow>
@@ -52,6 +53,9 @@ const Row = (props: { row: Order })=>{
                                 <TableRow key={historyRow.productID}>
                                     <TableCell component="th" scope="row">
                                     {historyRow.productName}
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <Avatar alt={historyRow.productName} src={historyRow.image} sx={{mx: "20px"}}/>
                                     </TableCell>
                                     <TableCell align="right">{historyRow.quantity}</TableCell>
                                     <TableCell align="right">{historyRow.price}</TableCell>
@@ -74,8 +78,6 @@ export default function UserOrder () {
         method: "get" ,
         url: `/orders/my-orders`
     });
-
-    console.log(orders)
 
     return (
         <>
