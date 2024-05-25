@@ -33,7 +33,7 @@ export const Signup = ()=>{
         setIsLoading(true);
         const id = toast.loading("Please wait...", {
             position: "top-center",
-            autoClose: 5000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -46,12 +46,12 @@ export const Signup = ()=>{
             const { status } = await api.post("/users/signup", newUser)
 
             if(status === 200){
-                toast.update(id, {render: "Account Created Successfully!", type: "success", isLoading: false,autoClose: 5000},);
+                toast.update(id, {render: "Account Created Successfully!", type: "success", isLoading: false,autoClose: 1000},);
                 navigate("/login")
             }
         }catch (error){
             const errorObject = error as AxiosError;
-            toast.update(id, {render: `${errorObject.message}`, type: "error", isLoading: false, autoClose: 5000 });
+            toast.update(id, {render: `${errorObject.message}`, type: "error", isLoading: false, autoClose: 2000 });
         } finally{
             setIsLoading(false);
         }
