@@ -40,6 +40,7 @@ export type User = {
   lastName?: string,
   phoneNumber: number,
   address?: string,
+  birthDate?: string,
   createdAt: string
 }
 

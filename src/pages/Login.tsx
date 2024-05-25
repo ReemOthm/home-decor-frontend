@@ -51,7 +51,7 @@ export const Login = ()=>{
 
             if(response.status === 200){
                 toast.update(id, {render: "Login Successfully!", type: "success", isLoading: false,autoClose: 1000},);
-                navigate("/products")
+                navigate("/profile")
             }
         }catch (error){
             const errorObject = error as AxiosError;
