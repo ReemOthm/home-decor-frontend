@@ -25,7 +25,7 @@ export const Profile = ()=>{
                 <ResizablePanel leftPanel={
                     <Stack mt={2} spacing={2}>
                         <Typography>
-                            <NavLink  to="information">User Information</NavLink>
+                            <NavLink to="information">User Information</NavLink>
                         </Typography>
                         <Typography>
                             <NavLink to="order">Orders</NavLink>

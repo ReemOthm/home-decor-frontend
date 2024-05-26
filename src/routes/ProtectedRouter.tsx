@@ -1,16 +1,10 @@
-import { ReactNode } from "react";
-import { Navigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-interface IProps {
-  isAllowed: boolean;
-  redirectPath: string;
-  children: ReactNode;
-}
+import { Login } from "@/pages";
 
-const ProtectedRoute = ({ isAllowed, redirectPath, children }: IProps) => {
-  if (!isAllowed) return <Navigate to={redirectPath} replace  />;
-
-  return children;
+const ProtectedRoute = () => {
+  const token = localStorage.getItem('token');
+  return token !== null ? <Outlet /> : <Login />
 };
 
 export default ProtectedRoute;

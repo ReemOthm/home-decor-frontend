@@ -49,11 +49,12 @@ export const Login = ()=>{
 
             localStorage.setItem('token', token);
             localStorage.setItem('refreshToken', refreshToken);
+            localStorage.setItem('isAdmin',  response.data.data.isAdmin);
             console.log(response)
 
             if(response.status === 200){
                 toast.update(id, {render: "Login Successfully!", type: "success", isLoading: false,autoClose: 1000},);
-                response.data.data.isAdmin ? navigate("/dashboard") : navigate("/profile");
+                response.data.data.isAdmin ? navigate("/dashboard") : navigate("/user/profile");
             }
         }catch (error){
             const errorObject = error as AxiosError;
