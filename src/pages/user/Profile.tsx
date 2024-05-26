@@ -4,6 +4,7 @@ import { Typography, Stack } from "@mui/material";
 import useApiQuery from "@/hooks/useApiQuery";
 import { NavLink, Outlet } from "react-router-dom";
 import ResizablePanel from "@/components/ui/ResizablePanel";
+import { Helmet } from "react-helmet";
 
 
 export const Profile = ()=>{
@@ -19,6 +20,7 @@ export const Profile = ()=>{
 
     return (
         <>
+            <Helmet title="Profile" />
             {data &&  data.data.result &&
                 <ResizablePanel leftPanel={
                     <Stack mt={2} spacing={2}>

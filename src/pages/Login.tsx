@@ -13,6 +13,7 @@ import { LoginFormData } from "@/data"
 import { LoginInput } from "@/types";
 import { loginSchema } from "@/validation";
 import LoadingBtn from "@/components/ui/LoadingBtn";
+import { Helmet } from "react-helmet";
 
 export const Login = ()=>{
 
@@ -48,10 +49,11 @@ export const Login = ()=>{
 
             localStorage.setItem('token', token);
             localStorage.setItem('refreshToken', refreshToken);
+            console.log(response)
 
             if(response.status === 200){
                 toast.update(id, {render: "Login Successfully!", type: "success", isLoading: false,autoClose: 1000},);
-                navigate("/profile")
+                response.data.data.isAdmin ? navigate("/dashboard") : navigate("/profile");
             }
         }catch (error){
             const errorObject = error as AxiosError;
@@ -77,6 +79,7 @@ export const Login = ()=>{
 
     return (
         <>
+            <Helmet title="Login" />
             <form className="form--signup" onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={2} width={400}>
                     {LoginFormRender}

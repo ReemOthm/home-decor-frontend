@@ -13,6 +13,7 @@ import { FormInput } from "@/types";
 import LoadingBtn from "@/components/ui/LoadingBtn";
 import api from "@/api";
 import { AxiosError } from "axios";
+import { Helmet } from "react-helmet";
 
 export const Signup = ()=>{
 
@@ -80,6 +81,7 @@ export const Signup = ()=>{
 
     return (
         <>
+            <Helmet title="Signup" />
             <form className="form--signup" onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={2} width={400}>
                     {SignupFormRender}
