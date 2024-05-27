@@ -28,7 +28,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export const tableHead= {
-    users : ['Username',"First Name", "Last Name", "Email","Phone Number", "Address", "Birth Date", "Created At", "Delete/Block"],
+    users : ['Username',"Name", "Email","Phone Number", "Address", "Admin","Banned", "Created At", "Delete/Block"],
     products : ["Name", "Category", "Quantity", "Price", "Created At", "Edit/Delete"],
     categories : ["Name", "Description", "Slug" ,"Created AT", "Edit/Delete"],
     orders : ["Order ID", "Status", "Payment", "Amount","Created AT", "Details"],
@@ -61,6 +61,31 @@ export const renderUserTable = (rows:User[],refetch:()=>void)=> {
         } 
     }
 
+    const handleBannedUser = async(userId:string)=> {
+        const id = toast.loading("Please wait...", {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+        try{
+            const { status } = await api.put(`/users/ban-unban?userIdString=${userId}`)
+            console.log(status)
+            if(status === 200){
+                toast.update(id, {render: "User has updated Successfully!", type: "success", isLoading: false,autoClose: 1000},);
+                refetch()
+            }
+        }catch (error){
+            console.log(error)
+            const errorObject = error as AxiosError;
+            toast.update(id, {render: `${errorObject.message}`, type: "error", isLoading: false, autoClose: 2000 });
+        } 
+    }
+
     return (
         <>
             {
@@ -69,16 +94,16 @@ export const renderUserTable = (rows:User[],refetch:()=>void)=> {
                     <StyledTableCell component="th" scope="row">
                         {row.username}
                     </StyledTableCell>
-                        <StyledTableCell >{row.firstName}</StyledTableCell>
-                        <StyledTableCell >{row.lastName}</StyledTableCell>
+                        <StyledTableCell >{row.firstName} {row.lastName}</StyledTableCell>
                         <StyledTableCell >{row.email}</StyledTableCell>
                         <StyledTableCell >{row.phoneNumber}</StyledTableCell>
                         <StyledTableCell >{row.address}</StyledTableCell>
-                        <StyledTableCell >{row.birthDate}</StyledTableCell>
+                        <StyledTableCell >{row.isAdmin? "Yes": "No"}</StyledTableCell>
+                        <StyledTableCell >{row.isBanned? "Yes": "No"}</StyledTableCell>
                         <StyledTableCell >{row.createdAt}</StyledTableCell>
                         <StyledTableCell >
                             <button  onClick={()=>handleDeleteUser(row.userID)}>Delete</button>
-                            <button>Block</button>
+                            <button onClick={()=>handleBannedUser(row.userID)}>{row.isBanned ? "UnBanned" : "Banned"}</button>
                         </StyledTableCell>
                     </StyledTableRow>
                 ))

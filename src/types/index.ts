@@ -41,6 +41,8 @@ export type User = {
   phoneNumber: number,
   address?: string,
   birthDate?: string,
+  isAdmin: boolean,
+  isBanned: boolean,
   createdAt: string,
   orders: Order[]
 }
