@@ -139,7 +139,7 @@ export const AllProducts = ()=>{
                         </>
                         : 
                             <div>
-                                <p className="no--product">No products found</p>
+                                <p className="no--found">No products found</p>
                             </div>                    
                     }
                     { searchKeyword && 

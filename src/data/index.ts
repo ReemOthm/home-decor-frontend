@@ -64,13 +64,5 @@ export const CategoryData: CategoryForm[] = [
     {
         type: 'text',
         name: 'description',
-    },   
-    {
-        type: 'text',
-        name: 'slug',
-    },   
-    {
-        type: 'text',
-        name: 'createdAt',
-    },   
+    } 
 ]
