@@ -38,20 +38,20 @@ export const UserInformation = ()=>{
         }
     }
 
-    const handleUpdateUserFirstName = ()=> {
+    const handleUpdateUserFirstName = async()=> {
         setEditFirst({
             status: !editFirst.status,
             name: editFirst.name == 'update'?  'save' : "update"
         })
-        requst()
+        await requst()
     }
 
-    const handleUpdateUserLastName = ()=> {
+    const handleUpdateUserLastName = async()=> {
         setEditLast({
             status: !editLast.status,
             name: editLast.name == 'update'?  'save' : "update"
         })
-        requst()
+        await requst()
     }
 
     const handleFirstNameChange = (e:React.ChangeEvent<HTMLInputElement>)=> setName({...name, firstName: e.target.value} )

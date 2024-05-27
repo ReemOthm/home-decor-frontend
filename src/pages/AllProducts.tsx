@@ -6,7 +6,7 @@ import useApiQuery from "./../hooks/useApiQuery";
 import ProductCard from "@/components/ui/ProductCard";
 import { Price, Product } from "@/types";
 
-export const Products = ()=>{
+export const AllProducts = ()=>{
 
     const [pageNumber, setPageNumber] = useState(1);
     const [searchKeyword, setSearchKeyword] = useState<string>("");

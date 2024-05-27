@@ -1,10 +1,9 @@
 import { Typography, Stack } from "@mui/material";
-
+import { Helmet } from "react-helmet";
+import { NavLink, Outlet } from "react-router-dom";
 
 import useApiQuery from "@/hooks/useApiQuery";
-import { NavLink, Outlet } from "react-router-dom";
 import ResizablePanel from "@/components/ui/ResizablePanel";
-import { Helmet } from "react-helmet";
 
 
 export const Profile = ()=>{
@@ -16,7 +15,7 @@ export const Profile = ()=>{
     });
 
 
-    if(isLoading) <h1>Loading ....</h1>
+    if(isLoading) return <h1>Loading ....</h1>
 
     return (
         <>

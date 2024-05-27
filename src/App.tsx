@@ -1,10 +1,9 @@
 import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import { Container } from "@mui/material";
-import router from "./routes";
 
+import router from "./routes";
 import "./App.css"
 
 function App() {

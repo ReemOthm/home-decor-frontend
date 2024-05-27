@@ -35,14 +35,14 @@ export type User = {
   id: string
   username: string,
   email: string,
-  password: string,
+  // password: string,
   firstName: string,
   lastName?: string,
   phoneNumber: number,
   address?: string,
   birthDate?: string,
   createdAt: string,
-  orders: Order[]
+  // orders: Order[]
 }
 
 export type Order = {
