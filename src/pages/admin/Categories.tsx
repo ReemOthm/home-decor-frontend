@@ -1,4 +1,4 @@
-import { Button} from '@mui/material';
+import { Box, Button, Pagination} from '@mui/material';
 import { ChangeEvent, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -18,6 +18,8 @@ import CreateModal from '@/components/modals/CreateModal';
 
 
 export const Categories = ()=>{
+
+    const [pageNumber, setPageNumber] = useState(1);
 
     const [openCreate, setOpenCreate] = useState(false);
     const handleOpenCreate = () => setOpenCreate(!openCreate);
@@ -58,13 +60,15 @@ export const Categories = ()=>{
     });
     
     const { data:categories, isLoading, error, refetch} = useApiQuery({
-        queryKey: ["categories"],
+        queryKey: ["categories", `${pageNumber}`],
         method: "get" ,
-        url: `/categories`
+        url: `/categories/all?pageNumber=${pageNumber}&pageSize=6`
     });
 
 
     // ---------------------Handlers----------------------------
+    const handlePageNumber = (event: React.ChangeEvent<unknown>,page: number)=> setPageNumber(page)
+
     const handleUpdateCategory = (e:ChangeEvent<HTMLInputElement>)=> {
         const {name, value} = e.target;
         setCategoryEdit({...categoryEdit, [name]: value})
@@ -182,15 +186,15 @@ export const Categories = ()=>{
             {errors[name] && <p className='error--msg'>{errors[name]?.message}</p>}
         </div>
     )
-
+console.log(categories)
     if(isLoading) return  <h1>Loading ....</h1>
 
     return (
         <>
             <Button variant="contained" sx={{width: "200px"}} onClick={handleOpenCreate}>Create Category</Button>
             {
-                categories && categories.data.length > 0 ?
-                <CustomizedTables renderRows={renderCategoriesTable(categories.data,handleOpenEdit, setCategoryEdit, handleOpenDelete)} columns={tableHead.categories}  /> 
+                categories && categories.data && categories.data?.items.length > 0 ?
+                <CustomizedTables renderRows={renderCategoriesTable(categories.data.items,handleOpenEdit, setCategoryEdit, handleOpenDelete)} columns={tableHead.categories}  /> 
                 :
                 <div>
                     <p className="no--found">No Categories found</p>
@@ -200,6 +204,13 @@ export const Categories = ()=>{
             <CreateModal openCreate={openCreate} handleopenCreate={handleOpenCreate} handleSubmit={handleSubmit(onSubmitCreate)} formElement={categoryFormCreate}/>
             <UpdateModal openUpdate={openEdit} handleOpenUpdate={handleOpenEdit} handleSubmit={handleSubmit(onSubmit)} formElement={categoryFormEdit}/>
             <DeleteModal openDelete={openDelete} handleOpenDelete={handleOpenDelete} handleDelete={handleDeleteCategory} />
+            
+            <Box sx={{width: "fit-content", margin: "40px auto"}}>
+                <Pagination count={categories.data.totalPages} variant="outlined" 
+                    page={pageNumber} color="secondary" onChange={handlePageNumber} 
+                />
+            </Box>
+            
             { error && <p>{error.message}</p> }
         </>
     )

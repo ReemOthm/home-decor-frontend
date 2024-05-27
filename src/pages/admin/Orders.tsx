@@ -1,4 +1,4 @@
-import { TableRow, Typography, TableCell, IconButton, Box , Collapse, TableHead, TableBody, Table, Paper, TableContainer, Avatar } from "@mui/material";
+import { TableRow, Typography, TableCell, IconButton, Box , Collapse, TableHead, TableBody, Table, Paper, TableContainer, Avatar, Pagination } from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useState } from "react";
@@ -74,16 +74,18 @@ const Row = (props: { row: Order })=>{
 
 export default function Orders () {
 
-    const { data: orders} = useApiQuery({
+    const { data: orders, isLoading} = useApiQuery({
         queryKey: ["orders"],
         method: "get" ,
         url: `/orders`
     });
 
+    if(isLoading) return <h1>Loading ...</h1>
+
     return (
         <>
             {
-                orders && orders.data.length > 0 && 
+                orders && orders.data.length > 0 &&
                 <>
                     <TableContainer component={Paper}>
                         <Table aria-label="collapsible table">
