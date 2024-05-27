@@ -27,7 +27,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export const tableHead= {
     users : ['Username',"First Name", "Last Name", "Phone Number", "Address", "Birth Date", "Created At", "Details"],
     products : ["Name", "Category", "Quantity", "Price", "Created At", "Details"],
-    categories : ["Name", "Description", "Created AT", "Details"],
+    categories : ["Name", "Description", "Slug" ,"Created AT", "Details"],
     orders : ["Order ID", "Status", "Payment", "Amount","Created AT", "Details"],
 }
 
@@ -82,19 +82,21 @@ export const renderProductTable = (rows:Product[], handleOpenDetails: ()=> void)
     )
 }
 
-export const renderCategoriesTable = (rows:Category[],handleOpenDetails: ()=> void)=> {
+export const renderCategoriesTable = (rows:Category[],handleOpenDetails: ()=> void, setCategory:(category:Category)=>void)=> {
     return (
         <>
             {
                 rows.map((row:Category) => (
-                    <StyledTableRow key={row.id}>
+                    <StyledTableRow key={row.categoryID}>
                     <StyledTableCell component="th" scope="row">
                         {row.name}
                     </StyledTableCell>
                         <StyledTableCell >{row.description}</StyledTableCell>
+                        <StyledTableCell >{row.slug}</StyledTableCell>
                         <StyledTableCell >{row.createdAt}</StyledTableCell>
                         <StyledTableCell >
-                            <button onClick={handleOpenDetails}>Details</button>
+                            <button onClick={()=> {handleOpenDetails(); setCategory(row)}}>Edit</button>
+                            <button>Delete</button>
                         </StyledTableCell>
                     </StyledTableRow>
                 ))

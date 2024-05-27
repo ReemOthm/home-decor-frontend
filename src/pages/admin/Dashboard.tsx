@@ -13,7 +13,7 @@ export const Dashboard = ()=>{
         url: `/users/profile`
     });
 
-    if(isLoading) <h1>Loading ....</h1>
+    if(isLoading) return  <h1>Loading ....</h1>
 
     return (
         <>

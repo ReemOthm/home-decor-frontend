@@ -54,7 +54,7 @@ export const Login = ()=>{
 
             if(response.status === 200){
                 toast.update(id, {render: "Login Successfully!", type: "success", isLoading: false,autoClose: 1000},);
-                response.data.data.isAdmin ? navigate("/dashboard") : navigate("/user/profile");
+                response.data.data.isAdmin ? navigate("/admin/dashboard") : navigate("/user/profile");
             }
         }catch (error){
             const errorObject = error as AxiosError;

@@ -28,3 +28,10 @@ export const loginSchema = z.object({
                 .regex(passwordValidation, 
                 "Password minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character"),
 });
+
+export const categorySchema = z.object({
+        name: z.string({message: "Please enter an Email"}).min(3, {message: "name must be at least 3 characters"}),
+        description: z.string({message: "please enter a password"})
+        .min(10, {message: "description must be at least 10 characters"})
+        .max(60, {message: "description must be less than 60 characters"}),
+});

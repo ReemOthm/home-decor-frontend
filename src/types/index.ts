@@ -23,7 +23,7 @@ export type Product = {
 }
 
 export type Category = {
-  id: string
+  categoryID: string
   name: string,
   description: string,
   slug: string,
@@ -35,14 +35,14 @@ export type User = {
   id: string
   username: string,
   email: string,
-  // password: string,
+  password: string,
   firstName: string,
   lastName?: string,
   phoneNumber: number,
   address?: string,
   birthDate?: string,
   createdAt: string,
-  // orders: Order[]
+  orders: Order[]
 }
 
 export type Order = {
@@ -62,6 +62,8 @@ export type Price = {
 export type inputs = 
   'username' | 'email' | 'password' | 'firstName' |
   'lastName' | 'address' | 'phoneNumber' | 'birthDate';
+
+export type EntityInputs = 'name' | "description" | "createdAt" | "slug"
 
 export type FormInput = {
   username: string,
@@ -89,4 +91,9 @@ export type LoginForm = {
   type: string,
   placeholder: string,
   name: 'email' | 'password',
+} 
+
+export type CategoryForm = {
+  type: string,
+  name: EntityInputs
 } 
