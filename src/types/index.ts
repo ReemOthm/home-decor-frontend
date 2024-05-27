@@ -32,7 +32,7 @@ export type Category = {
 }
 
 export type User = {
-  id: string
+  userID: string
   username: string,
   email: string,
   password: string,

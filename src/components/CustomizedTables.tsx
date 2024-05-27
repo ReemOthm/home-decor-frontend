@@ -3,6 +3,9 @@ import {Table, TableBody,TableCell,tableCellClasses, TableContainer ,TableHead, 
 import { ReactNode } from 'react';
 
 import { Category, Order, Product, User } from '@/types';
+import { toast } from 'react-toastify';
+import api from '@/api';
+import { AxiosError } from 'axios';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -25,29 +28,56 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export const tableHead= {
-    users : ['Username',"First Name", "Last Name", "Phone Number", "Address", "Birth Date", "Created At", "Delete/Block"],
+    users : ['Username',"First Name", "Last Name", "Email","Phone Number", "Address", "Birth Date", "Created At", "Delete/Block"],
     products : ["Name", "Category", "Quantity", "Price", "Created At", "Edit/Delete"],
     categories : ["Name", "Description", "Slug" ,"Created AT", "Edit/Delete"],
     orders : ["Order ID", "Status", "Payment", "Amount","Created AT", "Details"],
 }
 
-export const renderUserTable = (rows:User[])=> {
+export const renderUserTable = (rows:User[],refetch:()=>void)=> {
+
+    const handleDeleteUser = async(userId:string)=> {
+        const id = toast.loading("Please wait...", {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+        try{
+            const { status } = await api.delete(`/users?userId=${userId}`)
+            console.log(status)
+            if(status === 200){
+                toast.update(id, {render: "User has deleted Successfully!", type: "success", isLoading: false,autoClose: 1000},);
+                refetch()
+            }
+        }catch (error){
+            console.log(error)
+            const errorObject = error as AxiosError;
+            toast.update(id, {render: `${errorObject.message}`, type: "error", isLoading: false, autoClose: 2000 });
+        } 
+    }
+
     return (
         <>
             {
             rows.map((row:User) => (
-                    <StyledTableRow key={row.id}>
+                    <StyledTableRow key={row.userID}>
                     <StyledTableCell component="th" scope="row">
                         {row.username}
                     </StyledTableCell>
                         <StyledTableCell >{row.firstName}</StyledTableCell>
                         <StyledTableCell >{row.lastName}</StyledTableCell>
+                        <StyledTableCell >{row.email}</StyledTableCell>
                         <StyledTableCell >{row.phoneNumber}</StyledTableCell>
                         <StyledTableCell >{row.address}</StyledTableCell>
                         <StyledTableCell >{row.birthDate}</StyledTableCell>
                         <StyledTableCell >{row.createdAt}</StyledTableCell>
                         <StyledTableCell >
-                            <button>Delete</button>
+                            <button  onClick={()=>handleDeleteUser(row.userID)}>Delete</button>
                             <button>Block</button>
                         </StyledTableCell>
                     </StyledTableRow>
@@ -57,7 +87,7 @@ export const renderUserTable = (rows:User[])=> {
     )
 }
 
-export const renderProductTable = (rows:Product[], handleOpenDetails: ()=> void)=> {
+export const renderProductTable = (rows:Product[])=> {
     return (
         <>
         {
@@ -74,7 +104,7 @@ export const renderProductTable = (rows:Product[], handleOpenDetails: ()=> void)
                         <StyledTableCell >{row.price}</StyledTableCell>
                         <StyledTableCell >{row.createdAt}</StyledTableCell>
                         <StyledTableCell >
-                            <button onClick={handleOpenDetails}>Details</button>
+                            <button>Details</button>
                         </StyledTableCell>
                     </StyledTableRow>
                 ))
