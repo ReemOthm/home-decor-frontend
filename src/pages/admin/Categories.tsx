@@ -1,4 +1,4 @@
-import { Stack} from '@mui/material';
+import { Stack, Typography} from '@mui/material';
 import { ChangeEvent, useState } from "react";
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,8 +17,11 @@ import api from '@/api';
 
 export const Categories = ()=>{
 
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(!open);
+    const [openEdit, setOpenEdit] = useState(false);
+    const handleOpenEdit = () => setOpenEdit(!openEdit);
+
+    const [openDelete, setOpenDelete] = useState(false);
+    const handleOpenDelete = () => setOpenDelete(!openDelete);
     
     const [category, setCategory] = useState({
         categoryID: "",
@@ -49,8 +52,36 @@ export const Categories = ()=>{
         setCategory({...category, [name]: value})
     }
 
+    const handleDeleteCategory = async()=>{
+        handleOpenDelete();
+        
+        const id = toast.loading("Please wait...", {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+
+        try{
+            const { status } = await api.delete(`/categories/${category.categoryID}`)
+
+            if(status === 200){
+                toast.update(id, {render: "Category has deleted Successfully!", type: "success", isLoading: false,autoClose: 1000},);
+                refetch()
+            }
+        }catch (error){
+            console.log(error)
+            const errorObject = error as AxiosError;
+            toast.update(id, {render: `${errorObject.message}`, type: "error", isLoading: false, autoClose: 2000 });
+        } 
+    }
+
     const onSubmit:SubmitHandler<Category> = async (data) =>{
-        handleOpen(); 
+        handleOpenEdit(); 
 
         const updatedCategory = {...data, createdAt: category.createdAt}
 
@@ -101,19 +132,32 @@ export const Categories = ()=>{
         <>
             {
                 categories && categories.data.length > 0 &&
-                <CustomizedTables renderRows={renderCategoriesTable(categories.data,handleOpen, setCategory)} columns={tableHead.categories}  /> 
+                <CustomizedTables renderRows={renderCategoriesTable(categories.data,handleOpenEdit, setCategory, handleOpenDelete)} columns={tableHead.categories}  /> 
             }
 
-            <BasicModal open={open} handleOpen={handleOpen}>
+            <BasicModal open={openEdit} handleOpen={handleOpenEdit}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Stack spacing={2}>
                         {categoryForm}
                         <Stack direction ="row">
                             <button >Update</button>
-                            <button type='button' onClick={handleOpen}>Cancel</button>
+                            <button type='button' onClick={handleOpenEdit}>Cancel</button>
                         </Stack>
                     </Stack>
                 </form>
+            </BasicModal>
+            {/* Model for Delete */}
+            <BasicModal open={openDelete} handleOpen={handleOpenDelete}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+                Delete Category
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                You are about to delete category. Are you sure to delete?
+                </Typography>
+                <Stack direction ="row">
+                    <button onClick={handleDeleteCategory}>Delete</button>
+                    <button type='button' onClick={handleOpenDelete}>Cancel</button>
+                </Stack>
             </BasicModal>
 
             {error && <p>{error.message}</p>}

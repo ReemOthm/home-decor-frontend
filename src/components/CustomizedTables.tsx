@@ -82,7 +82,7 @@ export const renderProductTable = (rows:Product[], handleOpenDetails: ()=> void)
     )
 }
 
-export const renderCategoriesTable = (rows:Category[],handleOpenDetails: ()=> void, setCategory:(category:Category)=>void)=> {
+export const renderCategoriesTable = (rows:Category[],handleOpenEdit: ()=> void, setCategory:(category:Category)=>void, handleOpenDelete: ()=> void)=> {
     return (
         <>
             {
@@ -95,8 +95,8 @@ export const renderCategoriesTable = (rows:Category[],handleOpenDetails: ()=> vo
                         <StyledTableCell >{row.slug}</StyledTableCell>
                         <StyledTableCell >{row.createdAt}</StyledTableCell>
                         <StyledTableCell >
-                            <button onClick={()=> {handleOpenDetails(); setCategory(row)}}>Edit</button>
-                            <button>Delete</button>
+                            <button onClick={()=> {handleOpenEdit(); setCategory(row)}}>Edit</button>
+                            <button onClick={()=>{handleOpenDelete(); setCategory(row)}}>Delete</button>
                         </StyledTableCell>
                     </StyledTableRow>
                 ))
