@@ -1,12 +1,12 @@
 import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 
-import { ProductDetails, AllProducts, Signup, Login, Profile, UserInformation, RootLayout, Home, Dashboard, AdminInformation, Products, Categories, Orders } from "@/pages";
+import { ProductDetails, AllProducts, Signup, Login, Profile, UserInformation, RootLayout, Home, Dashboard, AdminInformation, Products, Categories } from "@/pages";
 import UserOrder from './../pages/user/UserOrder';
+import Orders from './../pages/admin/Orders';
 import ErrorHandler from "@/components/ErrorHandler";
 import ProtectedRoute from "./ProtectedRouter";
 import PageNotFound from "@/pages/PageNotFound";
 import AdminRoute from "./AdminRoute";
-
 
 const router = createBrowserRouter(
     createRoutesFromElements(

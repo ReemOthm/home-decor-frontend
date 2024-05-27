@@ -51,6 +51,7 @@ export type Order = {
   payment: string,
   amount: number,
   products: Product[],
+  userId: string,
   createdAt: string
 }
 

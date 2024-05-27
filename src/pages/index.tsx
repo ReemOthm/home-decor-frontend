@@ -10,4 +10,3 @@ export { Dashboard } from './admin/Dashboard';
 export { AdminInformation } from './admin/AdminInformation';
 export { Products } from './admin/Products';
 export { Categories } from './admin/Categories';
-export { Orders } from './admin/Orders';
