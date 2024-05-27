@@ -25,13 +25,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export const tableHead= {
-    users : ['Username',"First Name", "Last Name", "Phone Number", "Address", "Birth Date", "Created At", "Details"],
-    products : ["Name", "Category", "Quantity", "Price", "Created At", "Details"],
-    categories : ["Name", "Description", "Slug" ,"Created AT", "Details"],
+    users : ['Username',"First Name", "Last Name", "Phone Number", "Address", "Birth Date", "Created At", "Delete/Block"],
+    products : ["Name", "Category", "Quantity", "Price", "Created At", "Edit/Delete"],
+    categories : ["Name", "Description", "Slug" ,"Created AT", "Edit/Delete"],
     orders : ["Order ID", "Status", "Payment", "Amount","Created AT", "Details"],
 }
 
-export const renderUserTable = (rows:User[], handleOpenDetails: ()=> void)=> {
+export const renderUserTable = (rows:User[])=> {
     return (
         <>
             {
@@ -47,7 +47,8 @@ export const renderUserTable = (rows:User[], handleOpenDetails: ()=> void)=> {
                         <StyledTableCell >{row.birthDate}</StyledTableCell>
                         <StyledTableCell >{row.createdAt}</StyledTableCell>
                         <StyledTableCell >
-                            <button onClick={handleOpenDetails}>Details</button>
+                            <button>Delete</button>
+                            <button>Block</button>
                         </StyledTableCell>
                     </StyledTableRow>
                 ))

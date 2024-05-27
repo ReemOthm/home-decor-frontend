@@ -26,6 +26,9 @@ export const Dashboard = ()=>{
                             <NavLink to="information">Admin Information</NavLink>
                         </Typography>
                         <Typography>
+                            <NavLink to="users">Users</NavLink>
+                        </Typography>
+                        <Typography>
                             <NavLink to="products">Products</NavLink>
                         </Typography>
                         <Typography>

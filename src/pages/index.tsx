@@ -8,5 +8,6 @@ export { Profile } from './user/Profile';
 export { UserInformation } from './user/UserInformation';
 export { Dashboard } from './admin/Dashboard';
 export { AdminInformation } from './admin/AdminInformation';
+export { Users } from './admin/Users';
 export { Products } from './admin/Products';
 export { Categories } from './admin/Categories';
