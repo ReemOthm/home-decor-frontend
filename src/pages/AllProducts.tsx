@@ -148,7 +148,7 @@ export const AllProducts = ()=>{
                             </Grid>
                             
                             <Box sx={{  width: "200px;", margin: "40px auto"}}>
-                                <Pagination count={data.totalPages} variant="outlined" 
+                                <Pagination count={data.totalPages} variant="outlined"
                                     page={pageNumber} color="secondary" onChange={handlePageNumber} 
                                 />
                             </Box>
@@ -161,6 +161,7 @@ export const AllProducts = ()=>{
                     { searchKeyword && 
                         <Stack justifyContent="center" alignItems="center">
                             <Button size="small" variant="contained" 
+                            sx={{backgroundColor: "#b85454", "&:hover": {backgroundColor: "#943e3e"}}}
                             onClick={handleCloseSearch}>
                                 Return to Products Page 
                             </Button>

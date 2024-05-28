@@ -20,6 +20,7 @@ export const Dashboard = ()=>{
             <Helmet title="Dashboard" />
 
             { 
+                data && data.data &&
                 <ResizablePanel leftPanel={
                     <Stack mt={2} spacing={2}>
                         <Typography>
@@ -41,7 +42,8 @@ export const Dashboard = ()=>{
                 } 
                 rightPanel={
                     <Stack>
-                        <Typography textAlign={"right"}>{data.data?.result?.email}</Typography>
+                        <Typography sx={{textAlign: "right", color: "rgb(146, 48, 48);", fontWeight: 700, mt: "10px"}} 
+                            textAlign={"right"}>{data.data.result?.email}</Typography>
                         <Stack>
                             <Outlet context={data.data.result} />
                         </Stack>

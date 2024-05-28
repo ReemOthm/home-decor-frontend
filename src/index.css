@@ -8,7 +8,6 @@ body{
     font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-style: normal;
-    /* background-color: #eaeccc; */
     background-color: beige;
 }
 
@@ -49,6 +48,35 @@ a.active {
     width: 100%;
 }
 /* End Anchors */
+/* Start Buttons */
+.button{
+    border-radius: 6px;
+    padding: 8px 10px;
+    color: white;
+    background-color: #b85454;
+    border: none;
+    width: 100%;
+}
+
+.button:hover{
+    background-color: #943e3e;
+
+}
+
+.fit--width{
+    width: fit-content;
+}
+.margin--auto{
+    display: block;
+    margin: 30px auto;
+}
+.cancel{
+    background-color: #555;
+}
+.cancel:hover{
+    background-color: #383434;
+}
+/* End Buttons */
 /* Start Header */
 header{
     background-color: #fff;
@@ -105,7 +133,7 @@ nav ul{
 
 .search input[type="submit"]{
     padding: 10px;
-    background-color: rgb(189, 106, 106);;
+    background-color: rgb(189, 106, 106);
     color: white;
     border: none;
     border-radius: 6px;
@@ -143,13 +171,39 @@ nav ul{
 }
 
 /* End Single Products Page */
-
+/* Start Signup Page */
 .form--signup,
 .form--login{
+    border-radius: 10px;
+    background-color: #fff;
     max-width: 448px;
-    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0 40px 0;
+    box-shadow: 0 0 10px #ccc;
 }
 
+.form--signup{
+    margin: 30px auto;
+}
+
+.form--login{
+    margin: 100px auto;
+}
+/* End Signup Page */
+/* Start Information Page */
+.flex-between{
+    margin-left: 50px;
+    width: 400px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input__info{
+    padding: 5px;
+}
+/* End SignInformation Page */
 .input{
     border: 1px solid rgb(212, 212, 212);
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
@@ -192,6 +246,7 @@ nav ul{
 
 .panel{
     border-right: 2px solid #a18e8e;
+    height: 90vh;
 }
 
 /* Start Footer */

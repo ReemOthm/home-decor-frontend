@@ -11,9 +11,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
         color: theme.palette.common.white,
+        padding: 5,
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 14,
+        padding: 6,
     },
 }));
 
@@ -28,7 +30,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export const tableHead= {
-    users : ['Username',"Name", "Email","Phone Number", "Address", "Admin","Banned", "Created At", "Delete/Block"],
+    users : ['Username',"Name", "Email","Phone Number", "Admin","Banned", "Created At", "Delete/Block"],
     products : ["Name", "Category", "Quantity", "Price", "Created At", "Edit/Delete"],
     categories : ["Name", "Description", "Slug" ,"Created AT", "Edit/Delete"],
     orders : ["Order ID", "Status", "Payment", "Amount","Created AT", "Details"],
@@ -97,7 +99,6 @@ export const renderUserTable = (rows:User[],refetch:()=>void)=> {
                         <StyledTableCell >{row.firstName} {row.lastName}</StyledTableCell>
                         <StyledTableCell >{row.email}</StyledTableCell>
                         <StyledTableCell >{row.phoneNumber}</StyledTableCell>
-                        <StyledTableCell >{row.address}</StyledTableCell>
                         <StyledTableCell >{row.isAdmin? "Yes": "No"}</StyledTableCell>
                         <StyledTableCell >{row.isBanned? "Yes": "No"}</StyledTableCell>
                         <StyledTableCell >{row.createdAt}</StyledTableCell>
@@ -193,8 +194,8 @@ interface CustomizedTablesProps {
 const CustomizedTables = ({renderRows, columns}: CustomizedTablesProps) => {
 
     return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <TableContainer component={Paper} sx={{ml: "40px" }}>
+            <Table sx={{ minWidth: 700}} aria-label="customized table">
                 <TableHead>
                 <TableRow>
                     {columns.map((col, index) => <StyledTableCell key={index}>{col}</StyledTableCell>)}

@@ -1,4 +1,3 @@
-import { Button} from "@mui/material";
 
 interface LoadingBtnProps {
     isLoding: boolean,
@@ -7,10 +6,8 @@ interface LoadingBtnProps {
 
 const LoadingBtn = ({isLoding, title}:LoadingBtnProps)=>{
     return (
-        <Button
-            size="small"
-            variant="contained"
-            fullWidth
+        <button
+            className="button"
             type="submit"
         >
             <span>{title}  </span>
@@ -22,7 +19,7 @@ const LoadingBtn = ({isLoding, title}:LoadingBtnProps)=>{
                     />
                 </svg>
             }
-        </Button>
+        </button>
     )
 }
 

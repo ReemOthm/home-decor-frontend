@@ -15,9 +15,9 @@ const UpdateModal = ({openUpdate, handleOpenUpdate, handleSubmit, formElement}:U
             <form onSubmit={handleSubmit}>
                 <Stack spacing={2}>
                     {formElement}
-                    <Stack direction ="row">
-                        <button >Update</button>
-                        <button type='button' onClick={handleOpenUpdate}>Cancel</button>
+                    <Stack direction ="row" gap={1}>
+                        <button className="button">Update</button>
+                        <button className="button cancel" type='button' onClick={handleOpenUpdate}>Cancel</button>
                     </Stack>
                 </Stack>
             </form>

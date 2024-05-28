@@ -54,7 +54,7 @@ export const ProductDetails = ()=>{
                             }
                         </Stack>
                         <Stack sx={{mt: 4}}>
-                            <Button sx={{fontSize: 11, backgroundColor: "#607d8b"}} variant="contained" endIcon={<ShoppingCartIcon />} 
+                            <Button sx={{fontSize: 11, backgroundColor: "#b85454", "&:hover": {backgroundColor: "#943e3e"}}} variant="contained" endIcon={<ShoppingCartIcon />} 
                                 disabled = {data.data.quantity == 0 }
                                 size="small">
                                     Add to cart

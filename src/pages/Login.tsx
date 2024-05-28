@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Stack, TextField } from "@mui/material"
+import { Stack, TextField, Typography } from "@mui/material"
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -72,6 +72,7 @@ export const Login = ()=>{
                 : 
                 <TextField label={placeholder}  type={type} {...register(name)} fullWidth 
                     error={!!errors[name]}
+                    size="small"
                     helperText={errors[name]?.message}
                 />
             }
@@ -81,7 +82,8 @@ export const Login = ()=>{
     return (
         <>
             <Helmet title="Login" />
-            <form className="form--signup" onSubmit={handleSubmit(onSubmit)}>
+            <form className="form--login" onSubmit={handleSubmit(onSubmit)}>
+                <Typography variant="h4" sx={{ mb : "10px"}}>Login</Typography>
                 <Stack spacing={2} width={400}>
                     {LoginFormRender}
                     <LoadingBtn title="Login" isLoding={isLoading} />

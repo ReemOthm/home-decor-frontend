@@ -61,50 +61,50 @@ export const UserInformation = ()=>{
         <>
             { userData &&
                 <Stack gap={2}>
-                    <Stack direction="row" justifyContent="space-between">
+                    <div className="flex-between">
                         <Typography>Username:</Typography>
                         <Stack>
-                            <input disabled value={userData.username}/>
+                            <input disabled value={userData.username} className="input__info"/>
                         </Stack>
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between">
+                    </div>
+                    <div className="flex-between">
                         <Typography>Email:</Typography>
                         <Stack>
-                            <input disabled value={userData.email}/>
+                            <input disabled value={userData.email} className="input__info"/>
                         </Stack>
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between">
+                    </div>
+                    <div className="flex-between">
                         <Typography>First Name:</Typography>
                         <Stack direction="row" >
-                            <input type="text" disabled={!editFirst.status} value={name.firstName} onChange={handleFirstNameChange}/>
+                            <input type="text" disabled={!editFirst.status} className="input__info" value={name.firstName} onChange={handleFirstNameChange}/>
                             <button onClick={handleUpdateUserFirstName}>{editFirst.name}</button>
                         </Stack>
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between">
+                    </div>
+                    <div className="flex-between">
                         <Typography>Last Name:</Typography>
                         <Stack direction="row" >
-                            <input type="text" disabled={!editLast.status} value={name.lastName} onChange={handleLastNameChange}/>
+                            <input type="text" disabled={!editLast.status} className="input__info" value={name.lastName} onChange={handleLastNameChange}/>
                             <button onClick={handleUpdateUserLastName}>{editLast.name}</button>
                         </Stack>
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between">
+                    </div>
+                    <div className="flex-between">
                         <Typography>Phone Number:</Typography>
                         <Stack>
-                            <input disabled value={userData.phoneNumber}/>
+                            <input disabled value={userData.phoneNumber} className="input__info"/>
                         </Stack>
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between">
+                    </div>
+                    <div className="flex-between">
                         <Typography>Address:</Typography>
                         <Stack>
-                            <input disabled value={userData.address}/>
+                            <input disabled value={userData.address} className="input__info"/>
                         </Stack>
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between">
+                    </div>
+                    <div className="flex-between">
                         <Typography>Birth Date:</Typography>
                         <Stack>
-                            <input disabled value={userData.birthDate}/>
+                            <input disabled value={userData.birthDate} className="input__info"/>
                         </Stack>
-                    </Stack>
+                    </div>
                 </Stack>
             }
         </>

@@ -17,8 +17,8 @@ const DeleteModal = ({openDelete, handleOpenDelete, handleDelete}:DeleteModalPro
                     You are about to delete category. Are you sure to delete?
                 </Typography>
                 <Stack direction ="row">
-                    <button onClick={handleDelete}>Delete</button>
-                    <button type='button' onClick={handleOpenDelete}>Cancel</button>
+                    <button className="button" onClick={handleDelete}>Delete</button>
+                    <button className="button cancel" type='button' onClick={handleOpenDelete}>Cancel</button>
                 </Stack>
         </BasicModal>
     )

@@ -186,12 +186,12 @@ export const Categories = ()=>{
             {errors[name] && <p className='error--msg'>{errors[name]?.message}</p>}
         </div>
     )
-console.log(categories)
+
     if(isLoading) return  <h1>Loading ....</h1>
 
     return (
         <>
-            <Button variant="contained" sx={{width: "200px"}} onClick={handleOpenCreate}>Create Category</Button>
+            <button className='button fit--width margin--auto' onClick={handleOpenCreate}>Create Category</button>
             {
                 categories && categories.data && categories.data?.items.length > 0 ?
                 <CustomizedTables renderRows={renderCategoriesTable(categories.data.items,handleOpenEdit, setCategoryEdit, handleOpenDelete)} columns={tableHead.categories}  /> 
@@ -205,7 +205,7 @@ console.log(categories)
             <UpdateModal openUpdate={openEdit} handleOpenUpdate={handleOpenEdit} handleSubmit={handleSubmit(onSubmit)} formElement={categoryFormEdit}/>
             <DeleteModal openDelete={openDelete} handleOpenDelete={handleOpenDelete} handleDelete={handleDeleteCategory} />
             
-            <Box sx={{width: "fit-content", margin: "40px auto"}}>
+            <Box sx={{width: "200px", margin: "40px auto"}}>
                 <Pagination count={categories.data.totalPages} variant="outlined" 
                     page={pageNumber} color="secondary" onChange={handlePageNumber} 
                 />

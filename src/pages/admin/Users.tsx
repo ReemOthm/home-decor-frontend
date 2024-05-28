@@ -20,7 +20,7 @@ export const Users = ()=>{
     return (
         <>
             <CustomizedTables renderRows={renderUserTable(users.data.items,refetch)} columns={tableHead.users}  /> 
-            <Box sx={{width: "fit-content", margin: "40px auto"}}>
+            <Box sx={{width: "200px", margin: "40px auto"}}>
                 <Pagination count={users.data.items.totalPages} variant="outlined" 
                     page={pageNumber} color="secondary" onChange={handlePageNumber} 
                 />

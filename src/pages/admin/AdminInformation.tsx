@@ -12,36 +12,36 @@ export const AdminInformation = ()=>{
         <>
             { userData &&
                 <Stack gap={2}>
-                    <Stack direction="row" justifyContent="space-between">
+                    <div className="flex-between">
                         <Typography>Username:</Typography>
                         <Stack>
-                            <input disabled value={userData.username}/>
+                            <input disabled value={userData.username} className="input__info"/>
                         </Stack>
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between">
+                    </div>
+                    <div className="flex-between">
                         <Typography>Email:</Typography>
                         <Stack>
-                            <input disabled value={userData.email}/>
+                            <input disabled value={userData.email} className="input__info"/>
                         </Stack>
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between">
+                    </div>
+                    <div className="flex-between">
                         <Typography>First Name:</Typography>
                         <Stack direction="row" >
-                            <input type="text" disabled value={userData.firstName} />
+                            <input type="text" disabled value={userData.firstName} className="input__info"/>
                         </Stack>
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between">
+                    </div>
+                    <div className="flex-between">
                         <Typography>Last Name:</Typography>
                         <Stack direction="row" >
-                            <input type="text" disabled value={userData.lastName} />
+                            <input type="text" disabled value={userData.lastName} className="input__info"/>
                         </Stack>
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between">
+                    </div>
+                    <div className="flex-between">
                         <Typography>Created At:</Typography>
                         <Stack>
-                            <input disabled value={userData.createdAt}/>
+                            <input disabled value={userData.createdAt} className="input__info"/>
                         </Stack>
-                    </Stack>
+                    </div>
                 </Stack>
             }
         </>

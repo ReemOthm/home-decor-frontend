@@ -1,5 +1,7 @@
 import { Link, NavLink } from "react-router-dom"
 
+import { logOut } from "@/lib/utils";
+
 const Navbar = ()=>{
     const token = localStorage.getItem('token');
     const isAdmin = localStorage.getItem('isAdmin');
@@ -25,10 +27,13 @@ const Navbar = ()=>{
                             {
                                 token == null && <Link className="login" to="/signup">Signup</Link>
                             }
-                            { token == null ?
+                            { token == null &&
                                 <Link className="login" to="/login">Login</Link>
-                                : 
-                                <Link className="login" to="/">Logout</Link>
+                            }{
+                                token != null &&
+                                <Link className="login" to="/" >
+                                    <button className="button fit-content" onClick={()=>logOut()}>Logout</button>
+                                </Link>
                             }
                         </div>
 

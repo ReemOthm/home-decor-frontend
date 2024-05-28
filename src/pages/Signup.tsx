@@ -1,4 +1,4 @@
-import { Stack, TextField} from "@mui/material";
+import { Stack, TextField, Typography} from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -65,6 +65,7 @@ export const Signup = ()=>{
                 type == 'date' ?                
                 <TextField label={placeholder}  type={type} {...register(name)} fullWidth 
                 error={!!errors[name]}
+                size="small"
                 helperText={errors[name]?.message}
                 InputLabelProps={{shrink: true}}
                 />
@@ -74,6 +75,7 @@ export const Signup = ()=>{
                 <TextField label={placeholder}  type={type} {...register(name)} fullWidth 
                     error={!!errors[name]}
                     helperText={errors[name]?.message}
+                    size="small"
                 />
             }
         </div>
@@ -83,9 +85,10 @@ export const Signup = ()=>{
         <>
             <Helmet title="Signup" />
             <form className="form--signup" onSubmit={handleSubmit(onSubmit)}>
+                <Typography variant="h4" sx={{ mb : "10px"}}>Signup</Typography>
                 <Stack spacing={2} width={400}>
                     {SignupFormRender}
-                    <LoadingBtn title="Signup" isLoding={isLoading} />
+                    <LoadingBtn title="Submit" isLoding={isLoading} />
                 </Stack>
             </form>
         </>

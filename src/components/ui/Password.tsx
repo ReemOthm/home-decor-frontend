@@ -28,6 +28,7 @@ const Password = ({register, errors, name}:PasswordProps)=>{
                 <OutlinedInput
                     {...register(name)}
                     error={!!errors[name]}
+                    size="small"
                     type={showPassword ? 'text' : 'password'}
                     endAdornment={
                         <InputAdornment position="end">

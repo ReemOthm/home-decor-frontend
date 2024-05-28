@@ -33,7 +33,7 @@ export const Profile = ()=>{
                 } 
                 rightPanel={
                     <Stack>
-                        <Typography textAlign={"right"}>{data.data?.result?.email}</Typography>
+                        <Typography sx={{textAlign: "right", color: "rgb(146, 48, 48);", fontWeight: 700, mt: "10px"}}>{data.data?.result?.email}</Typography>
                         <Stack>
                             <Outlet context={data.data.result}  />
                         </Stack>

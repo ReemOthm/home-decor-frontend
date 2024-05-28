@@ -15,9 +15,9 @@ const CreateModal = ({openCreate, handleopenCreate, handleSubmit, formElement}:C
             <form onSubmit={handleSubmit}>
                 <Stack spacing={2}>
                     {formElement}
-                    <Stack direction ="row">
-                        <button>Create</button>
-                        <button type='button' onClick={handleopenCreate}>Cancel</button>
+                    <Stack direction ="row" gap={1}>
+                        <button className="button">Create</button>
+                        <button className="button cancel" type='button' onClick={handleopenCreate}>Cancel</button>
                     </Stack>
                 </Stack>
             </form>

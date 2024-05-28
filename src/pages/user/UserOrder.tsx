@@ -30,7 +30,7 @@ const Row = (props: { row: Order })=>{
                 <TableCell align="right">{row.status}</TableCell>
                 <TableCell align="right">{row.payment}</TableCell>
                 <TableCell align="right">{row.amount}</TableCell>
-                <TableCell align="right">{row.createdAt}</TableCell>
+                <TableCell>{row.createdAt}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -84,7 +84,7 @@ export default function UserOrder () {
             {
                 orders && orders.data.length > 0 && 
                 <>
-                    <TableContainer component={Paper}>
+                    <TableContainer component={Paper} sx={{margin: "20px"}}>
                         <Table aria-label="collapsible table">
                             <TableHead>
                             <TableRow>
@@ -93,7 +93,7 @@ export default function UserOrder () {
                                 <TableCell align="right">Status</TableCell>
                                 <TableCell align="right">Payment</TableCell>
                                 <TableCell align="right">Amount</TableCell>
-                                <TableCell align="right">Created At</TableCell>
+                                <TableCell >Created At</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
