@@ -118,6 +118,31 @@ nav ul{
     margin: 150px auto;
 }
 /* End Products Page */
+/* Start Single Products Page */
+.related__products{
+    margin: 50px;    
+}
+.related__products > div{
+    width: 70%;
+    margin: 10px auto;    
+    display: flex;
+}
+
+.related__products a{
+    width: 33%;
+    padding: 0;
+}
+
+.related__products .image img:hover {
+    filter: opacity(1);
+}
+
+.related__products .image img{
+    width: 100%;
+    filter: opacity(0.5)
+}
+
+/* End Single Products Page */
 
 .form--signup,
 .form--login{
@@ -240,6 +265,12 @@ nav ul{
     .filter__menu{
         flex-direction: column;
         margin-bottom: 20px;
+    }
+    .card{
+        flex-direction: column;
+    }
+    .card img{
+        width: 100%;
     }
     .footer > section{
         flex-direction: column;

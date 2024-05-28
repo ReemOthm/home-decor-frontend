@@ -8,7 +8,7 @@ export const RootLayout = ()=>{
     return (
         <>
             <Navbar />
-            <Container>
+            <Container sx={{minHeight: "90vh"}}>
                 <Outlet />
             </Container>
             <Footer />

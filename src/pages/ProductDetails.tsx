@@ -1,7 +1,7 @@
 import { Button, Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
 import { ShoppingCartIcon } from "lucide-react";
 import { Helmet } from "react-helmet";
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 
 import ColorCircles from "@/components/ui/ColorCircle";
 import useApiQuery from "@/hooks/useApiQuery";
@@ -18,20 +18,26 @@ export const ProductDetails = ()=>{
         url: `products/:${slug}`}
     );
 
+    const { data: categories} = useApiQuery({
+        queryKey: ["categories"],
+        method: "get" ,
+        url: `/categories/${data?.data?.category?.categoryID}`
+    });
+
     if(isLoading) return <h1>Product is loading</h1>
 
     return (
         <>
             <Helmet title={data?.data.productName} />
             { data &&             
-                <Card sx={{ display: 'flex', maxWidth: "70%", margin: "auto" }}>
+                <Card sx={{ display: 'flex', maxWidth: "70%", mx: "auto", mt: "40px"}} className="card">
                     <CardMedia
                     component="img"
                     sx={{ width: "50%" }}
                     image={data.data.image}
                     alt={data.data.productName}
                     />
-                    <CardContent>
+                    <CardContent sx={{flex: 1}}>
                         <Typography component="div" variant="h5">
                         {capitalizeTitle(data.data.productName)}
                         </Typography>
@@ -39,7 +45,7 @@ export const ProductDetails = ()=>{
                         {data.data.description}
                         </Typography>
                         <Stack direction="row" justifyContent="space-between" alignItems="end" sx={{py:1}}>
-                            <Typography>{data.data.price} SAR</Typography>
+                            <Typography sx={{fontWeight: 500}}>{data.data.price} SAR</Typography>
                             <Typography>{data.data.category.name}</Typography>
                         </Stack>
                         <Stack direction="row" gap={1}>
@@ -48,7 +54,7 @@ export const ProductDetails = ()=>{
                             }
                         </Stack>
                         <Stack sx={{mt: 4}}>
-                            <Button sx={{fontSize: 11}} variant="contained" endIcon={<ShoppingCartIcon />} 
+                            <Button sx={{fontSize: 11, backgroundColor: "#607d8b"}} variant="contained" endIcon={<ShoppingCartIcon />} 
                                 disabled = {data.data.quantity == 0 }
                                 size="small">
                                     Add to cart
@@ -57,6 +63,31 @@ export const ProductDetails = ()=>{
                     </CardContent>
                 </Card>
             }
+
+            { categories && categories.data.products.length > 0 && 
+                <div className="related__products">
+                    <Typography textAlign={"center"}>Products you might like</Typography>
+                    <div>
+                        <Link to={`../products/${categories.data.products[0].slug}`}>
+                            <div className="image">
+                                <img src={categories.data.products[0].image}/>
+                            </div>
+                        </Link>
+                        <Link to={`../products/${categories.data.products[1].slug}`}>
+                            <div className="image">
+                                <img src={categories.data.products[1].image}/>
+                            </div>
+                        </Link>
+                        <Link to={`../products/${categories.data.products[2].slug}`} >
+                            <div className="image">
+                                <img src={categories.data.products[2].image}/>
+                            </div>
+                        </Link>
+                    </div>  
+                </div>
+            }
+
+
             {error && <p >{error.message}</p>} 
         </>
     )
