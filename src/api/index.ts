@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const isDevelopment = import.meta.env.MODE === 'development'
-let baseURL = 'http://localhost:5125/api'
+let baseURL = 'https://home-decor-backend-service.onrender.com/'
 
 if (!isDevelopment) {
   // Update this later when you have a working backend server
