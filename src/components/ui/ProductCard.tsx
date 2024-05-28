@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import { Product } from "@/types";
 import ColorCircles from "@/components/ui/ColorCircle";
-import { capitalizeTitle, discrptionSlice } from "@/lib/utils";
+import { capitalizeTitle } from "@/lib/utils";
 
 interface ProductCardProps {
     product: Product
@@ -19,14 +19,11 @@ const ProductCard = ({product}:ProductCardProps)=>{
                 image={product.image} 
                 title={product.productName} 
             />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+            <CardContent sx={{padding: "4px 15px"}}>
+                <Typography gutterBottom variant="h5" component="div" sx={{mb:0}}>
                     {capitalizeTitle(product.productName)}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{height: "40px"}}>
-                    {discrptionSlice(product.description)}
-                </Typography>
-                <Stack direction="row" alignItems="end" justifyContent="space-between" sx={{py:1}}>
+                <Stack direction="row" alignItems="end" justifyContent="space-between " sx={{py:1}}>
                     <Typography>{product.price} SAR</Typography>
                     <Typography>{product.category.name}</Typography>
                 </Stack>
@@ -36,14 +33,14 @@ const ProductCard = ({product}:ProductCardProps)=>{
                     }
                 </Stack>
             </CardContent>
-            <CardActions sx={{justifyContent: "center"}}>
-                <Link to={`${product.slug}`} >
-                    <Button sx={{fontSize: 11}} variant="contained" endIcon={<VisibilityIcon />} size="small">Show Deatils</Button>
+            <CardActions sx={{py:2}}>
+                <Link className="no--style" to={`${product.slug}`} >
+                    <Button fullWidth  sx={{fontSize: 11}} variant="contained" endIcon={<VisibilityIcon />} size="small">Deatils</Button>
                 </Link>
-                <Button sx={{fontSize: 11}} variant="contained" endIcon={<ShoppingCartIcon />} 
+                <Button fullWidth sx={{fontSize: 11, padding: "4px 10px", margin : 0}} variant="contained" endIcon={<ShoppingCartIcon />} 
                     size="small" disabled = {product.quantity == 0}
                 >
-                    Add to cart 
+                    Add 
                 </Button>
             </CardActions>
         </Card>

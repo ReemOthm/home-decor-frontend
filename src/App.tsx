@@ -10,9 +10,9 @@ function App() {
 
   return (
     <>  
-      <Container>
+      {/* <Container> */}
         <RouterProvider router={router} />
-      </Container>
+      {/* </Container> */}
       <ToastContainer />
     </>
   )

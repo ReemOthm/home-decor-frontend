@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Grid, Pagination, Stack, TextField } from "@mui/material";
+import { Autocomplete, Box, Button, Grid, Pagination, Stack, TextField, colors } from "@mui/material";
 import { Helmet } from "react-helmet";
 import { useRef, useState } from "react";
 
@@ -22,7 +22,7 @@ export const AllProducts = ()=>{
     const { data, error, isLoading } = useApiQuery({
         queryKey: ["products", `${pageNumber}`, `${searchKeyword}`, `${category}`, `${price.maxPrice}`, `${price.minPrice}`],
         method: "get" ,
-        url: `/products?keyword=${searchKeyword}&category=${category}&minPrice=${price.minPrice}&maxPrice=${price.maxPrice}&page=${pageNumber}`
+        url: `/products?keyword=${searchKeyword}&category=${category}&minPrice=${price.minPrice}&maxPrice=${price.maxPrice}&page=${pageNumber}&pageSize=8`
     });
 
     const { data: categories} = useApiQuery({
@@ -78,24 +78,32 @@ export const AllProducts = ()=>{
             {
                 data && 
                 <>
-                    <Stack direction="row" justifyContent="space-between">
+                    <div  className="filter__menu">
                         <form className="search" onSubmit={handleSearch}>
-                            <input type="search" ref={keyword}/>
+                            <input type="search" ref={keyword} placeholder="What are you looking for?"/>
                             <input type="submit" value="search" />
                         </form>
 
                         <Stack direction="row" gap={1}>
                             <Autocomplete 
-                                sx={{width: "200px"}}
+                                className="filter"
                                 onChange={handleFilterByPrice}
                                 size= "small"
                                 options={priceOptions.map((price) => price)}
                                 renderInput={(params) => (
                                 <TextField 
                                     {...params}
-                                    label="Filter by Price"
+                                    placeholder="Filter by Price"
                                     InputProps={{
-                                    ...params.InputProps,
+                                        ...params.InputProps,
+                                        style: { 
+                                            fontSize: 15,
+                                        },
+                                    }}
+                                    sx={{
+                                        fieldset: {
+                                            border: "none",
+                                        }
                                     }}
                                 />
                                 )}
@@ -103,27 +111,35 @@ export const AllProducts = ()=>{
 
                             { categoryOptions && categoryOptions.length > 0 &&
                                 <Autocomplete 
-                                    sx={{width: "200px"}}
+                                    className="filter"
                                     onChange={handleFilterByCategory}
                                     size= "small"
                                     options={categoryOptions.map((category) => category.name)}
                                     renderInput={(params) => (
                                     <TextField 
                                         {...params}
-                                        label="Filter by Category"
+                                        placeholder="Filter by Category"
                                         InputProps={{
-                                        ...params.InputProps,
+                                            ...params.InputProps,
+                                            style: { 
+                                                fontSize: 15,
+                                            },
+                                        }}
+                                        sx={{
+                                            fieldset: {
+                                                border: "none",
+                                            }
                                         }}
                                     />
                                     )}
                                 />
                             }  
                         </Stack>
-                    </Stack>
+                    </div>
 
                     { data.items.length > 0 ?
                         <>
-                            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 2, sm: 5, md: 7 }} justifyContent="center">                
+                            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 6, md: 8 }} justifyContent="center">                
                                 { data.items.map((product:Product) => ( 
                                 <Grid item xs={2} sm={2} md={2} key={product.productID}>
                                     <ProductCard product={product}  /> 
@@ -131,7 +147,7 @@ export const AllProducts = ()=>{
                                 ))}
                             </Grid>
                             
-                            <Box sx={{width: "fit-content", margin: "40px auto"}}>
+                            <Box sx={{  width: "200px;", margin: "40px auto"}}>
                                 <Pagination count={data.totalPages} variant="outlined" 
                                     page={pageNumber} color="secondary" onChange={handlePageNumber} 
                                 />
