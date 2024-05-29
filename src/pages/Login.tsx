@@ -44,7 +44,7 @@ export const Login = ()=>{
         });
         
         try{
-            const response = await api.post("/login", data)
+            const response = await api.post("/api/login", data)
             const { token, refreshToken } = response.data;
 
             localStorage.setItem('token', token);

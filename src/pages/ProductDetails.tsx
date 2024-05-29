@@ -68,19 +68,19 @@ export const ProductDetails = ()=>{
                 <div className="related__products">
                     <Typography textAlign={"center"}>Products you might like</Typography>
                     <div>
-                        <Link to={`../products/${categories.data.products[0].slug}`}>
+                        <Link to={`../products/${categories.data.products[0]?.slug}`}>
                             <div className="image">
-                                <img src={categories.data.products[0].image}/>
+                                <img src={categories.data.products[0]?.image}/>
                             </div>
                         </Link>
-                        <Link to={`../products/${categories.data.products[1].slug}`}>
+                        <Link to={`../products/${categories.data.products[1]?.slug}`}>
                             <div className="image">
-                                <img src={categories.data.products[1].image}/>
+                                <img src={categories.data.products[1]?.image}/>
                             </div>
                         </Link>
-                        <Link to={`../products/${categories.data.products[2].slug}`} >
+                        <Link to={`../products/${categories.data.products[2]?.slug}`} >
                             <div className="image">
-                                <img src={categories.data.products[2].image}/>
+                                <img src={categories.data.products[2]?.image}/>
                             </div>
                         </Link>
                     </div>  

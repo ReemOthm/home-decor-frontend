@@ -34,7 +34,7 @@ const ProductCard = ({product}:ProductCardProps)=>{
                 </Stack>
             </CardContent>
             <CardActions sx={{py:2}}>
-                <Link className="no--style" to={`${product.slug}`} >
+                <Link className="no--style" to={`${product?.slug}`} >
                     <Button fullWidth  sx={{fontSize: 11, backgroundColor: "#b85454", "&:hover": {backgroundColor: "#943e3e"}}} variant="contained" endIcon={<VisibilityIcon />} size="small">Deatils</Button>
                 </Link>
                 <Button fullWidth sx={{fontSize: 11, padding: "4px 10px", margin : 0, backgroundColor: "#b85454", "&:hover": {backgroundColor: "#943e3e"}}} variant="contained" endIcon={<ShoppingCartIcon />} 
