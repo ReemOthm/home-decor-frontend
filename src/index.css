@@ -8,7 +8,7 @@ body{
     font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-style: normal;
-    background-color: beige;
+    /* background-color: beige; */
 }
 
 input:focus{
@@ -86,7 +86,7 @@ header{
     padding: 0 40px 0 0;
     border-bottom: 2px solid var(--head-color);
     padding: 5px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 2px solid #eee;
 }
 nav{
     max-width: 80%;
