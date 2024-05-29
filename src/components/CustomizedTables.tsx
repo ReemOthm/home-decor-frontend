@@ -194,7 +194,7 @@ interface CustomizedTablesProps {
 const CustomizedTables = ({renderRows, columns}: CustomizedTablesProps) => {
 
     return (
-        <TableContainer component={Paper} sx={{ml: "40px" }}>
+        <TableContainer component={Paper} sx={{ml: "20px" }}>
             <Table sx={{ minWidth: 700}} aria-label="customized table">
                 <TableHead>
                 <TableRow>
