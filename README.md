@@ -1,56 +1,42 @@
-# Project: Frontend for E-commerce Website
+# Frontend for E-commerce Website
 
-Tech Stack: React, TypeScript. Styling: Tailwind, MUI, or CSS/SASS
+## Introduction 
+Home-Decor is an ecommerce website that provide a collection of home decoration and accessories products.
+### You can find the website at [HomeDecor](https://main--home-decor-project.netlify.app/products) 🌟
 
-### Level 1: Basic Requirements
+### Types of Users
+There are two types of users:  Admin and Visitors/Customers. 
 
-**Pages to Create:**
+### Technologies
+  - Tech Stack: React, TypeScript. 
+  - Styling:  MUI, CSS
+  - React libraries: ``axios``, ``react router dom``, ``react hook form``, ``react tostify``, ``react helmet``, ``react query``
+## Functionalities
+### Admin
+  - Admin has a dashboard
+  - Admin can view his/her information
+  - Admin can list all users
+  - Admin can list all Orders
+  - Admin can list all Categories, create category, update/delete category
+  - Admin can delete/block user
+    
+### Customers/Visitors features
+  - Create an account, and login
+  - Show all the products
+  - Search for a product based on name
+  - Filter products based on price or category
+  - View his profile information and orders
+  - Update profile information
 
-1. Home page (list all the products)
-2. Product page (contain the details of a product)
-3. Dashboard page
+## User Interfaces
+### Products Page
+![image](https://github.com/ReemOthm/home-decor-frontend/assets/86829326/1168e0a6-5c86-44f8-9807-9f427c6f1559)
+### Login Page
+![image](https://github.com/ReemOthm/home-decor-frontend/assets/86829326/c382b690-cc2e-49d1-ad17-9cdacc74133a)
+### Admin Dashboard
+![image](https://github.com/ReemOthm/home-decor-frontend/assets/86829326/f7008f51-97ee-40d1-b85f-863ca5af768c)
+### User Profile
+![image](https://github.com/ReemOthm/home-decor-frontend/assets/86829326/ceb5c22d-1131-41d4-9388-5a4010740ce7)
 
-**Functionalities for a Visitor:**
 
-- Get list of products
-- Filter products by categories or price
-- Search products by name
-- Add products to a cart
-- Remove products from a cart
 
-**Functionalities for an Admin:**
-
-- Add a new product, update info of a product, remove a product
-
-### Level 2: Additional Requirements
-
-**Authentication:**
-
-- Implement register and login functionality via email and password
-- Protect the routes based on login and admin status
-
-**Functionalities for an Admin:**
-
-- list all users, delete or block a user.
-- list all orders
-- Add a new category, update info of a category, remove a category
-
-**Form Validation:**
-
-- Implement form validation.
-
-### Level 3: Bonus Requirement (Optional)
-
-If you have a higher skill level and finish the previous requirements before the deadline, you can tackle the following bonus tasks:
-
-- Messages, show loading, success, and error messages (e.g., when loading products list or adding new product)
-- Implement pagination feature
-- Create a Profile Page (only available if user logs in), implement editing user profile feature (user can change first name, last name)
-
-- Peer Review:
-- Review the code and implementation of 2 assignments from other participants.
-- Provide constructive feedback and suggestions for improvement.
-
-`Please note that the bonus requirements and reviews are optional and can be completed if you have additional time and advanced skills.`
-
-Happy coding!
