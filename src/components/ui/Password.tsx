@@ -24,7 +24,7 @@ const Password = ({register, errors, name}:PasswordProps)=>{
     return (
         <>
             <FormControl fullWidth>
-                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                <InputLabel size="small" htmlFor="Password" >Enter a Password</InputLabel>
                 <OutlinedInput
                     {...register(name)}
                     error={!!errors[name]}
@@ -41,7 +41,7 @@ const Password = ({register, errors, name}:PasswordProps)=>{
                         </IconButton>
                 </InputAdornment>
                 }
-                label="Password"
+                label="Enter a Password"
                 />
                 {!!errors[name] && (
                     <FormHelperText error id="accountId-error">

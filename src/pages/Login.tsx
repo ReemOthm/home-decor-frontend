@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Stack, TextField, Typography } from "@mui/material"
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -86,7 +86,12 @@ export const Login = ()=>{
                 <Typography variant="h4" sx={{ mb : "10px"}}>Login</Typography>
                 <Stack spacing={2} width={400}>
                     {LoginFormRender}
+                    <p className="form--links"><Link to="/forget-password" className="basic--color">Forget Password?</Link></p>
                     <LoadingBtn title="Login" isLoding={isLoading} />
+                    <p className="form--links">
+                        Don&apos;t have an account?
+                        <Link to="/signup" className="basic--color">Sign up</Link>
+                    </p>
                 </Stack>
             </form>
         </>

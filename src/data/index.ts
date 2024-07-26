@@ -30,17 +30,7 @@ export const SignupFormData: SignupForm[] = [
         type: 'number' ,
         placeholder: "Enter your phone number",
         name: 'phoneNumber',
-    },
-    {
-        type: 'text' ,
-        placeholder: "Enter your address",
-        name: 'address',
-    },
-    {
-        type: 'date' ,
-        placeholder: "Enter your birth date",
-        name: 'birthDate',
-    },
+    }
 ];
 
 export const LoginFormData: LoginForm[] = [

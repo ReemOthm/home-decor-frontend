@@ -38,9 +38,23 @@ a.active {
     font-size: 16px;
 }
 
-.login{
-    color: #0788d3;
+.login,
+.signup{
     font-weight: 800;
+    border-radius: 0;
+    padding: 6px 10px;
+    font-weight: 700;
+    border: 2px solid #9c3d3d;
+}
+
+.login{
+    color: #943e3e;
+}
+
+.signup{
+    background-color: #9c3d3d;
+    color: #fff;
+    margin-right: 10px;
 }
 
 .no--style{
@@ -61,6 +75,19 @@ a.active {
 .button:hover{
     background-color: #943e3e;
 
+}
+
+.basic--color{
+    color: #b85454;
+    font-weight: 700;
+}
+
+.basic--color:hover{
+    color: #9c3d3d;
+}
+
+.form--links{
+    font-size: 14px;
 }
 
 .fit--width{

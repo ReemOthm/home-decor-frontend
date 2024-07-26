@@ -2,7 +2,7 @@ import { Stack, TextField, Typography} from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -14,6 +14,7 @@ import LoadingBtn from "@/components/ui/LoadingBtn";
 import api from "@/api";
 import { AxiosError } from "axios";
 import { Helmet } from "react-helmet";
+import { Fullscreen } from "lucide-react";
 
 export const Signup = ()=>{
 
@@ -62,14 +63,6 @@ export const Signup = ()=>{
     const SignupFormRender = SignupFormData.map(({type, placeholder, name},index)=> 
         <div key={index}>
             {
-                type == 'date' ?                
-                <TextField label={placeholder}  type={type} {...register(name)} fullWidth 
-                error={!!errors[name]}
-                size="small"
-                helperText={errors[name]?.message}
-                InputLabelProps={{shrink: true}}
-                />
-                :
                 name == 'password' ? <Password register={register} errors={errors} name="password" />
                 : 
                 <TextField label={placeholder}  type={type} {...register(name)} fullWidth 
@@ -89,6 +82,10 @@ export const Signup = ()=>{
                 <Stack spacing={2} width={400}>
                     {SignupFormRender}
                     <LoadingBtn title="Submit" isLoding={isLoading} />
+                    <p className="form--links">
+                        Already have an account?
+                        <Link to="/login" className="basic--color">Login</Link>
+                    </p>
                 </Stack>
             </form>
         </>

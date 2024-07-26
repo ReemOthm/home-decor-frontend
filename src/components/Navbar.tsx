@@ -25,14 +25,15 @@ const Navbar = ()=>{
                         </div>
                         <div>
                             {
-                                token == null && <Link className="login" to="/signup">Signup</Link>
+                                token == null && <Link className="signup" to="/signup">Signup</Link>
                             }
                             { token == null &&
                                 <Link className="login" to="/login">Login</Link>
-                            }{
+                            }
+                            {
                                 token != null &&
-                                <Link className="login" to="/" >
-                                    <button className="button fit-content" onClick={()=>logOut()}>Logout</button>
+                                <Link to="/" >
+                                    <button className="button" onClick={()=>logOut()}>Logout</button>
                                 </Link>
                             }
                         </div>
