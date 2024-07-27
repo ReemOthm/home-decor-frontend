@@ -8,10 +8,11 @@ import ColorCircles from "@/components/ui/ColorCircle";
 import { capitalizeTitle } from "@/lib/utils";
 
 interface ProductCardProps {
-    product: Product
+    product: Product,
+    displayButtons?: boolean
 }
 
-const ProductCard = ({product}:ProductCardProps)=>{
+const ProductCard = ({product, displayButtons = true}:ProductCardProps)=>{
     
     return (
         <Card sx={{filter: product.quantity == 0? "grayscale(1)" : "initial"}}> 
@@ -33,16 +34,19 @@ const ProductCard = ({product}:ProductCardProps)=>{
                     }
                 </Stack>
             </CardContent>
-            <CardActions sx={{py:2}}>
-                <Link className="no--style" to={`${product?.slug}`} >
-                    <Button fullWidth  sx={{fontSize: 11, backgroundColor: "#b85454", "&:hover": {backgroundColor: "#943e3e"}}} variant="contained" endIcon={<VisibilityIcon />} size="small">Deatils</Button>
-                </Link>
-                <Button fullWidth sx={{fontSize: 11, padding: "4px 10px", margin : 0, backgroundColor: "#b85454", "&:hover": {backgroundColor: "#943e3e"}}} variant="contained" endIcon={<ShoppingCartIcon />} 
-                    size="small" disabled = {product.quantity == 0}
-                >
-                    Add 
-                </Button>
-            </CardActions>
+            {
+                displayButtons &&
+                <CardActions sx={{py:2}}>
+                    <Link className="no--style" to={`${product?.slug}`} >
+                        <Button fullWidth  sx={{fontSize: 11, backgroundColor: "#b85454", "&:hover": {backgroundColor: "#943e3e"}}} variant="contained" endIcon={<VisibilityIcon />} size="small">Deatils</Button>
+                    </Link>
+                    <Button fullWidth sx={{fontSize: 11, padding: "4px 10px", margin : 0, backgroundColor: "#b85454", "&:hover": {backgroundColor: "#943e3e"}}} variant="contained" endIcon={<ShoppingCartIcon />} 
+                        size="small" disabled = {product.quantity == 0}
+                    >
+                        Add 
+                    </Button>
+                </CardActions>
+            }
         </Card>
     )
 }

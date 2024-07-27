@@ -1,10 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 
-export type HttpMethod = 'get' | 'post' | 'put' | 'delete';
-
 export type ApiQuery = {
   queryKey: string[],
-  method: HttpMethod,
   url: string,
   config?: AxiosRequestConfig
 }

@@ -9,7 +9,7 @@ export const Footer = ()=>{
                 <section>
                     <address className="footer-address">
                         <span className="footer__title">Contact Us at</span>
-                        <a className="contact--btn" role="button" href="mailto:webmaster@example.com"> Home Decore</a><br/>
+                        <a className="contact--btn" role="button" href="mailto:webmaster@example.com"> HomeDecore</a><br/>
                         Visit us at:<br/>
                         Riyadh, Saudi Arabia<br/>
                         Box 564, Alfaysalyah<br/>

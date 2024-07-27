@@ -21,13 +21,11 @@ export const AllProducts = ()=>{
     // Queries
     const { data, error, isLoading } = useApiQuery({
         queryKey: ["products", `${pageNumber}`, `${searchKeyword}`, `${category}`, `${price.maxPrice}`, `${price.minPrice}`],
-        method: "get" ,
         url: `/products?keyword=${searchKeyword}&category=${category}&minPrice=${price.minPrice}&maxPrice=${price.maxPrice}&page=${pageNumber}&pageSize=8`
     });
 
     const { data: categories} = useApiQuery({
         queryKey: ["categories"],
-        method: "get" ,
         url: `/categories`
     });
 

@@ -14,13 +14,11 @@ export const ProductDetails = ()=>{
     // Queries
     const { data, error, isLoading } = useApiQuery({
         queryKey: ["products"],
-        method: "get" ,
         url: `products/:${slug}`}
     );
 
     const { data: categories} = useApiQuery({
         queryKey: ["categories"],
-        method: "get" ,
         url: `/categories/${data?.data?.category?.categoryID}`
     });
 

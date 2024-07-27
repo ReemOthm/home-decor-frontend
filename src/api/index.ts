@@ -1,11 +1,12 @@
 import axios from 'axios'
 
 const isDevelopment = import.meta.env.MODE === 'development'
-let baseURL = 'https://home-decor-backend-service.onrender.com'
+// let baseURL = 'https://home-decor-backend-service.onrender.com'
+const baseURL = 'http://localhost:5125'
 
 if (!isDevelopment) {
   // Update this later when you have a working backend server
-  baseURL = 'https://home-decor-backend-service.onrender.com'
+  // baseURL = 'https://home-decor-backend-service.onrender.com'
 }
 
 const api = axios.create({
