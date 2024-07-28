@@ -1,68 +1,36 @@
-import { Button, Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
-import { ShoppingCartIcon } from "lucide-react";
+import { Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
 import { Link, useParams } from "react-router-dom"
 
-import ColorCircles from "@/components/ui/ColorCircle";
 import useApiQuery from "@/hooks/useApiQuery";
-import { capitalizeTitle } from "@/lib/utils";
+import ProductDetailsCard from "@/components/ui/ProductDetailsCard";
 
 export const ProductDetails = ()=>{
 
     const {slug} = useParams()
-    
+
     // Queries
     const { data, error, isLoading } = useApiQuery({
         queryKey: ["products"],
         url: `products/:${slug}`}
     );
-
+    
     const { data: categories} = useApiQuery({
         queryKey: ["categories"],
         url: `/categories/${data?.data?.category?.categoryID}`
     });
-
+    
     if(isLoading) return <h1>Product is loading</h1>
 
     return (
         <>
-            <Helmet title={data?.data.productName} />
-            { data &&             
-                <Card sx={{ display: 'flex', maxWidth: "70%", mx: "auto", mt: "40px"}} className="card">
-                    <CardMedia
-                    component="img"
-                    sx={{ width: "50%" }}
-                    image={data.data.image}
-                    alt={data.data.productName}
-                    />
-                    <CardContent sx={{flex: 1}}>
-                        <Typography component="div" variant="h5">
-                        {capitalizeTitle(data.data.productName)}
-                        </Typography>
-                        <Typography variant="subtitle1" color="text.secondary" component="div" sx={{pt: 2}}>
-                        {data.data.description}
-                        </Typography>
-                        <Stack direction="row" justifyContent="space-between" alignItems="end" sx={{py:1}}>
-                            <Typography sx={{fontWeight: 500}}>{data.data.price} SAR</Typography>
-                            <Typography>{data.data.category.name}</Typography>
-                        </Stack>
-                        <Stack direction="row" gap={1}>
-                            {  data.data.colors.length > 0 &&
-                                data.data.colors.map((color:string) => <ColorCircles color={color} key={color}/> )
-                            }
-                        </Stack>
-                        <Stack sx={{mt: 4}}>
-                            <Button sx={{fontSize: 11, backgroundColor: "#b85454", "&:hover": {backgroundColor: "#943e3e"}}} variant="contained" endIcon={<ShoppingCartIcon />} 
-                                disabled = {data.data.quantity == 0 }
-                                size="small">
-                                    Add to cart
-                            </Button>
-                        </Stack>
-                    </CardContent>
-                </Card>
+            <Helmet title={data?.data?.productName} />
+
+            {
+                data && data.data && <ProductDetailsCard productData={data.data} />
             }
 
-            { categories && categories.data.products.length > 0 && 
+            { categories && categories.data  && categories.data.products?.length > 0 &&
                 <div className="related__products">
                     <Typography textAlign={"center"}>Products you might like</Typography>
                     <div>
@@ -84,7 +52,6 @@ export const ProductDetails = ()=>{
                     </div>  
                 </div>
             }
-
 
             {error && <p >{error.message}</p>} 
         </>

@@ -31,7 +31,7 @@ export const Home = ()=>{
                 <Link to="/about" className="button fit--width">Read More</Link>
             </Stack>
 
-            { data && data.items.length &&
+            { data && data.items?.length > 0 &&
                 <Stack spacing={4} alignItems="center" mb={6}>
                     <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 6, md: 8 }} justifyContent="center">                
                         { data.items.map((product:Product) => ( 

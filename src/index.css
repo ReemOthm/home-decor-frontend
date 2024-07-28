@@ -200,16 +200,16 @@ nav ul{
 
 .search input[type="search"]{
     padding: 10px;
-    border: none;
-    border-radius: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px 0 0 6px;
 }
 
 .search input[type="submit"]{
     padding: 10px;
     background-color: rgb(189, 106, 106);
+    border: 1px solid rgb(189, 106, 106);
     color: white;
-    border: none;
-    border-radius: 6px;
+    border-radius: 0 6px 6px 0;
 }
 
 .no--found{
@@ -227,6 +227,7 @@ nav ul{
     width: 70%;
     margin: 10px auto;    
     display: flex;
+    align-items: center;
 }
 
 .related__products a{

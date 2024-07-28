@@ -9,7 +9,6 @@ export const Users = ()=>{
 
     const { data:users, isLoading, error, refetch} = useApiQuery({
         queryKey: ["users", `${pageNumber}`],
-        method: "get" ,
         url: `/users?pageNumber=${pageNumber}&pageSize=6`
     });
 

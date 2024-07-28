@@ -75,7 +75,6 @@ export default function UserOrder () {
 
     const { data: orders} = useApiQuery({
         queryKey: ["orders"],
-        method: "get" ,
         url: `/orders/my-orders`
     });
 

@@ -10,7 +10,6 @@ export const Profile = ()=>{
 
     const { data, isLoading, error} = useApiQuery({
         queryKey: ["profile"],
-        method: "get" ,
         url: `/users/profile`
     });
 

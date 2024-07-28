@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Grid, Pagination, Stack, TextField, colors } from "@mui/material";
+import { Autocomplete, Box, Button, Grid, Pagination, Stack, TextField } from "@mui/material";
 import { Helmet } from "react-helmet";
 import { useRef, useState } from "react";
 
@@ -29,7 +29,7 @@ export const AllProducts = ()=>{
         url: `/categories`
     });
 
-    const categoryOptions = categories != null ? [{name: "All"}, ...categories.data] : null
+    const categoryOptions = categories != null && categories.data.length > 0 && [{name: "All"}, ...categories.data]
 
     const priceOptions = ["All","Less than 100", "Greater than 100"]
 
@@ -98,11 +98,6 @@ export const AllProducts = ()=>{
                                             fontSize: 15,
                                         },
                                     }}
-                                    sx={{
-                                        fieldset: {
-                                            border: "none",
-                                        }
-                                    }}
                                 />
                                 )}
                             />
@@ -123,11 +118,6 @@ export const AllProducts = ()=>{
                                                 fontSize: 15,
                                             },
                                         }}
-                                        sx={{
-                                            fieldset: {
-                                                border: "none",
-                                            }
-                                        }}
                                     />
                                     )}
                                 />
@@ -146,8 +136,8 @@ export const AllProducts = ()=>{
                             </Grid>
                             
                             <Box sx={{  width: "200px;", margin: "40px auto"}}>
-                                <Pagination count={data.totalPages} variant="outlined"
-                                    page={pageNumber} color="secondary" onChange={handlePageNumber} 
+                                <Pagination count={data.totalPages} variant="outlined" shape="rounded"
+                                    page={pageNumber} onChange={handlePageNumber} 
                                 />
                             </Box>
                         </>
@@ -157,7 +147,7 @@ export const AllProducts = ()=>{
                             </div>                    
                     }
                     { searchKeyword && 
-                        <Stack justifyContent="center" alignItems="center">
+                        <Stack justifyContent="center" alignItems="center" mb={4}>
                             <Button size="small" variant="contained" 
                             sx={{backgroundColor: "#b85454", "&:hover": {backgroundColor: "#943e3e"}}}
                             onClick={handleCloseSearch}>

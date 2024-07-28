@@ -61,7 +61,6 @@ export const Categories = ()=>{
     
     const { data:categories, isLoading, error, refetch} = useApiQuery({
         queryKey: ["categories", `${pageNumber}`],
-        method: "get" ,
         url: `/categories/all?pageNumber=${pageNumber}&pageSize=6`
     });
 
