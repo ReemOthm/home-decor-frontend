@@ -54,6 +54,12 @@ const ProductDetailsCard = ({productData}: IProductDetailsProps)=>{
                             }
                         </Stack>
                         <Stack sx={{mt: 4}}>
+                            {
+                                productData.quantity == 0 && 
+                                <Typography sx={{textAlign:"center", color:"red"}}>
+                                    The product is out of stock
+                                </Typography>
+                            }
                             <Button sx={{fontSize: 11, backgroundColor: "#b85454", "&:hover": {backgroundColor: "#943e3e"}}} variant="contained" endIcon={<ShoppingCartIcon />} 
                                 disabled = {productData.quantity == 0 }
                                 size="small">
