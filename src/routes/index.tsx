@@ -7,12 +7,14 @@ import ErrorHandler from "@/components/ErrorHandler";
 import ProtectedRoute from "./ProtectedRouter";
 import PageNotFound from "@/pages/PageNotFound";
 import AdminRoute from "./AdminRoute";
+import { About } from "@/pages/About";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <>
             <Route path="/" element={<RootLayout/>} errorElement={<ErrorHandler />}>
                 <Route index element={<Home />} />
+                <Route path="about" element={  <About />}  />
                 <Route path="login" element={  <Login />}  />
                 <Route path="signup" element={<Signup /> } />
                 <Route path="products" element={<AllProducts />}  />

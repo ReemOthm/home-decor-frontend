@@ -7,6 +7,7 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import useApiQuery from "@/hooks/useApiQuery";
 import ProductDetailsCard from "@/components/ui/ProductDetailsCard";
 import { Product } from "@/types";
+import { Skeleton, Stack } from '@mui/material';
 
 
 export const ProductDetails = ()=>{
@@ -18,8 +19,6 @@ export const ProductDetails = ()=>{
         queryKey: ["categories"],
         url: `/categories/${slug}`
     });
-    
-    if(isLoading) return <h1>Product is loading</h1>
 
     return (
         <>
@@ -29,6 +28,21 @@ export const ProductDetails = ()=>{
                 <ArrowBackIosIcon sx={{position: "relative", top: "3px", left:"4px", fontSize:"18px"}} />
                 return to products
             </Link>
+
+            {
+                isLoading &&             
+                <>
+                    <Stack pt={9} alignItems="center" sx={{height: "90vh"}}>
+                        <Skeleton variant="rectangular" width="70%" height="200px" />
+                        <Stack direction="row" spacing={2} mt={3}>
+                            <Skeleton variant="rectangular" width={120} height={70} />
+                            <Skeleton variant="rectangular" width={120} height={70} />
+                            <Skeleton variant="rectangular" width={120} height={70} />
+                            <Skeleton variant="rectangular" width={120} height={70} />
+                        </Stack>
+                    </Stack>
+                </>
+            }
 
             {
                 categories && categories.data && categories.data.products?.length > 0 &&
@@ -50,7 +64,7 @@ export const ProductDetails = ()=>{
                     renderDotsItem={({activeIndex})=>{
                             return  <div className="related__products">
                                         <div className="image">
-                                            <img src={categories.data.products[activeIndex].image}/>
+                                            <img src={categories.data.products[activeIndex].image} alt={categories.data.products[activeIndex].productName}/>
                                         </div>
                                     </div>
                         }

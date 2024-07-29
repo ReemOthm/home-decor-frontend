@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Grid, Pagination, Stack, TextField } from "@mui/material";
+import { Autocomplete, Box, Button, Grid, Pagination, Skeleton, Stack, TextField } from "@mui/material";
 import { Helmet } from "react-helmet";
 import { useRef, useState } from "react";
 
@@ -68,7 +68,41 @@ export const AllProducts = ()=>{
         }
     }
 
-    if(isLoading) return <h1>Products are loading</h1>
+    if(isLoading) return (
+        <>
+            <Box className="filter__menu" mt={4}>
+                <Skeleton variant="rectangular" width={210} height={23} />
+                <Stack direction="row" gap={1}>
+                    <Skeleton variant="rectangular" width={210} height={20} />
+                    <Skeleton variant="rectangular" width={210} height={20} />
+                </Stack>
+            </Box>
+            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 6, md: 8 }} justifyContent="center"
+                sx={{
+                    p: 4,
+                    height: "90vh",
+                }}
+            >                
+            { Array.from(new Array(8)).map((index) => ( 
+                <Grid item xs={2} sm={2} md={2} key={index}>
+                    <Skeleton variant="rectangular" width={210} height={118} />
+                    <Skeleton width="30%" />
+                    <Skeleton width="80%" />
+                    <Stack direction="row" spacing={1} >
+                        <Skeleton variant="circular" width={20} height={20} />
+                        <Skeleton variant="circular" width={20} height={20} />
+                        <Skeleton variant="circular" width={20} height={20} />
+                    </Stack>
+                    <Stack direction="row" spacing={1} mt={1}>
+                        <Skeleton variant="rounded" width="40%" height={20} />
+                        <Skeleton variant="rounded" width="40%" height={20} />
+                    </Stack>
+                </Grid>
+                ))
+            }
+            </Grid>
+        </>
+    )
 
     return (
         <>

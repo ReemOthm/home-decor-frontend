@@ -1,4 +1,4 @@
-import { Grid, Stack, Typography } from "@mui/material";
+import { Grid, Skeleton, Stack, Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
@@ -27,23 +27,43 @@ export const Home = ()=>{
 
             <Stack spacing={2} alignItems="center" sx={{mt: "600px", mb: "30px", textAlign: "center"}} >
                 <Typography variant="h2">About</Typography>
-                <p className="about__description">Lorem ipsum dolor Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam inventore modi quos aspernatur veritatis maiores doloremque sint vero aliquam esse perspiciatis excepturi, sunt deleniti odit ut. Nam sit amet consectetur adipisicing elit. Odit iusto eligendi sed architecto temporibus earum fuga maxime, natus inventore iure. Incidunt ipsa veniam iusto eaque repellendus excepturi cupiditate voluptate corrupti.</p>
+                <p className="about__description">Lorem ipsum dolor Lorem ipsum dolor sit amet consecvero aliquam esse perspiciatis excepturi, sunt deleniti adipisicing elit. Odit iusto eligendi sed architecto temporibus earum fuga maxime, natus inventore iure. Incidunt ipsa veniam iusto eaque repellendus excepturi cupiditate voluptate corrupti.</p>
                 <Link to="/about" className="button fit--width">Read More</Link>
             </Stack>
 
-            { data && data.items?.length > 0 &&
-                <Stack spacing={4} alignItems="center" mb={6}>
-                    <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 6, md: 8 }} justifyContent="center">                
-                        { data.items.map((product:Product) => ( 
-                            <Grid item xs={2} sm={2} md={2} key={product.productID}>
-                            <ProductCard product={product} displayButtons={false} /> 
-                        </Grid>
-                        ))}
-                    </Grid>
-                    <Link to="/products" className="button fit--width" onClick={()=> scrollTo(0,0)}>Show More</Link>
-                </Stack>
+            {
+                isLoading ? 
+                    <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 6, md: 8 }} justifyContent="center" mb={6}>
+                        { Array.from(new Array(8)).map((index) => ( 
+                                <Grid item xs={2} sm={2} md={2}  key={index}>
+                                    <Skeleton variant="rectangular" width={210} height={118} />
+                                    <Skeleton width="80px" />
+                                    <Skeleton width="170px" />
+                                    <Stack direction="row" spacing={1} >
+                                        <Skeleton variant="circular" width={20} height={20} />
+                                        <Skeleton variant="circular" width={20} height={20} />
+                                        <Skeleton variant="circular" width={20} height={20} />
+                                    </Stack>
+                                </Grid>
+                            ))
+                        }
+                    </Grid> 
+                    : 
+                    <>
+                        { data && data.items?.length > 0 &&
+                            <Stack spacing={4} alignItems="center" mb={6}>
+                                <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 6, md: 8 }} justifyContent="center">                
+                                    { data.items.map((product:Product) => ( 
+                                        <Grid item xs={2} sm={2} md={2} key={product.productID}>
+                                            <ProductCard product={product} displayButtons={false} /> 
+                                        </Grid>
+                                    ))}
+                                </Grid>
+                                <Link to="/products" className="button fit--width" onClick={()=> scrollTo(0,0)}>Show More</Link>
+                            </Stack>
+                        }
+                    </>
             }
-
 
             {error && <p >{error.message}</p>} 
 
