@@ -29,6 +29,7 @@ const Password = ({register, errors, name}:PasswordProps)=>{
                     {...register(name)}
                     error={!!errors[name]}
                     size="small"
+                    sx={{width: "100%", margin: "auto"}}
                     type={showPassword ? 'text' : 'password'}
                     endAdornment={
                         <InputAdornment position="end">

@@ -50,7 +50,6 @@ export const Login = ()=>{
             localStorage.setItem('token', token);
             localStorage.setItem('refreshToken', refreshToken);
             localStorage.setItem('isAdmin',  response.data.data.isAdmin);
-            console.log(response)
 
             if(response.status === 200){
                 toast.update(id, {render: "Login Successfully!", type: "success", isLoading: false,autoClose: 1000},);
@@ -70,7 +69,7 @@ export const Login = ()=>{
             {
                 name == 'password' ? <Password register={register} errors={errors} name="password" />
                 : 
-                <TextField label={placeholder}  type={type} {...register(name)} fullWidth 
+                <TextField label={placeholder}  type={type} {...register(name)} sx={{width: "100%", margin: "auto"}} 
                     error={!!errors[name]}
                     size="small"
                     helperText={errors[name]?.message}
@@ -82,13 +81,13 @@ export const Login = ()=>{
     return (
         <>
             <Helmet title="Login" />
-            <form className="form--login" onSubmit={handleSubmit(onSubmit)}>
+            <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
                 <Typography variant="h4" sx={{ mb : "10px"}}>Login</Typography>
-                <Stack spacing={2} width={400}>
+                <Stack spacing={2} width={350}>
                     {LoginFormRender}
-                    <p className="form--links"><Link to="/forget-password" className="basic--color">Forget Password?</Link></p>
+                    <p className="sugnup__links"><Link to="/forget-password" className="basic--color">Forget Password?</Link></p>
                     <LoadingBtn title="Login" isLoding={isLoading} />
-                    <p className="form--links">
+                    <p className="signup__links">
                         Don&apos;t have an account?
                         <Link to="/signup" className="basic--color">Sign up</Link>
                     </p>

@@ -70,22 +70,21 @@ export const AllProducts = ()=>{
 
     if(isLoading) return (
         <>
-            <Box className="filter__menu" mt={4}>
+            <Box className="filter__menu" mt={4} mb={4}>
                 <Skeleton variant="rectangular" width={210} height={23} />
-                <Stack direction="row" gap={1}>
-                    <Skeleton variant="rectangular" width={210} height={20} />
-                    <Skeleton variant="rectangular" width={210} height={20} />
+                <Stack direction="row" gap={1} mt={1}>
+                    <Skeleton variant="rectangular" width="150px" height={20} />
+                    <Skeleton variant="rectangular" width="150px" height={20} />
                 </Stack>
             </Box>
-            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 6, md: 8 }} justifyContent="center"
+            <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 4, sm: 6, md: 8 }} justifyContent="center"
                 sx={{
-                    p: 4,
                     height: "90vh",
                 }}
             >                
-            { Array.from(new Array(8)).map((index) => ( 
+            { Array.from(new Array(8)).map((e,index) => ( 
                 <Grid item xs={2} sm={2} md={2} key={index}>
-                    <Skeleton variant="rectangular" width={210} height={118} />
+                    <Skeleton variant="rectangular" width="100%" height={118} />
                     <Skeleton width="30%" />
                     <Skeleton width="80%" />
                     <Stack direction="row" spacing={1} >
@@ -111,14 +110,14 @@ export const AllProducts = ()=>{
                 data && 
                 <>
                     <div  className="filter__menu">
-                        <form className="search" onSubmit={handleSearch}>
+                        <form className="filter__search" onSubmit={handleSearch}>
                             <input type="search" ref={keyword} placeholder="What are you looking for?"/>
                             <input type="submit" value="search" />
                         </form>
 
-                        <Stack direction="row" gap={1}>
+                        <Stack direction="row" gap={1} width={300}>
                             <Autocomplete 
-                                className="filter"
+                                className="filter__products"
                                 onChange={handleFilterByPrice}
                                 size= "small"
                                 options={priceOptions.map((price) => price)}
@@ -129,7 +128,7 @@ export const AllProducts = ()=>{
                                     InputProps={{
                                         ...params.InputProps,
                                         style: { 
-                                            fontSize: 15,
+                                            fontSize: 10,
                                         },
                                     }}
                                 />
@@ -138,7 +137,7 @@ export const AllProducts = ()=>{
 
                             { categoryOptions && categoryOptions.length > 0 &&
                                 <Autocomplete 
-                                    className="filter"
+                                    className="filter__products"
                                     onChange={handleFilterByCategory}
                                     size= "small"
                                     options={categoryOptions.map((category) => category.name)}
@@ -149,7 +148,7 @@ export const AllProducts = ()=>{
                                         InputProps={{
                                             ...params.InputProps,
                                             style: { 
-                                                fontSize: 15,
+                                                fontSize: 10,
                                             },
                                         }}
                                     />

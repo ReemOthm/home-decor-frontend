@@ -8,7 +8,7 @@ interface ResizablePanelProps {
     showLeftPanel: boolean
 }
 
-const ResizablePanel = ({defaultLayout=[33,67], leftPanel, rightPanel,showLeftPanel}:ResizablePanelProps)=>{
+const ResizablePanel = ({defaultLayout=[15,85], leftPanel, rightPanel,showLeftPanel}:ResizablePanelProps)=>{
     const onLayout = (sizes: number[]) => {
         document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
     };
@@ -18,7 +18,7 @@ const ResizablePanel = ({defaultLayout=[33,67], leftPanel, rightPanel,showLeftPa
     <PanelGroup direction="horizontal" onLayout={onLayout} autoSaveId="condition" className='panel-group'>
         {showLeftPanel && (
         <>
-            <Panel defaultSize={defaultLayout[0]} collapsible className=''>
+            <Panel defaultSize={defaultLayout[0]} collapsible className='left-panel'>
             {leftPanel}
             </Panel>
             <PanelResizeHandle className="panel" />

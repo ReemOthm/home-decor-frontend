@@ -4,14 +4,25 @@ import Navbar from "@/components/Navbar"
 import { Outlet } from "react-router-dom"
 import { Footer } from "@/components/Footer"
 
-export const RootLayout = ()=>{
+interface RootLayoutProps{
+    container: boolean
+}
+
+export const RootLayout = ({container}: RootLayoutProps)=>{
     return (
         <>
             <Navbar />
-            <Container>
+            {container ?
+                <>
+                    <Container>
+                        <Outlet />
+                    </Container>
+                    <Footer />
+                </>
+                : 
                 <Outlet />
-            </Container>
-            <Footer />
+            }
+
         </>
     )
 }

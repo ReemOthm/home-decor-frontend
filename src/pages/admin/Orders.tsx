@@ -74,10 +74,14 @@ const Row = (props: { row: Order })=>{
 
 export default function Orders () {
 
+    const [pageNumber, setPageNumber] = useState(1);
+
     const { data: orders, isLoading} = useApiQuery({
         queryKey: ["orders"],
         url: `/orders`
     });
+
+    const handlePageNumber = (event: React.ChangeEvent<unknown>,page: number)=> setPageNumber(page)
 
     if(isLoading) return <h1>Loading ...</h1>
 
@@ -106,8 +110,15 @@ export default function Orders () {
                             </TableBody>
                         </Table>
                     </TableContainer>
+
+                    <Box sx={{width: "200px", margin: "40px auto"}}>
+                        <Pagination count={orders.data.totalPages} variant="outlined" 
+                            page={pageNumber} color="secondary" onChange={handlePageNumber} 
+                        />
+                    </Box>
                 </>
             }
+
         </>
 
     );

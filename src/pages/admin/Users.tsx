@@ -1,6 +1,6 @@
 import CustomizedTables, { renderUserTable, tableHead } from "@/components/CustomizedTables";
 import useApiQuery from "@/hooks/useApiQuery";
-import { Box, Pagination } from "@mui/material";
+import { Box, Pagination, Skeleton } from "@mui/material";
 import { useState } from "react";
 
 export const Users = ()=>{
@@ -14,7 +14,7 @@ export const Users = ()=>{
 
     const handlePageNumber = (event: React.ChangeEvent<unknown>,page: number)=> setPageNumber(page)
 
-    if(isLoading) return  <h1>Loading ....</h1>
+    if(isLoading) return <Skeleton variant="rectangular" width="100%" height={118} />
 
     return (
         <>

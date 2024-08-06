@@ -12,7 +12,7 @@ import { About } from "@/pages/About";
 const router = createBrowserRouter(
     createRoutesFromElements(
         <>
-            <Route path="/" element={<RootLayout/>} errorElement={<ErrorHandler />}>
+            <Route path="/" element={<RootLayout container={true}/>} errorElement={<ErrorHandler />}>
                 <Route index element={<Home />} />
                 <Route path="about" element={  <About />}  />
                 <Route path="login" element={  <Login />}  />
@@ -20,6 +20,10 @@ const router = createBrowserRouter(
                 <Route path="products" element={<AllProducts />}  />
                 <Route path="products/:slug" element={<ProductDetails />}  />
 
+                <Route path="*" element={<PageNotFound />} />
+            </Route>
+
+            <Route element={<RootLayout container={false} />} errorElement={<ErrorHandler />}>
                 <Route path="user" element={ <ProtectedRoute/> }>
                     <Route path="profile" element={<Profile />} >
                         <Route path="information" element={<UserInformation />} />
@@ -36,8 +40,6 @@ const router = createBrowserRouter(
                         <Route path="orders" element={<Orders />} />
                     </Route>
                 </Route>
-
-                <Route path="*" element={<PageNotFound />} />
             </Route>
         </>
     )

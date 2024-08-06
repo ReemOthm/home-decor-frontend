@@ -11,7 +11,7 @@ export const AdminInformation = ()=>{
     return (
         <>
             { userData &&
-                <Stack gap={2}>
+                <Stack gap={2} justifyContent="center" width={500} >
                     <div className="flex-between">
                         <Typography>Username:</Typography>
                         <Stack>

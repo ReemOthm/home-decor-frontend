@@ -16,7 +16,7 @@ const DeleteModal = ({openDelete, handleOpenDelete, handleDelete}:DeleteModalPro
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                     You are about to delete category. Are you sure to delete?
                 </Typography>
-                <Stack direction ="row">
+                <Stack direction ="row" mt={2} spacing={2}>
                     <button className="button" onClick={handleDelete}>Delete</button>
                     <button className="button cancel" type='button' onClick={handleOpenDelete}>Cancel</button>
                 </Stack>

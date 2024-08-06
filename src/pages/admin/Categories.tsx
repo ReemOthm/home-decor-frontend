@@ -1,4 +1,4 @@
-import { Box, Button, Pagination} from '@mui/material';
+import { Box, Pagination, Skeleton} from '@mui/material';
 import { ChangeEvent, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -68,7 +68,7 @@ export const Categories = ()=>{
     // ---------------------Handlers----------------------------
     const handlePageNumber = (event: React.ChangeEvent<unknown>,page: number)=> setPageNumber(page)
 
-    const handleUpdateCategory = (e:ChangeEvent<HTMLInputElement>)=> {
+    const handleUpdateCategory = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement> )=> {
         const {name, value} = e.target;
         setCategoryEdit({...categoryEdit, [name]: value})
     }
@@ -175,18 +175,32 @@ export const Categories = ()=>{
     const categoryFormEdit = CategoryData.map(({type, name}, index)=> 
         <div key={index}>
             <label htmlFor={name}>{capitalizeTitle(name)}</label>
-            <input 
+            {
+                name == "description" ? 
+                <textarea     
+                className='input'            
+                id={name}
+                {...register(name)} 
+                value={category[name]} 
+                onChange={handleUpdateCategory}></textarea>
+                : 
+                <input 
                 className='input' 
                 id={name}
                 type={type} 
                 {...register(name)} 
                 value={category[name]} 
                 onChange={handleUpdateCategory} />
+            }
             {errors[name] && <p className='error--msg'>{errors[name]?.message}</p>}
         </div>
     )
 
-    if(isLoading) return  <h1>Loading ....</h1>
+    if(isLoading) return <div>
+        <Skeleton variant="rectangular" width="200px" height={30} sx={{m:"40px auto" }}/>
+        <Skeleton variant="rectangular" width="100%" height={118} />
+    </div>
+
 
     return (
         <>

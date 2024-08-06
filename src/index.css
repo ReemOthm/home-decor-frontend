@@ -8,22 +8,18 @@ body{
     font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-style: normal;
-    /* background-color: beige; */
 }
 
 input:focus{
     outline: 1px solid #a18e8e;
 }
 
-/* Start Anchors */
-a{
+a {
     text-decoration: none;
     color: black;
-}
-
-a {
     padding: 11px 11px;
     border-radius: 9px;
+    z-index: 3;
 }
 
 a.active {
@@ -31,36 +27,48 @@ a.active {
     color: rgb(172, 57, 57);
 }
 
-.logo{
-    font-style: italic;
-    letter-spacing: -1px;
-    color: rgb(187, 50, 50);
-    font-size: 16px;
-}
-
-.login,
-.signup{
-    font-weight: 800;
-    padding: 6px 10px;
-    font-weight: 700;
-    border: 2px solid #9c3d3d;
-}
-
-.login{
-    color: #943e3e;
-}
-
-.signup{
-    background-color: #9c3d3d;
-    color: #fff;
-    margin-right: 10px;
-}
-
+/* Start Specail Classes */
 .no--style{
     padding: 0;
     width: 100%;
 }
-/* End Anchors */
+
+.no--found{
+    text-align: center;
+    font-size: 20px;
+    width: 50%;
+    margin: 150px auto;
+}
+
+.error--msg{
+    font-size: small;
+    color: rgb(192, 16, 16);
+    margin: 0;
+}
+
+.color--circle{
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.spinner {
+    animation-name: spin;
+    animation-duration: 500ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    margin-left: 8px;
+}
+
+.flex--center{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+}
+/* End Specail Classes */
+
 /* Start Buttons */
 .button{
     border-radius: 6px;
@@ -86,11 +94,11 @@ a.active {
 }
 
 .arrow--left{
-    left: 23px;
+    left: 3px;
 }
 
 .arrow--right{
-    right: 23px;
+    right: 3px;
 }
 
 .basic--color{
@@ -107,10 +115,6 @@ a.active {
     top: 18px;
 }
 
-.form--links{
-    font-size: 14px;
-}
-
 .fit--width{
     width: fit-content;
 }
@@ -125,6 +129,7 @@ a.active {
     background-color: #383434;
 }
 /* End Buttons */
+
 /* Start Header */
 header{
     background-color: #fff;
@@ -133,12 +138,8 @@ header{
     z-index: 100;
     padding: 0 40px 0 0;
     border-bottom: 2px solid var(--head-color);
-    padding: 5px;
+    padding: 5px 0;
     border-bottom: 2px solid #eee;
-}
-nav{
-    max-width: 80%;
-    margin: auto;
 }
 
 nav ul{
@@ -146,8 +147,51 @@ nav ul{
     align-items: center;
     justify-content: space-between;
     font-size: 15px;
+    padding: 0 22px;
 }
+
+@media screen and  (max-width: 767px) {
+    nav ul{
+        flex-wrap: wrap;
+    }
+    nav .menu{
+        order: 1;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+}
+
 /* End Header */
+
+/* Start Navbar */
+.logo{
+    font-style: italic;
+    letter-spacing: -1px;
+    color: rgb(187, 50, 50);
+    font-size: 16px;
+}
+
+.login,
+.signup{
+    font-weight: 800;
+    padding: 6px 10px;
+    font-weight: 700;
+    border: 2px solid #9c3d3d;
+}
+
+.login{
+    color: #943e3e;
+    margin-right: 10px;
+}
+
+.signup{
+    background-color: #9c3d3d;
+    color: #fff;
+    margin-right: 10px;
+}
+/* End Navbar */
+
 /* Start Home Page */
 .landing{
     position: absolute;
@@ -162,14 +206,6 @@ nav ul{
     justify-content: center;
     align-items: center;
     animation: change-background 10s infinite;
-}
-
-.landing::before{
-    /* content: ""; */
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: #2222229d;
 }
 
 .landing h1{
@@ -192,56 +228,52 @@ nav ul{
     line-height: 1.7;
     width: 70%;
     word-break: break-all;
-    
+    text-align: center; 
 }
 /* End Home Page */
-/* Start Products Page */
-.filter{
-    width: 200px;
-    background-color: white;
-    border-radius: 6px;
-    height: 35px;
-}
 
+/* Start AllProducts Page */
 .filter__menu{
     display: flex; 
     justify-content: space-between; 
     align-items:center;
 }
 
-.color--circle{
-    display: block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+@media screen and  (max-width: 767px) {
+    .filter__menu{
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
 }
 
-.search{
+.filter__products{
+    width: 200px;
+    background-color: white;
+    border-radius: 6px;
+    height: 35px;
+    font-size: 14px;
+}
+
+.filter__search{
     margin: 20px 0;
 }
 
-.search input[type="search"]{
+.filter__search input[type="search"]{
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 6px 0 0 6px;
 }
 
-.search input[type="submit"]{
+.filter__search input[type="submit"]{
     padding: 10px;
     background-color: rgb(189, 106, 106);
     border: 1px solid rgb(189, 106, 106);
     color: white;
     border-radius: 0 6px 6px 0;
 }
+/* End AllProducts Page */
 
-.no--found{
-    text-align: center;
-    font-size: 20px;
-    width: 50%;
-    margin: 150px auto;
-}
-/* End Products Page */
-/* Start Single Products Page */
+/* Start Product Description Page */
 .alice-carousel__dots{
     display: flex;
     align-items: center;
@@ -253,21 +285,34 @@ nav ul{
 }
 
 .related__products .image{
-    width: 150px;
+    width: 100%;
 }
 
 .related__products .image img{
     width: 100%;
+    height: 100px;
     filter: opacity(0.5)
 }
 
 .related__products .image img:hover {
     filter: opacity(1);
 }
-/* End Single Products Page */
+/* End Product Description Page */
+
+/* Start Product Card */
+@media screen and  (max-width: 767px) {
+    .card{
+        flex-direction: column;
+    }
+    .card img{
+        width: 100%;
+    }
+}
+/* End Product Card */
+
 /* Start Signup Page */
-.form--signup,
-.form--login{
+.signup__form,
+.login__form{
     border-radius: 10px;
     background-color: #fff;
     max-width: 448px;
@@ -278,14 +323,20 @@ nav ul{
     box-shadow: 0 0 10px #ccc;
 }
 
-.form--signup{
+.signup__form{
     margin: 30px auto;
 }
 
-.form--login{
+.login__form{
     margin: 100px auto;
 }
+
+.signup__links{
+    font-size: 14px;
+}
+
 /* End Signup Page */
+
 /* Start Information Page */
 .flex-between{
     margin-left: 50px;
@@ -297,51 +348,30 @@ nav ul{
 .input__info{
     padding: 5px;
 }
-/* End SignInformation Page */
-.input{
-    border: 1px solid rgb(212, 212, 212);
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-    border-radius: 0.5rem;
-    width: 100%;
-    background-color: transparent;
-    padding: 0.55rem;
-    font-size: 14px; 
-    line-height: 1.75rem;
-    /* margin-bottom: 10px; */
-}
+/* End Information Page */
 
-.input:focus{
-    border-color: transparent;
-    outline: 2px solid rgb(107, 129, 190);
-}
-
-.error--msg{
-    font-size: small;
-    color: rgb(192, 16, 16);
-    margin: 0;
-}
-
-.spinner {
-    animation-name: spin;
-    animation-duration: 500ms;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    margin-left: 8px;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
+/* Start Panel Styles */
 .panel{
     border-right: 2px solid #a18e8e;
     height: 90vh;
 }
+
+.left-panel{
+    background-color: #eeebeb;
+    padding-left: 15px;
+}
+/* End Panel Styles */
+
+/* Start Admin Pages */
+.input{
+    display: block;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+/* End Admin Pages */
 
 /* Start Footer */
 .footer{
@@ -357,6 +387,14 @@ nav ul{
     align-items: center;
     color: var(--secandory-color);
     margin-bottom: 10px;
+}
+
+@media screen and  (max-width: 767px) {
+    .footer > section{
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
 }
 
 .footer__subscribe{
@@ -380,6 +418,7 @@ nav ul{
     color: white;
     background-color: #b85454;
 }
+
 .footer__icons{
     margin-top: 10px;
     display: flex;
@@ -394,9 +433,11 @@ nav ul{
 .footer__title{
     font-weight: 700;
 }
+
 .footer-address{
     font-size: 14px;
 }
+
 .footer__copyrights{
     text-align: center;
     font-size: 1rem;
@@ -406,28 +447,8 @@ nav ul{
     margin: 0;
     position: relative;
 }
-
 /* End Footer */
 
-/* Start Media */
-@media screen and  (max-width: 767px) {
-    .filter__menu{
-        flex-direction: column;
-        margin-bottom: 20px;
-    }
-    .card{
-        flex-direction: column;
-    }
-    .card img{
-        width: 100%;
-    }
-    .footer > section{
-        flex-direction: column;
-        gap: 30px;
-        text-align: center;
-    }
-}
-/* End Media */
 /* Start Animation */
 @keyframes change-background {
     35%{
@@ -440,4 +461,13 @@ nav ul{
         background-image: url("../public/images/landing3.jpg");
     }
 }
-/* End ANimation */
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+/* End Animation */

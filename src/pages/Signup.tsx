@@ -65,7 +65,7 @@ export const Signup = ()=>{
             {
                 name == 'password' ? <Password register={register} errors={errors} name="password" />
                 : 
-                <TextField label={placeholder}  type={type} {...register(name)} fullWidth 
+                <TextField label={placeholder}  type={type} {...register(name)} sx={{width: "100%", margin: "auto"}}
                     error={!!errors[name]}
                     helperText={errors[name]?.message}
                     size="small"
@@ -77,12 +77,12 @@ export const Signup = ()=>{
     return (
         <>
             <Helmet title="Signup" />
-            <form className="form--signup" onSubmit={handleSubmit(onSubmit)}>
+            <form className="signup__form" onSubmit={handleSubmit(onSubmit)}>
                 <Typography variant="h4" sx={{ mb : "10px"}}>Signup</Typography>
-                <Stack spacing={2} width={400}>
+                <Stack spacing={2} width="350px">
                     {SignupFormRender}
                     <LoadingBtn title="Submit" isLoding={isLoading} />
-                    <p className="form--links">
+                    <p className="signup__links">
                         Already have an account?
                         <Link to="/login" className="basic--color">Login</Link>
                     </p>

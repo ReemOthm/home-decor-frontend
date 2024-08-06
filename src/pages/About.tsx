@@ -5,7 +5,7 @@ export const About = ()=>{
     return (
         <>
             <Helmet title="About" />
-            <Stack spacing={2} sx={{m: "50px 0"}} >
+            <Stack spacing={2} sx={{m: "50px 0"}}  alignItems="center">
                 <Typography variant="h2">About</Typography>
                 <div className="about__description">
                     <p>
@@ -17,7 +17,7 @@ export const About = ()=>{
                     </p>
                     <br />
                     <p>
-                        Lorem ipsum dolor it. Aperiam inventore modi quos aspernatur veritatis maiores doloremque sint vero aliquam esse perspiciatis excepturi, sunt deleniti odit ut. Nam sit amet consectetur adipisicing elit. Odit iusto eligendi sed architecto temporibus earum fuga maxime, natus inventore iure. Incidunt ipsa veniam iusto eaque repellendus excepturi cupiditate voluptate corrupti.
+                        maiores doloremque sint ver sit amet consectetur adipisicing elit. Odit iusto eligendi sed architecto temporibus earum fuga maxime, natus inventore iure. Incidunt ipsa veniam iusto eaque repellendus excepturi cupiditate voluptate corrupti.
                     </p>
                 </div>
             </Stack>

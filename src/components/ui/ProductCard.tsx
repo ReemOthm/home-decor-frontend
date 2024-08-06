@@ -16,17 +16,17 @@ const ProductCard = ({product, displayButtons = true}:ProductCardProps)=>{
     
     return (
         <Card sx={{filter: product.quantity == 0? "grayscale(1)" : "initial"}}> 
-            <CardMedia sx={{ height: 194}} 
+            <CardMedia sx={{ height: 194, backgroundSize: "contain"}} 
                 image={product.image} 
                 title={product.productName} 
             />
             <CardContent sx={{padding: "4px 15px"}}>
-                <Typography gutterBottom variant="h5" component="div" sx={{mb:0}}>
+                <Typography gutterBottom variant="h5" component="div" sx={{mb:0}} fontSize={16}>
                     {capitalizeTitle(product.productName)}
                 </Typography>
-                <Stack direction="row" alignItems="end" justifyContent="space-between " sx={{py:1}}>
+                <Stack direction="row" alignItems="center" justifyContent="space-between " sx={{py:1}}>
                     <Typography>{product.price} SAR</Typography>
-                    <Typography>{product.category.name}</Typography>
+                    <Typography fontSize={10}>{product.category.name}</Typography>
                 </Stack>
                 <Stack direction="row" gap={1}>
                     {  product.colors.length > 0 &&
