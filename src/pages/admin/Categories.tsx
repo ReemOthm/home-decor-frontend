@@ -172,6 +172,7 @@ export const Categories = ()=>{
             {errors[name] && <p className='error--msg'>{errors[name]?.message}</p>}
         </div>
     )
+    
     const categoryFormEdit = CategoryData.map(({type, name}, index)=> 
         <div key={index}>
             <label htmlFor={name}>{capitalizeTitle(name)}</label>
@@ -214,9 +215,9 @@ export const Categories = ()=>{
                 </div>  
             }
 
-            <CreateModal openCreate={openCreate} handleopenCreate={handleOpenCreate} handleSubmit={handleSubmit(onSubmitCreate)} formElement={categoryFormCreate}/>
-            <UpdateModal openUpdate={openEdit} handleOpenUpdate={handleOpenEdit} handleSubmit={handleSubmit(onSubmit)} formElement={categoryFormEdit}/>
-            <DeleteModal openDelete={openDelete} handleOpenDelete={handleOpenDelete} handleDelete={handleDeleteCategory} />
+            <CreateModal openCreate={openCreate} handleopenCreate={handleOpenCreate} handleSubmit={handleSubmit(onSubmitCreate)} formElement={categoryFormCreate} scroll={false}/>
+            <UpdateModal openUpdate={openEdit} handleOpenUpdate={handleOpenEdit} handleSubmit={handleSubmit(onSubmit)} formElement={categoryFormEdit} scroll={false} />
+            <DeleteModal item='category' openDelete={openDelete} handleOpenDelete={handleOpenDelete} handleDelete={handleDeleteCategory} />
             
             <Box sx={{width: "200px", margin: "40px auto"}}>
                 <Pagination count={categories.data.totalPages} variant="outlined" 

@@ -1,14 +1,18 @@
 import { useOutletContext } from "react-router-dom";
 import { Typography, Stack } from "@mui/material";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/app/store";
 
 import { User } from "@/types";
-import api from "@/api";
 import { notifyError, notifySuccess } from "@/Toastify";
+import { updateUserProfile } from "@/app/features/userSlice";
 
 export const UserInformation = ()=>{
 
     const userData:User = useOutletContext();
+
+    const dispatch = useDispatch<AppDispatch>()
 
     const [editFirst, setEditFirst] = useState({
         status: false,
@@ -28,10 +32,8 @@ export const UserInformation = ()=>{
     const requst = async()=> {
         try {
             if((userData.firstName != name.firstName || userData.lastName != name.lastName ) && (editFirst.name == 'save' || editLast.name == 'save')){
-                const response = await api.put("/users/profile", name);
-                if(response.status == 200){
-                    notifySuccess("Name updated Successfully!")
-                }
+                dispatch(updateUserProfile(name))
+                notifySuccess("Name updated Successfully!")
             }
         } catch (error) {
             notifyError(`${error}`);

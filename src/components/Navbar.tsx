@@ -1,17 +1,13 @@
 import { Link, NavLink } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
 
-import { logOut } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { logoutUser } from "@/app/features/userSlice";
 
 const Navbar = ()=>{
 
-    const [token, setToken] = useState(localStorage.getItem('token'));
-    const [isAdmin, setIsAdmin] = useState(localStorage.getItem('isAdmin'));
-    const [allowedToken, setAlowedToken] = useState(token);
-
-    useEffect(()=>{
-        setAlowedToken(token)
-    },[token, isAdmin])
+    const token = useSelector((state:any)=> state.userReducer.token)
+    const isAdmin = useSelector((state:any)=> state.userReducer.isAdmin)
+    const dispatch = useDispatch()
 
     return (
         <>
@@ -23,28 +19,24 @@ const Navbar = ()=>{
                         <div className="menu">
                             <NavLink to="/">Home</NavLink>
                             <NavLink to="/products">Products</NavLink>
-                            { allowedToken != null && isAdmin == "false" &&
+                            { token != null && isAdmin == false &&
                                 <NavLink to="/user/profile">Profile</NavLink>
                             }
-                            { allowedToken != null && isAdmin == "true" &&
+                            { token != null && isAdmin == true &&
                                 <NavLink to="/admin/dashboard">Dashboard</NavLink>
                             }
                         </div>
                         <div>
                             {
-                                allowedToken == null && <Link className="signup" to="/signup">Signup</Link>
+                                token == null && <Link className="signup" to="/signup">Signup</Link>
                             }
-                            { allowedToken == null &&
+                            { token == null &&
                                 <Link className="login" to="/login">Login</Link>
                             }
                             {
-                                allowedToken != null &&
+                                token != null &&
                                 <Link to="/" >
-                                    <button className="button" onClick={()=>{
-                                        logOut() 
-                                        setToken(null)
-                                        setIsAdmin(null)
-                                    }}>Logout</button>
+                                    <button className="button" onClick={()=> dispatch(logoutUser())}>Logout</button>
                                 </Link>
                             }
                         </div>
@@ -52,7 +44,6 @@ const Navbar = ()=>{
                     </ul>
                 </nav>
             </header>
-
         </>
     )
 }

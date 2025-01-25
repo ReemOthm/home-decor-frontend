@@ -1,4 +1,4 @@
-import { CategoryForm, LoginForm, SignupForm } from "./../types";
+import { CategoryForm, LoginForm, ProductForm, SignupForm } from "./../types";
 
 export const SignupFormData: SignupForm[] = [
     {
@@ -55,4 +55,32 @@ export const CategoryData: CategoryForm[] = [
         type: 'text',
         name: 'description',
     } 
+]
+
+export const ProductData: ProductForm[] = [
+    {
+        type: 'text',
+        name: 'productName',
+    },
+    {
+        type: 'text',
+        name: 'description',
+    },
+    {
+        type: 'text',
+        name: 'price',
+    },
+    {
+        type: 'text',
+        name: 'category',
+    },
+    {
+        type: 'text',
+        name: 'image',
+    },
+    {
+        type: 'text',
+        name: 'colors',
+    },
+    
 ]

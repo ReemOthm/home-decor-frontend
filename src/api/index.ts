@@ -1,8 +1,9 @@
+import { setToken } from '@/app/features/userSlice';
 import axios from 'axios'
 
 const isDevelopment = import.meta.env.MODE === 'development'
 // let baseURL = 'https://home-decor-backend-service.onrender.com'
-const baseURL = 'http://localhost:5125'
+const baseURL = import.meta.env.VITE_SERVER_URL
 
 if (!isDevelopment) {
   // Update this later when you have a working backend server
@@ -17,10 +18,9 @@ const api = axios.create({
   withCredentials: true,
 })
 
-
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token =  localStorage.getItem("loginData") ? JSON.parse(localStorage.getItem("loginData") as string).token : null;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -28,7 +28,6 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
 
 api.interceptors.response.use(
   (response) => response,
@@ -39,11 +38,11 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const refreshToken = localStorage.getItem('refreshToken');
+        const refreshToken = localStorage.getItem("loginData") ? JSON.parse(localStorage.getItem("loginData") as string).userData.refreshToken : null;
         const response = await axios.post('/api/refresh', { refreshToken });
         const { token } = response.data;
 
-        localStorage.setItem('token', token);
+        setToken(token)
 
         originalRequest.headers.Authorization = `Bearer ${token}`;
         return axios(originalRequest);
@@ -51,10 +50,8 @@ api.interceptors.response.use(
           throw new Error("error")
       }
     }
-
     return Promise.reject(error);
   }
 );
-
 
 export default api

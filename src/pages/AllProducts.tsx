@@ -163,7 +163,7 @@ export const AllProducts = ()=>{
                             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 6, md: 8 }} justifyContent="center">                
                                 { data.items.map((product:Product) => ( 
                                 <Grid item xs={2} sm={2} md={2} key={product.productID}>
-                                    <ProductCard product={product}  /> 
+                                    <ProductCard product={product} /> 
                                 </Grid>
                                 ))}
                             </Grid>

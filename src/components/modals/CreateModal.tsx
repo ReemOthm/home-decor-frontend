@@ -1,17 +1,19 @@
 import { ReactNode } from "react";
+import {  Stack } from "@mui/material";
+
 import { BasicModal } from "./Modal";
-import { Stack } from "@mui/material";
 
 interface CreateModalProps {
     openCreate: boolean,
     handleopenCreate: ()=> void,
     handleSubmit: ()=>void,
     formElement: ReactNode,
+    scroll: boolean
 }
 
-const CreateModal = ({openCreate, handleopenCreate, handleSubmit, formElement}:CreateModalProps)=>{
+const CreateModal = ({openCreate, handleopenCreate, handleSubmit, formElement, scroll}:CreateModalProps)=>{
     return (
-        <BasicModal open={openCreate} handleOpen={handleopenCreate}>
+        <BasicModal open={openCreate} handleOpen={handleopenCreate} scroll={scroll} >
             <form onSubmit={handleSubmit}>
                 <Stack spacing={2}>
                     {formElement}

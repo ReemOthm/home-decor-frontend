@@ -31,7 +31,21 @@ export const loginSchema = z.object({
 
 export const categorySchema = z.object({
         name: z.string({message: "Please enter an Email"}).min(3, {message: "name must be at least 3 characters"}),
-        description: z.string({message: "please enter a password"})
+        description: z.string({message: "please enter a description"})
         .min(10, {message: "description must be at least 10 characters"})
         .max(60, {message: "description must be less than 60 characters"}),
 });
+
+
+export const productSchema = z.object({
+        productName: z.string({message: "Please enter a product name"}).min(3, {message: "name must be at least 3 characters"}),
+        description: z.string()
+        .min(10, {message: "description must be at least 10 characters"})
+        .max(50, {message: "description must be less than 60 characters"}),
+        price: z.string().min(3),
+        categoryName: z.string().min(3),
+        quantity: z.coerce.number().nonnegative(),
+        color: z.string().min(3),
+        imageFile: z.any()
+});
+

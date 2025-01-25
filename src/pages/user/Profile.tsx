@@ -2,24 +2,18 @@ import { Typography, Stack } from "@mui/material";
 import { Helmet } from "react-helmet";
 import { NavLink, Outlet } from "react-router-dom";
 
-import useApiQuery from "@/hooks/useApiQuery";
 import ResizablePanel from "@/components/ui/ResizablePanel";
+import { useSelector } from "react-redux";
 
 
 export const Profile = ()=>{
 
-    const { data, isLoading, error} = useApiQuery({
-        queryKey: ["profile"],
-        url: `/users/profile`
-    });
-
-
-    if(isLoading) return <h1>Loading ....</h1>
+    const data = useSelector((state:any)=> state.userReducer.userData)
 
     return (
         <>
             <Helmet title="Profile" />
-            {data &&  data.data.result &&
+            {data && 
                 <ResizablePanel leftPanel={
                     <Stack mt={2} spacing={2}>
                         <Typography>
@@ -34,7 +28,7 @@ export const Profile = ()=>{
                     <Stack>
                         <Typography sx={{textAlign: "right", color: "rgb(146, 48, 48);", fontWeight: 700, mt: "10px"}}>{data.data?.result?.email}</Typography>
                         <Stack>
-                            <Outlet context={data.data.result}  />
+                            <Outlet context={data}  />
                         </Stack>
                     </Stack>
                 } 
@@ -42,7 +36,6 @@ export const Profile = ()=>{
                 />
 
             }
-            {error && <p>{error.message}</p>}
         </>
     )
 }

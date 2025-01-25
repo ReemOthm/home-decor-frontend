@@ -1,17 +1,19 @@
 import { ReactNode } from "react";
-import { BasicModal } from "./Modal";
 import { Stack } from "@mui/material";
+
+import { BasicModal } from "./Modal";
 
 interface UpdateModalProps {
     openUpdate: boolean,
     handleOpenUpdate: ()=> void,
     handleSubmit: ()=>void,
-    formElement: ReactNode
+    formElement: ReactNode,
+    scroll: boolean
 }
 
-const UpdateModal = ({openUpdate, handleOpenUpdate, handleSubmit, formElement}:UpdateModalProps)=>{
+const UpdateModal = ({openUpdate, handleOpenUpdate, handleSubmit, formElement, scroll}:UpdateModalProps)=>{
     return (
-        <BasicModal open={openUpdate} handleOpen={handleOpenUpdate}>
+        <BasicModal open={openUpdate} handleOpen={handleOpenUpdate} scroll={scroll}>
             <form onSubmit={handleSubmit}>
                 <Stack spacing={2}>
                     {formElement}

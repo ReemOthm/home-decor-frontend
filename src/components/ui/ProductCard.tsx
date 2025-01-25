@@ -5,16 +5,17 @@ import { Link } from "react-router-dom";
 
 import { Product } from "@/types";
 import ColorCircles from "@/components/ui/ColorCircle";
-import { capitalizeTitle } from "@/lib/utils";
+import { ReactNode } from "react";
 
 interface ProductCardProps {
     product: Product,
-    displayButtons?: boolean
+    displayButtons?: boolean,
+    children?: ReactNode
 }
 
-const ProductCard = ({product, displayButtons = true}:ProductCardProps)=>{
+const ProductCard = ({product, displayButtons = true, children}:ProductCardProps)=>{
     
-    return (
+    return ( 
         <Card sx={{filter: product.quantity == 0? "grayscale(1)" : "initial"}}> 
             <CardMedia sx={{ height: 194, backgroundSize: "contain"}} 
                 image={product.image} 
@@ -22,7 +23,7 @@ const ProductCard = ({product, displayButtons = true}:ProductCardProps)=>{
             />
             <CardContent sx={{padding: "4px 15px"}}>
                 <Typography gutterBottom variant="h5" component="div" sx={{mb:0}} fontSize={16}>
-                    {capitalizeTitle(product.productName)}
+                    {product.productName}
                 </Typography>
                 <Stack direction="row" alignItems="center" justifyContent="space-between " sx={{py:1}}>
                     <Typography>{product.price} SAR</Typography>
@@ -47,6 +48,7 @@ const ProductCard = ({product, displayButtons = true}:ProductCardProps)=>{
                     </Button>
                 </CardActions>
             }
+            {children}
         </Card>
     )
 }

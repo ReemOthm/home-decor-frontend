@@ -10,10 +10,13 @@ export type Product = {
   productID: string
   productName: string,
   description: string,
-  image: string,
+  image: string ,
+  imageFile: FileList | string,
   slug: string,
-  category: Category,
+  category: Category ,
+  categoryName: string,
   colors: string[],
+  color: string,
   price: number,
   quantity: number,
   createdAt: string
@@ -44,6 +47,17 @@ export type User = {
   orders: Order[]
 }
 
+export interface UserState {
+  error: string | null;
+  isLoading: boolean;
+  token: string | null;
+  isLoggedIn: boolean;
+  isAdmin: boolean,
+  userData: User | null;
+  users: User[];
+  totalPages: number;
+}
+
 export type Order = {
   orderId: string,
   status: string,
@@ -64,6 +78,7 @@ export type inputs =
   'lastName' | 'address' | 'phoneNumber' | 'birthDate';
 
 export type EntityInputs = 'name' | "description" | "createdAt" | "slug"
+export type ProductInputs = 'productName' | "description" | "createdAt" | "slug"| 'price' | "image" | "colors" | "category"
 
 export type FormInput = {
   username: string,
@@ -97,3 +112,76 @@ export type CategoryForm = {
   type: string,
   name: EntityInputs
 } 
+
+export type ProductForm = {
+  type: string,
+  name: ProductInputs
+} 
+
+export type ProductState = {
+  products: Product[]
+  totalPages: number,
+  error: null | string
+  isLoading: boolean
+}
+
+export type CategoryState = {
+  categories: Category[]
+  totalPages: number,
+  error: null | string
+  isLoading: boolean
+  isEditing: boolean;
+}
+
+export type  CartItemProps = {
+  item: {
+    productId: string;
+    image: string;
+    name: string;
+    price: number;
+    quantity: number;
+  };
+}
+export type CartItem = {
+  cartId: string;
+  productId: string;
+  productName: string;
+  price: number;
+  image: string;
+  quantity: number;
+};
+
+export type CartState = {
+  cartId: string | null;
+  cartItems: CartItem[];
+  error: string | null;
+  isLoading: boolean;
+}
+// export type Order = {
+//   userId: string;
+//   cartId: string;
+//   status: string;
+//   totalPrice: number;
+// }
+
+export type OrderState = {
+  orders: ExtendedOrder[];
+  error: string | null;
+  isLoading: boolean;
+}
+
+export type UserOrder = {
+  orderId: string;
+  userId: string;
+  cartId: string;
+  status: string;
+  totalPrice: number;
+}
+// export type ExtendedOrder = Order & { userId: string };
+export type ExtendedOrder ={
+  orderId: string;
+  userId: string;
+  cartId: string;
+  status: string;
+  totalPrice: number;
+}

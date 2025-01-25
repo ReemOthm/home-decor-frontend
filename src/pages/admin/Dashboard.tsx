@@ -6,36 +6,31 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import GroupsIcon from '@mui/icons-material/Groups';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import CategoryIcon from '@mui/icons-material/Category';
+import { useDispatch, useSelector } from "react-redux";
 
 import ResizablePanel from "@/components/ui/ResizablePanel"
-import useApiQuery from "@/hooks/useApiQuery";
+import { AppDispatch } from "@/app/store";
+import { setLoading } from "@/app/features/userSlice";
 
 export const Dashboard = ()=>{
 
-    const { data, isLoading, error} = useApiQuery({
-        queryKey: ["profile"],
-        url: `/users/profile`
-    });
+    const data = useSelector((state:any)=> state.userReducer.userData)
+    const dispatch = useDispatch<AppDispatch>()
 
-    if(isLoading) return  <h1>Loading ....</h1>
+    const handeleLoading = ()=> dispatch(setLoading(true))
 
     return (
         <>
             <Helmet title="Dashboard" />
-
             { 
-                data && data.data &&
+                data &&
                 <ResizablePanel leftPanel={
                     <Stack mt={2} spacing={2}>
-                        <Typography sx={{
-                            fontWeight: "700",
-                            textAlign: "center"
-                        }}>Dashboard</Typography>
                         <NavLink to="information" className="flex--center">
                             <AccountBoxIcon sx={{color: "#7a3c3c"}} />
                             <span>Account</span>
                         </NavLink>
-                        <NavLink to="users" className="flex--center">
+                        <NavLink to="users" className="flex--center" onClick={()=> handeleLoading()}>
                             <GroupsIcon sx={{color: "#7a3c3c"}} />
                             <span>Users</span>
                         </NavLink>
@@ -58,18 +53,15 @@ export const Dashboard = ()=>{
                         <Typography sx={{ color: "rgb(146, 48, 48);", 
                             fontWeight: 700, m: "10px 0 10px auto", bgcolor: "#f7f7f7", width: "fit-content", padding: "5px 10px", 
                         }} >
-                            {data.data.result?.email}</Typography>
+                            {data.email}</Typography>
                         <Stack>
-                            <Outlet context={data.data.result} />
+                            <Outlet context={data} />
                         </Stack>
                     </Stack>
                 } 
                 showLeftPanel={true}
                 />
             }
-
-            {error && <p>{error.message}</p>}
-
         </>
     )
 }
