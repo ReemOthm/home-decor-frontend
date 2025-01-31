@@ -111,7 +111,6 @@ const userSlice = createSlice({
             state.error? notifyError(state.error) : notifyError("Failed to Login")
         });
         builder.addCase(updateUserProfile.fulfilled, (state, action) => {
-            console.log(action.payload)
             state.userData = action.payload.data
             localStorage.setItem("loginData", JSON.stringify({
                 isLoggedIn: state.isLoggedIn,

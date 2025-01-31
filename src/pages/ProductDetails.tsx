@@ -3,22 +3,29 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';import { H
 import { Link, useParams } from "react-router-dom"
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
+import { Skeleton, Stack } from '@mui/material';
+import { useEffect } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
-import useApiQuery from "@/hooks/useApiQuery";
 import ProductDetailsCard from "@/components/ui/ProductDetailsCard";
 import { Product } from "@/types";
-import { Skeleton, Stack } from '@mui/material';
-
+import { AppDispatch } from '@/app/store';
+import { fetchCategories } from '@/app/features/categorySlice';
 
 export const ProductDetails = ()=>{
 
     const {slug} = useParams()
 
-    // Queries    
-    const { data: categories, error, isLoading} = useApiQuery({
-        queryKey: ["categories"],
-        url: `/categories/${slug}`
-    });
+    const dispatch = useDispatch<AppDispatch>()
+    const [error, isLoading, categories] = useSelector((state:any)=> [
+        state.categoryRoducer.error,
+        state.categoryRoducer.isLoading,
+        state.categoryRoducer.categories
+    ], shallowEqual)
+
+    useEffect(()=>{
+        dispatch(fetchCategories(`${slug}`))
+    },[dispatch])
 
     return (
         <>
@@ -45,7 +52,7 @@ export const ProductDetails = ()=>{
             }
 
             {
-                categories && categories.data && categories.data.products?.length > 0 &&
+                categories && categories.products?.length > 0 &&
                     <AliceCarousel mouseTracking 
                     renderPrevButton={({isDisabled})=>
                         {
@@ -64,19 +71,19 @@ export const ProductDetails = ()=>{
                     renderDotsItem={({activeIndex})=>{
                             return  <div className="related__products">
                                         <div className="image">
-                                            <img src={categories.data.products[activeIndex].image} alt={categories.data.products[activeIndex].productName}/>
+                                            <img src={categories.products[activeIndex].image} alt={categories.products[activeIndex].productName}/>
                                         </div>
                                     </div>
                         }
                     }
                     >
                         {
-                            categories.data.products.map((product:Product) => <ProductDetailsCard productData={product} key={product.productID} />)
+                            categories.products.map((product:Product) => <ProductDetailsCard productData={product} key={product.productID} />)
                         }
                 </AliceCarousel>
             }
 
-            {error && <p >{error.message}</p>} 
+            {error && <p >{error}</p>} 
         </>
     )
 }

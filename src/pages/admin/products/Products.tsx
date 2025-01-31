@@ -1,20 +1,18 @@
-import { useEffect, useRef, useState } from "react";
-import api from "@/api";
-import { Box, Button, CardActions, Grid, Pagination, Skeleton, Stack } from "@mui/material";
-import { AxiosError } from "axios";
+import { ChangeEvent, useEffect, useRef, useState } from "react";import { Box, Button, CardActions, Grid, Pagination, Skeleton, Stack } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import CreateModal from "@/components/modals/CreateModal";
 import DeleteModal from "@/components/modals/DeleteModal";
 import ProductCard from "@/components/ui/ProductCard";
-import useApiQuery from "@/hooks/useApiQuery";
 import { Product } from "@/types";
 import { productSchema } from "@/validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import UpdateModal from "@/components/modals/UpdateModal";
 import ProductFormEdit from "./ProductFormEdit";
 import ProductForm from "./ProductForm";
+import { AppDispatch } from "@/app/store";
+import { createProduct, deleteProduct, fetchProducts, updateProduct } from "@/app/features/productSlice";
+import { fetchCategories } from "@/app/features/categorySlice";
 
 export const Products = ()=>{
 
@@ -34,7 +32,6 @@ export const Products = ()=>{
         productName: '',
         description: '',
         image: '',
-        imageFile: '',
         slug: '',
         category: {
             categoryID: "",
@@ -52,33 +49,66 @@ export const Products = ()=>{
         createdAt: ""
     }
     
+    const [product, setProduct] = useState<string>("") 
     const [pageNumber, setPageNumber] = useState(1);
     const [searchKeyword, setSearchKeyword] = useState<string>("");
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
-    const [imageFile, setImageFile] = useState<string | null>(null);
-    const [product, setProduct] = useState(initailProduct)
-
+    const [imagePreview, setImagePreview] = useState<string>("");
+    const [imageFile, setImageFile] = useState<File|string>("");
     const [productToEdit, setProductToEdit] = useState(initailProduct)
 
-    const [openCreate, setOpenCreate] = useState(false);
+    const [openCreate, setOpenCreate] = useState(false); 
     const [openDelete, setOpenDelete] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
-    
-    // useEffect(()=>{
-    //     setProductToEdit(product);
-    // },[product])
-    
-    // Queries
-    const { data, error, isLoading , refetch} = useApiQuery({
-        queryKey: ["products", `${pageNumber}`, `${searchKeyword}`],
-        url: `/products?keyword=${searchKeyword}&page=${pageNumber}&pageSize=8`
-    });
-    
+
+    const dispatch = useDispatch<AppDispatch>()
+    const [error, totalPages, products, isLoading, categories] = useSelector((state:any)=> [
+        state.productRoducer.error,
+        state.productRoducer.totalPages, 
+        state.productRoducer.products, 
+        state.productRoducer.isLoading,
+        state.categoryRoducer.categories
+    ], shallowEqual)
+
+    useEffect(()=>{
+        dispatch(fetchProducts({
+            category: "",
+            searchKeyword,
+            minPrice: "", 
+            maxPrice:"", 
+            pageNumber:pageNumber.toString()}
+        ))
+        dispatch(fetchCategories(""))
+    },[pageNumber, searchKeyword])
+        
     // ------------------HANDLERS-------------------------
-    const handlePageNumber = (event: React.ChangeEvent<unknown>,page: number)=> setPageNumber(page)
-    const handleOpenCreate = () => setOpenCreate(!openCreate);
-    const handleOpenEdit = () => setOpenEdit(!openEdit);
-    const handleOpenDelete = () => setOpenDelete(!openDelete);
+    const handlePageNumber = (event: React.ChangeEvent<unknown>,page: number)=> {
+        setPageNumber(page)
+    }
+    const handleOpenCreate = () => setOpenCreate(true);
+    const handleCloseCreate = () => {
+        setOpenCreate(false);
+        reset()
+        setImagePreview("")
+        setImageFile("")
+    }
+
+    const handleOpenEdit = (product:Product) =>{
+        setOpenEdit(true);
+        setProductToEdit(product)
+        setImagePreview(product.image)
+    }
+
+    const handleCloseEdit = () => {
+        setOpenEdit(false);
+        reset()
+        setImagePreview("")
+        setImageFile("")
+    }
+
+    const handleChangeUpdate = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=> {
+        const {name, value} = e.target;
+        setProductToEdit({...productToEdit, [name]: value})
+    }    
     
     const handleSearch = (e: React.ChangeEvent<HTMLFormElement>)=> {
         e.preventDefault()
@@ -92,118 +122,69 @@ export const Products = ()=>{
         setSearchKeyword(""); 
         setPageNumber(1);
     }   
-
+    
+    const handleOpenDelete = () => setOpenDelete(!openDelete);
     const handleDeleteProduct = async()=>{
         handleOpenDelete();
-
-        const id = toast.loading("Please wait...", {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-
-        try{
-            const { status } = await api.delete(`/products/${product.productID}`)
-
-            if(status === 200){
-                toast.update(id, {render: "Product has deleted Successfully!", type: "success", isLoading: false,autoClose: 1000},);
-                refetch()
-                setProduct(initailProduct)
-            }
-        }catch (error){
-            console.log(error)
-            const errorObject = error as AxiosError;
-            toast.update(id, {render: `${errorObject.message}`, type: "error", isLoading: false, autoClose: 2000 });
-        } 
-    }
-
-    const handleEdit = (product:Product)=>{
-        handleOpenEdit()
-        setProductToEdit(product)
+        dispatch(deleteProduct(product))
+        setProduct("")
     }
     
-    // const handleUpdateCategory = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement> )=> {
-    //     const {name, value} = e.target;
-    //     setCategoryEdit({...categoryEdit, [name]: value})
-    // }
-
     // ------------------Submit Handlers------------------------
     const onSubmitCreate:SubmitHandler<Product> = async (data)=>{
-        handleOpenCreate(); 
-        console.log(data)
-
+        handleCloseCreate(); 
+        const formData = new FormData()
+        formData.append("file", imageFile)
+        formData.append("upload_preset", 'react_ecommerce')
+        formData.append('cloud_name',import.meta.env.VITE_CLOUDNAME)
+        const res = await fetch(import.meta.env.VITE_CLOUDURL,{
+            method:"POST",
+            body: formData
+        })
+        const uploadedImageUrl = await res.json()
         const product = { 
             ...data, 
-            image: imageFile, 
+            image: uploadedImageUrl.url, 
             colors: data.color.split(" "),
         };
-
-        console.log(product)
-        
-        const id = toast.loading("Please wait...", {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-        
-        try{
-            const { status } = await api.post(`/products`, product)
-            
-            if(status === 200){
-                toast.update(id, {render:"Product Created Successfully", type: "success", isLoading: false,autoClose: 1000},);
-                refetch()
-                reset()
-            }
-        }catch (error){
-            console.log(error)
-            const errorObject = error as AxiosError;
-            toast.update(id, {render: `${errorObject.message}`, type: "error", isLoading: false, autoClose: 2000 });
-        } 
+        await dispatch(createProduct(product))
+        reset()
+        setImagePreview("")
+        setImageFile("")
     }
 
     const onSubmitEdit:SubmitHandler<Product> = async (data)=>{
-        handleOpenEdit(); 
-        
-        const updatedProduct = {...data}
-                console.log(data)
-        // const id = toast.loading("Please wait...", {
-        //     position: "top-center",
-        //     autoClose: 1000,
-        //     hideProgressBar: false,
-        //     closeOnClick: true,
-        //     pauseOnHover: true,
-        //     draggable: true,
-        //     progress: undefined,
-        //     theme: "light",
-        // });
-        
-        // try{
-        //     const { status } = await api.put(`/products/${product.productID}`, updatedProduct)
-            
-        //     if(status === 200){
-        //         toast.update(id, {render:"Product Updated Successfully", type: "success", isLoading: false,autoClose: 1000},);
-        //         refetch()
-        //         // setProduct
-        //     }
-        // }catch (error){
-        //     console.log(error)
-        //     const errorObject = error as AxiosError;
-        //     toast.update(id, {render: `${errorObject.message}`, type: "error", isLoading: false, autoClose: 2000 });
-        // } 
+        handleCloseEdit(); 
+        if(imagePreview !== productToEdit.image){
+            const formData = new FormData()
+            formData.append("file", imageFile)
+            formData.append("upload_preset", 'react_ecommerce') 
+            formData.append('cloud_name', import.meta.env.VITE_CLOUDNAME) 
+            const res = await fetch(import.meta.env.VITE_CLOUDURL,{
+                method:"POST",
+                body: formData
+            })
+            const uploadedImageUrl = await res.json()
+            const updatedProduct = {
+                ...productToEdit, 
+                categoryName: data.categoryName,
+                image: uploadedImageUrl.url,
+            }
+            await dispatch(updateProduct(updatedProduct))
+        } else{
+            const updatedProduct = {
+                ...productToEdit, 
+                categoryName: data.categoryName,
+            }
+            await dispatch(updateProduct(updatedProduct))
+        }
+        reset()
+        setImagePreview("")
+        setImageFile("")
+        setProductToEdit(initailProduct)
     }
 
     // ----------------------Render-----------------------------
-
     if(isLoading) return (
         <>
             <Box className="filter__menu" m="4px">
@@ -242,7 +223,7 @@ export const Products = ()=>{
     return (
         <>
             {
-                data && 
+                products && 
                 <>
                     <Box className="filter__menu" mr={2}>
                         <Button sx={{fontSize: 11, ml: 2, backgroundColor: "#b85454", "&:hover": {backgroundColor: "#943e3e"}}} variant="contained" 
@@ -254,21 +235,21 @@ export const Products = ()=>{
                         </form>
                     </Box>
 
-                    { data.items.length > 0 ?
+                    { products.length > 0 ?
                         <>
                             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 6, md: 8 }} justifyContent="center"  p="10px">              
-                                { data.items.map((product:Product) => ( 
+                                { products.map((product:Product) => ( 
                                 <Grid item xs={2} sm={2} md={2} key={product.productID}>
                                     <ProductCard product={product}displayButtons={false}>
                                         <CardActions sx={{py:2}}>
-                                            <Button fullWidth  sx={{fontSize: 11, backgroundColor: "#999", "&:hover": {backgroundColor: "#444"}}} variant="contained"  size="small"
-                                                onClick={()=>handleEdit(product)}
+                                            <Button fullWidth  sx={{fontSize: 11, backgroundColor: "#444", "&:hover": {backgroundColor: "#999"}}} variant="contained"  size="small"
+                                                onClick={()=>handleOpenEdit(product)}
                                             >Edit</Button>
                                             <Button fullWidth sx={{fontSize: 11, padding: "4px 10px", margin : 0, backgroundColor: "#b81f1f", "&:hover": {backgroundColor: "#ca2828"}}} variant="contained"
                                                 size="small"
                                                 onClick={()=>{
                                                     handleOpenDelete()
-                                                    setProduct(product)
+                                                    setProduct(product.productID)
                                                 }}
                                             >
                                                 Delete 
@@ -280,7 +261,7 @@ export const Products = ()=>{
                             </Grid>
                             
                             <Box sx={{  width: "200px;", margin: "40px auto"}}>
-                                <Pagination count={data.totalPages} variant="outlined" shape="rounded"
+                                <Pagination count={totalPages} variant="outlined" shape="rounded"
                                     page={pageNumber} onChange={handlePageNumber} 
                                 />
                             </Box>
@@ -300,26 +281,24 @@ export const Products = ()=>{
                         </Stack>
                     }
 
-
-                    <CreateModal scroll={true} openCreate={openCreate} handleopenCreate={handleOpenCreate} handleSubmit={handleSubmit(onSubmitCreate)} 
-                        formElement={<ProductForm register={register} errors={errors} imagePreview={imagePreview} setImagePreview={setImagePreview} 
+                    <CreateModal btnName="Create" scroll={true} open={openCreate} close={handleCloseCreate} handleSubmit={handleSubmit(onSubmitCreate)} 
+                        formElement={<ProductForm categories={categories} register={register} errors={errors} imagePreview={imagePreview} setImagePreview={setImagePreview} 
                         setImageFile={setImageFile}
                         />}
                     />
-
-                    <UpdateModal scroll={true} openUpdate={openEdit} handleOpenUpdate={handleOpenEdit} handleSubmit={handleSubmit(onSubmitEdit)} formElement={
-                        <ProductFormEdit register={register} errors={errors} imagePreview={imagePreview} setImagePreview={setImagePreview} 
-                        setImageFile={setImageFile} productToEdit={productToEdit}
-                        />
-                    }/>
-
+                    
+                    <CreateModal btnName="Update" scroll={true} open={openEdit} close={handleCloseEdit} handleSubmit={handleSubmit(onSubmitEdit)} 
+                        formElement={<ProductFormEdit handleChangeUpdate={handleChangeUpdate} register={register} errors={errors} imagePreview={imagePreview} setImagePreview={setImagePreview} 
+                            setImageFile={setImageFile} productToEdit={productToEdit}
+                        />}
+                    />
 
                     <DeleteModal item='product' openDelete={openDelete} handleOpenDelete={handleOpenDelete} handleDelete={handleDeleteProduct} />
 
                 </>
             }
 
-            {error && <p >{error.message}</p>} 
+            {error && <p className="no--found">{error}</p>} 
         </>
     )
 }

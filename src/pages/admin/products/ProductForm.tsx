@@ -1,37 +1,26 @@
 import { Autocomplete, Stack, TextField } from "@mui/material";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import { Dispatch, SetStateAction } from "react";
+import { ChangeEvent } from "react";
 
 import { Category, Product } from "@/types";
-import useApiQuery from "@/hooks/useApiQuery";
 
 interface IProductForm {
+    categories: Category[]
     register: UseFormRegister<Product>,
     errors: FieldErrors<Product>,
-    imagePreview: string | null,
-    setImagePreview: Dispatch<SetStateAction<string | null>>,
-    setImageFile: Dispatch<SetStateAction<string | null>>
+    imagePreview: string,
+    setImagePreview: (file:string)=>void,
+    setImageFile: (file:File|string)=>void
 }
 
-const ProductForm = ({register, errors, imagePreview, setImagePreview, setImageFile}: IProductForm)=>{
+const ProductForm = ({categories, register, errors, imagePreview, setImagePreview, setImageFile}: IProductForm)=>{
 
-    const { data: categories} = useApiQuery({
-        queryKey: ["categories"],
-        url: `/categories`
-    });
-
-    const handleImageChange = (files: FileList|null)=>{
-        if(files){
-            setImagePreview(URL.createObjectURL(files?.[0]))
-
-            const fileRef = files[0] || '';
-            const fileType:string = fileRef.type || '';
-            const reader = new FileReader(); 
-            reader.readAsBinaryString(fileRef);
-            reader.onload = (ev:any)=> {
-                setImageFile(`data:${fileType};base64,${btoa(ev.target.result)}`);
-            }
-
+    const handleImageUpload = async(e:ChangeEvent<HTMLInputElement>)=>{
+        if(e.target.files){
+            const file = e.target.files[0]
+            if(!file) return
+            setImagePreview(URL.createObjectURL(file))
+            setImageFile(file)
         }
     }
 
@@ -70,12 +59,12 @@ const ProductForm = ({register, errors, imagePreview, setImagePreview, setImageF
                 </div>
                 <div>
                     <label htmlFor="category">Category</label>
-                    { categories?.data && categories.data.length > 0 &&
+                    { categories && categories.length > 0 &&
                         <Autocomplete 
                         className="filter__products"
                         fullWidth
                         size="small"
-                        options={categories.data.map((category:Category) => category.name)}
+                        options={categories.map((category:Category) => category.name)}
                         renderInput={(params) => (
                             <TextField 
                             {...register("categoryName")} 
@@ -116,12 +105,12 @@ const ProductForm = ({register, errors, imagePreview, setImagePreview, setImageF
                         id="image"
                         type="file" 
                         accept="image/*"
-                        {...register("imageFile")} 
-                        onChange={(e)=> handleImageChange(e.target.files)}
+                        {...register("image")} 
+                        onChange={handleImageUpload}
                         />
                     {imagePreview && <img src={imagePreview} width={40} height={30} />}
-                    { errors["imageFile"] && <p className='error--msg'>{errors["imageFile"]?.message}</p>}
-                </div>            
+                    { errors["image"] && <p className='error--msg'>{errors["image"]?.message}</p>}
+                </div>
             </Stack>
         </>
     )

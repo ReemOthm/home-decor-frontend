@@ -1,38 +1,30 @@
 import { Autocomplete, Stack, TextField } from "@mui/material";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import { Dispatch, SetStateAction } from "react";
+import { useSelector } from "react-redux";
+import { ChangeEvent } from "react";
 
 import { Category, Product } from "@/types";
-import useApiQuery from "@/hooks/useApiQuery";
 
 interface IProductForm {
+    handleChangeUpdate: (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>void,
     register: UseFormRegister<Product>,
     errors: FieldErrors<Product>,
-    imagePreview: string | null,
-    setImagePreview: Dispatch<SetStateAction<string | null>>,
-    setImageFile: Dispatch<SetStateAction<string | null>>,
+    imagePreview: string,
+    setImagePreview: (file:string)=>void,
+    setImageFile: (file:File|string)=>void
     productToEdit: Product
 }
 
-const ProductFormEdit = ({register, errors, imagePreview, setImagePreview, setImageFile, productToEdit}: IProductForm)=>{
+const ProductFormEdit = ({handleChangeUpdate,register, errors, imagePreview, setImagePreview, setImageFile, productToEdit}: IProductForm)=>{
 
-    const { data: categories} = useApiQuery({
-        queryKey: ["categories"],
-        url: `/categories`
-    });
+    const categories = useSelector((state:any)=> state.categoryRoducer.categories)
 
-    const handleImageChange = (files: FileList|null)=>{
-        if(files){
-            setImagePreview(URL.createObjectURL(files?.[0]))
-
-            const fileRef = files[0] || '';
-            const fileType:string = fileRef.type || '';
-            const reader = new FileReader(); 
-            reader.readAsBinaryString(fileRef);
-            reader.onload = (ev:any)=> {
-                setImageFile(`data:${fileType};base64,${btoa(ev.target.result)}`);
-            }
-
+    const handleImageChange = async(e:ChangeEvent<HTMLInputElement>)=>{
+        if(e.target.files){
+            const file = e.target.files[0]
+            if(!file) return
+            setImagePreview(URL.createObjectURL(file))
+            setImageFile(file)
         }
     }
 
@@ -47,6 +39,7 @@ const ProductFormEdit = ({register, errors, imagePreview, setImagePreview, setIm
                         type="text"
                         value={productToEdit.productName} 
                         {...register("productName")} 
+                        onChange={handleChangeUpdate}
                     />
                     { errors["productName"] && <p className='error--msg'>{errors["productName"]?.message}</p>}
                 </div>
@@ -57,6 +50,7 @@ const ProductFormEdit = ({register, errors, imagePreview, setImagePreview, setIm
                         id="description"
                         value={productToEdit.description} 
                         {...register("description")} 
+                        onChange={handleChangeUpdate}
                     >    
                     </textarea>
                     { errors["description"] && <p className='error--msg'>{errors["description"]?.message}</p>}
@@ -69,27 +63,29 @@ const ProductFormEdit = ({register, errors, imagePreview, setImagePreview, setIm
                         type="text"
                         value={productToEdit.price}  
                         {...register("price")} 
-                        />
+                        onChange={handleChangeUpdate}
+                    />
                     { errors["price"] && <p className='error--msg'>{errors["price"]?.message}</p>}
                 </div>
                 <div>
                     <label htmlFor="category">Category</label>
-                    { categories?.data && categories.data.length > 0 &&
+                    { categories && categories.length > 0 &&
                         <Autocomplete 
-                        className="filter__products"
-                        fullWidth
-                        size="small"
-                        // value={productToEdit.category.name} 
-                        options={categories.data.map((category:Category) => category.name)}
-                        renderInput={(params) => (
-                            <TextField 
-                            {...register("categoryName")} 
-                                {...params}
-                                InputProps={{
-                                    ...params.InputProps,
-                                }}
-                                />
-                            )}
+                            className="filter__products"
+                            fullWidth
+                            size="small"
+                            value={productToEdit.category.name} 
+                            options={categories.map((category:Category) => category.name)}
+                            renderInput={(params) => (
+                                <TextField 
+                                {...register("categoryName")} 
+                                onChange={handleChangeUpdate}
+                                    {...params}
+                                    InputProps={{
+                                        ...params.InputProps,
+                                    }}
+                                    />
+                                )}
                         />
                     }  
                     { errors["categoryName"] && <p className='error--msg'>{errors["categoryName"]?.message}</p>}
@@ -102,7 +98,8 @@ const ProductFormEdit = ({register, errors, imagePreview, setImagePreview, setIm
                         type="number" 
                         value={productToEdit.quantity}
                         {...register("quantity")} 
-                        />
+                        onChange={handleChangeUpdate}
+                    />
                     { errors["quantity"] && <p className='error--msg'>{errors["quantity"]?.message}</p>}
                 </div>
                 <div>
@@ -113,7 +110,8 @@ const ProductFormEdit = ({register, errors, imagePreview, setImagePreview, setIm
                         type="text" 
                         value={productToEdit.colors.join(" ")} 
                         {...register("color")} 
-                        />
+                        onChange={handleChangeUpdate}
+                    />
                     { errors["color"] && <p className='error--msg'>{errors["color"]?.message}</p>}
                 </div>
                 <div>
@@ -123,11 +121,11 @@ const ProductFormEdit = ({register, errors, imagePreview, setImagePreview, setIm
                         id="image"
                         type="file" 
                         accept="image/*"
-                        {...register("imageFile")} 
-                        onChange={(e)=> handleImageChange(e.target.files)}
-                        />
+                        {...register("image")} 
+                        onChange={handleImageChange}
+                    />
                     {imagePreview && <img src={imagePreview} width={40} height={30} />}
-                    { errors["imageFile"] && <p className='error--msg'>{errors["imageFile"]?.message}</p>}
+                    { errors["image"] && <p className='error--msg'>{errors["image"]?.message}</p>}
                 </div>            
             </Stack>
         </>

@@ -2,41 +2,27 @@ import { Box, Pagination, Skeleton} from '@mui/material';
 import { ChangeEvent, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'react-toastify';
-import { AxiosError } from 'axios';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
-import useApiQuery from "@/hooks/useApiQuery";
-import CustomizedTables, { renderCategoriesTable, tableHead } from "./../../components/CustomizedTables";
+import CustomizedTables, { tableHead } from "./../../components/CustomizedTables";
 import { CategoryData } from '@/data';
 import { capitalizeTitle } from '@/lib/utils';
 import { Category } from '@/types';
 import { categorySchema } from '@/validation';
-import api from '@/api';
 import DeleteModal from '@/components/modals/DeleteModal';
-import UpdateModal from '@/components/modals/UpdateModal';
 import CreateModal from '@/components/modals/CreateModal';
-
+import { AppDispatch } from '@/app/store';
+import { createCategory, deleteCategory, fetchCategoriesAll, updateCategory } from '@/app/features/categorySlice';
+import { CategoriesTable } from '@/components/tables/CategoriesTable';
 
 export const Categories = ()=>{
 
     const [pageNumber, setPageNumber] = useState(1);
 
     const [openCreate, setOpenCreate] = useState(false);
-    const handleOpenCreate = () => setOpenCreate(!openCreate);
-
     const [openEdit, setOpenEdit] = useState(false);
-    const handleOpenEdit = () => setOpenEdit(!openEdit);
-
     const [openDelete, setOpenDelete] = useState(false);
-    const handleOpenDelete = () => setOpenDelete(!openDelete);
-    
-    const [category, setCategory] = useState({
-        categoryID: "",
-        name: "",
-        description: "",
-        slug: "",
-        createdAt: ""
-    });
+    const [categoryId, setCategoryId] = useState("");
 
     const [categoryEdit, setCategoryEdit] = useState({
         categoryID: "",
@@ -46,10 +32,29 @@ export const Categories = ()=>{
         createdAt: ""
     });
 
-    useEffect(()=>{
-        setCategory(categoryEdit);
-    },[categoryEdit])
+    const handleOpenCreate = () => setOpenCreate(true);
+    const handleCloseCreate = () => {
+        reset()
+        setOpenCreate(false);
+    }
 
+    const handleOpenEdit = () => setOpenEdit(true);
+
+    const handleCloseEdit = ()=>{
+        setOpenEdit(false)
+        reset()
+    }
+    
+    const handleOpenDelete = () => setOpenDelete(!openDelete);
+
+    const dispatch = useDispatch<AppDispatch>()
+    const [error, totalPages, isLoading, categories] = useSelector((state:any)=> [
+        state.categoryRoducer.error,
+        state.categoryRoducer.totalPages, 
+        state.categoryRoducer.isLoading,
+        state.categoryRoducer.categories
+    ], shallowEqual)
+    
     const {
         register,
         handleSubmit,
@@ -58,106 +63,40 @@ export const Categories = ()=>{
     } = useForm<Category>({
         resolver: zodResolver(categorySchema)
     });
-    
-    const { data:categories, isLoading, error, refetch} = useApiQuery({
-        queryKey: ["categories", `${pageNumber}`],
-        url: `/categories/all?pageNumber=${pageNumber}&pageSize=6`
-    });
 
+    useEffect(()=>{
+        dispatch(fetchCategoriesAll(pageNumber.toString()))
+    },[pageNumber])
 
     // ---------------------Handlers----------------------------
     const handlePageNumber = (event: React.ChangeEvent<unknown>,page: number)=> setPageNumber(page)
 
     const handleUpdateCategory = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement> )=> {
         const {name, value} = e.target;
-        setCategoryEdit({...categoryEdit, [name]: value})
+        setCategoryEdit(categoryEdit=>({...categoryEdit, [name]: value}))
     }
 
     const handleDeleteCategory = async()=>{
         handleOpenDelete();
-
-        const id = toast.loading("Please wait...", {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-
-        try{
-            const { status } = await api.delete(`/categories/${category.categoryID}`)
-
-            if(status === 200){
-                toast.update(id, {render: "Category has deleted Successfully!", type: "success", isLoading: false,autoClose: 1000},);
-                refetch()
-            }
-        }catch (error){
-            console.log(error)
-            const errorObject = error as AxiosError;
-            toast.update(id, {render: `${errorObject.message}`, type: "error", isLoading: false, autoClose: 2000 });
-        } 
+        dispatch(deleteCategory(categoryId))
+        setCategoryId("")
     }
 
     const onSubmitCreate:SubmitHandler<Category> = async (data)=>{
-        handleOpenCreate(); 
-        
-        const id = toast.loading("Please wait...", {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-        
-        try{
-            const { status } = await api.post(`/categories`, data)
-            
-            if(status === 200){
-                toast.update(id, {render:"Category Created Successfully", type: "success", isLoading: false,autoClose: 1000},);
-                refetch()
-                reset()
-            }
-        }catch (error){
-            console.log(error)
-            const errorObject = error as AxiosError;
-            toast.update(id, {render: `${errorObject.message}`, type: "error", isLoading: false, autoClose: 2000 });
-        } 
+        dispatch(createCategory(data))
+        dispatch(fetchCategoriesAll(pageNumber.toString()))
+        handleCloseCreate(); 
     }
     
-    const onSubmit:SubmitHandler<Category> = async (data)=>{
-        handleOpenEdit(); 
-        
-        const updatedCategory = {...data, createdAt: categoryEdit.createdAt}
-
-        const id = toast.loading("Please wait...", {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-        
-        try{
-            const { status } = await api.put(`/categories/${category.categoryID}`, updatedCategory)
-            
-            if(status === 200){
-                toast.update(id, {render:"Category Updated Successfully", type: "success", isLoading: false,autoClose: 1000},);
-                refetch()
-            }
-        }catch (error){
-            console.log(error)
-            const errorObject = error as AxiosError;
-            toast.update(id, {render: `${errorObject.message}`, type: "error", isLoading: false, autoClose: 2000 });
-        } 
+    const onSubmitUpdate:SubmitHandler<Category> = async (data)=>{
+        const updatedCategory:Category = {
+            ...categoryEdit,
+            name: data.name,
+            description: data.description,
+            products: []
+        }
+        dispatch(updateCategory(updatedCategory))
+        handleCloseEdit(); 
     }
 
     // ----------------------Render-----------------------------
@@ -168,30 +107,33 @@ export const Categories = ()=>{
                 className='input' 
                 id={name}
                 type={type} 
-                {...register(name)} />
+                {...register(name)} 
+            />
             {errors[name] && <p className='error--msg'>{errors[name]?.message}</p>}
         </div>
     )
-    
+
     const categoryFormEdit = CategoryData.map(({type, name}, index)=> 
         <div key={index}>
             <label htmlFor={name}>{capitalizeTitle(name)}</label>
             {
                 name == "description" ? 
                 <textarea     
-                className='input'            
-                id={name}
-                {...register(name)} 
-                value={category[name]} 
-                onChange={handleUpdateCategory}></textarea>
+                    className='input'            
+                    id={name}
+                    {...register(name)} 
+                    value={categoryEdit[name]} 
+                    onChange={handleUpdateCategory}>
+                </textarea>
                 : 
                 <input 
-                className='input' 
-                id={name}
-                type={type} 
-                {...register(name)} 
-                value={category[name]} 
-                onChange={handleUpdateCategory} />
+                    className='input' 
+                    id={name}
+                    type={type} 
+                    {...register(name)} 
+                    value={categoryEdit[name]} 
+                    onChange={handleUpdateCategory} 
+                />
             }
             {errors[name] && <p className='error--msg'>{errors[name]?.message}</p>}
         </div>
@@ -202,30 +144,29 @@ export const Categories = ()=>{
         <Skeleton variant="rectangular" width="100%" height={118} />
     </div>
 
-
     return (
         <>
             <button className='button fit--width margin--auto' onClick={handleOpenCreate}>Create Category</button>
             {
-                categories && categories.data && categories.data?.items.length > 0 ?
-                <CustomizedTables renderRows={renderCategoriesTable(categories.data.items,handleOpenEdit, setCategoryEdit, handleOpenDelete)} columns={tableHead.categories}  /> 
+                categories && categories.length > 0 ?
+                <CustomizedTables renderRows={CategoriesTable(categories,handleOpenEdit, setCategoryEdit, setCategoryId, handleOpenDelete)} columns={tableHead.categories}  /> 
                 :
                 <div>
                     <p className="no--found">No Categories found</p>
                 </div>  
             }
 
-            <CreateModal openCreate={openCreate} handleopenCreate={handleOpenCreate} handleSubmit={handleSubmit(onSubmitCreate)} formElement={categoryFormCreate} scroll={false}/>
-            <UpdateModal openUpdate={openEdit} handleOpenUpdate={handleOpenEdit} handleSubmit={handleSubmit(onSubmit)} formElement={categoryFormEdit} scroll={false} />
-            <DeleteModal item='category' openDelete={openDelete} handleOpenDelete={handleOpenDelete} handleDelete={handleDeleteCategory} />
+            <CreateModal btnName='Create' open={openCreate} close={handleCloseCreate} handleSubmit={handleSubmit(onSubmitCreate)} formElement={categoryFormCreate} scroll={false}/>
+            <CreateModal btnName='Update' open={openEdit} close={handleCloseEdit} handleSubmit={handleSubmit(onSubmitUpdate)} formElement={categoryFormEdit} scroll={false}/>
+            <DeleteModal item='category' openDelete={openDelete} handleOpenDelete={handleOpenDelete} handleDelete={handleDeleteCategory} /> 
             
             <Box sx={{width: "200px", margin: "40px auto"}}>
-                <Pagination count={categories.data.totalPages} variant="outlined" 
+                <Pagination count={totalPages} variant="outlined" 
                     page={pageNumber} color="secondary" onChange={handlePageNumber} 
                 />
             </Box>
             
-            { error && <p>{error.message}</p> }
+            { error && <p className='no--found'>{error}</p> }
         </>
     )
 }

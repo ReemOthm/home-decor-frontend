@@ -11,11 +11,11 @@ interface DeleteModalProps {
 
 const DeleteModal = ({openDelete, handleOpenDelete, handleDelete, item}:DeleteModalProps)=>{
     return (
-        <BasicModal open={openDelete} handleOpen={handleOpenDelete} >
+        <BasicModal open={openDelete} close={handleOpenDelete} >
             <Typography id="modal-modal-title" variant="h6" component="h2">
                 Delete {item}
                 </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                <Typography id="modal-modal-description">
                     You are about to delete {item}. Are you sure to delete?
                 </Typography>
                 <Stack direction ="row" mt={2} spacing={2}>

@@ -4,22 +4,23 @@ import {  Stack } from "@mui/material";
 import { BasicModal } from "./Modal";
 
 interface CreateModalProps {
-    openCreate: boolean,
-    handleopenCreate: ()=> void,
+    open: boolean,
+    close: ()=> void,
     handleSubmit: ()=>void,
     formElement: ReactNode,
-    scroll: boolean
+    scroll: boolean,
+    btnName:string
 }
 
-const CreateModal = ({openCreate, handleopenCreate, handleSubmit, formElement, scroll}:CreateModalProps)=>{
+const CreateModal = ({open, close, handleSubmit, formElement, scroll,btnName}:CreateModalProps)=>{
     return (
-        <BasicModal open={openCreate} handleOpen={handleopenCreate} scroll={scroll} >
+        <BasicModal open={open} close={close} scroll={scroll}  >
             <form onSubmit={handleSubmit}>
-                <Stack spacing={2}>
+                <Stack spacing={1}>
                     {formElement}
                     <Stack direction ="row" gap={1}>
-                        <button className="button">Create</button>
-                        <button className="button cancel" type='button' onClick={handleopenCreate}>Cancel</button>
+                        <button className="button" type="submit">{btnName}</button>
+                        <button className="button cancel" type='button' onClick={close}>Cancel</button>
                     </Stack>
                 </Stack>
             </form>

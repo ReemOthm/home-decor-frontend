@@ -3,12 +3,12 @@ import {Box, Modal} from '@mui/material';
 
 interface BasicModalProps{
     open: boolean,
-    handleOpen: ()=> void,
+    close: ()=> void,
     children: React.ReactNode,
     scroll?: boolean
 }
 
-export const BasicModal = ({open, handleOpen, children, scroll}: BasicModalProps) => {
+export const BasicModal = ({open, close, children}: BasicModalProps) => {
 
     const style = {
         position: 'absolute',
@@ -19,16 +19,16 @@ export const BasicModal = ({open, handleOpen, children, scroll}: BasicModalProps
         bgcolor: 'background.paper',
         borderRadius: '10px',
         boxShadow: 24,
-        p: 4,
-        height: scroll ? "100vh" : "auto",
-        overflowY: scroll ?  "scroll" : 'none'
+        p: 3,
+        // height: scroll ? "100vh" : "auto",
+        // overflowY: scroll ?  "scroll" : 'none'
     };
 
     return (
         <div>
             <Modal
                 open={open}
-                onClose={handleOpen}
+                onClose={close}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >

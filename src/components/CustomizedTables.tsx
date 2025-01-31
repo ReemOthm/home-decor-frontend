@@ -1,8 +1,8 @@
 import { styled } from '@mui/material/styles';
-import {Table, TableBody,TableCell,tableCellClasses, TableContainer ,TableHead, TableRow, Paper, Avatar} from '@mui/material';
+import {Table, TableBody,TableCell,tableCellClasses, TableContainer ,TableHead, TableRow, Paper} from '@mui/material';
 import { ReactNode } from 'react';
 
-import { Category, Order, Product } from '@/types';
+import { Order } from '@/types';
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -31,56 +31,6 @@ export const tableHead= {
     products : ["Name", "Category", "Quantity", "Price", "Created At", "Edit/Delete"],
     categories : ["Name", "Description", "Slug" ,"Created AT", "Edit/Delete"],
     orders : ["Order ID", "Status", "Payment", "Amount","Created AT", "Details"],
-}
-
-export const renderProductTable = (rows:Product[])=> {
-    return (
-        <>
-        {
-            rows.map((row:Product) => (
-                    <StyledTableRow key={row.productID}>
-                    <StyledTableCell component="th" scope="row">
-                        {row.productName}
-                    </StyledTableCell>
-                        <StyledTableCell >
-                            <Avatar alt={row.productName} src={row.image} sx={{mx: "20px"}}/>
-                        </StyledTableCell>
-                        <StyledTableCell >{row.category.name}</StyledTableCell>
-                        <StyledTableCell >{row.quantity}</StyledTableCell>
-                        <StyledTableCell >{row.price}</StyledTableCell>
-                        <StyledTableCell >{row.createdAt}</StyledTableCell>
-                        <StyledTableCell >
-                            <button>Details</button>
-                        </StyledTableCell>
-                    </StyledTableRow>
-                ))
-            }
-        </>
-    )
-}
-
-export const renderCategoriesTable = (rows:Category[],handleOpenEdit: ()=> void, settingCategory:(category:Category)=>void, handleOpenDelete: ()=> void)=> {
-
-    return (
-        <>
-            {
-                rows.map((row:Category) => (
-                    <StyledTableRow key={row.categoryID}>
-                    <StyledTableCell component="th" scope="row">
-                        {row.name}
-                    </StyledTableCell>
-                        <StyledTableCell >{row.description}</StyledTableCell>
-                        <StyledTableCell >{row.slug}</StyledTableCell>
-                        <StyledTableCell >{row.createdAt}</StyledTableCell>
-                        <StyledTableCell >
-                            <button onClick={()=> {handleOpenEdit(); settingCategory(row);}}>Edit</button>
-                            <button onClick={()=>{handleOpenDelete(); settingCategory(row);}}>Delete</button>
-                        </StyledTableCell>
-                    </StyledTableRow>
-                ))
-            }
-        </>
-    )
 }
 
 export const renderOrdersTable = (rows:Order[], handleOpenDetails: ()=> void)=> {

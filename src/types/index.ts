@@ -10,8 +10,7 @@ export type Product = {
   productID: string
   productName: string,
   description: string,
-  image: string ,
-  imageFile: FileList | string,
+  image: string,
   slug: string,
   category: Category ,
   categoryName: string,
@@ -22,6 +21,21 @@ export type Product = {
   createdAt: string
 }
 
+export type ProductState = {
+  products: Product[]
+  totalPages: number,
+  error: null | string
+  isLoading: boolean
+}
+
+export type productParams ={
+  category: string, 
+  searchKeyword: string,
+  minPrice: string, 
+  maxPrice: string, 
+  pageNumber: string
+}
+
 export type Category = {
   categoryID: string
   name: string,
@@ -29,6 +43,13 @@ export type Category = {
   slug: string,
   products: Product[],
   createdAt: string
+}
+
+export type CategoryState = {
+  categories: Category[]
+  totalPages: number,
+  error: null | string
+  isLoading: boolean
 }
 
 export type User = {
@@ -117,21 +138,6 @@ export type ProductForm = {
   type: string,
   name: ProductInputs
 } 
-
-export type ProductState = {
-  products: Product[]
-  totalPages: number,
-  error: null | string
-  isLoading: boolean
-}
-
-export type CategoryState = {
-  categories: Category[]
-  totalPages: number,
-  error: null | string
-  isLoading: boolean
-  isEditing: boolean;
-}
 
 export type  CartItemProps = {
   item: {

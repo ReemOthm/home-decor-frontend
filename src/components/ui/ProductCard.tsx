@@ -27,7 +27,7 @@ const ProductCard = ({product, displayButtons = true, children}:ProductCardProps
                 </Typography>
                 <Stack direction="row" alignItems="center" justifyContent="space-between " sx={{py:1}}>
                     <Typography>{product.price} SAR</Typography>
-                    <Typography fontSize={10}>{product.category.name}</Typography>
+                    <Typography fontSize={10}>{product.category ? product.category.name : product.categoryName}</Typography>
                 </Stack>
                 <Stack direction="row" gap={1}>
                     {  product.colors.length > 0 &&

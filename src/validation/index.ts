@@ -20,7 +20,6 @@ export const signupSchema = z.object({
         birthDate: z.string().optional(),
 });
 
-
 export const loginSchema = z.object({
         email: z.string({message: "Please enter an Email"})
                 .regex(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g , 'Enter a valid email'),
@@ -36,16 +35,14 @@ export const categorySchema = z.object({
         .max(60, {message: "description must be less than 60 characters"}),
 });
 
-
 export const productSchema = z.object({
         productName: z.string({message: "Please enter a product name"}).min(3, {message: "name must be at least 3 characters"}),
         description: z.string()
         .min(10, {message: "description must be at least 10 characters"})
         .max(50, {message: "description must be less than 60 characters"}),
         price: z.string().min(3),
-        categoryName: z.string().min(3),
+        categoryName: z.string(),
         quantity: z.coerce.number().nonnegative(),
         color: z.string().min(3),
-        imageFile: z.any()
+        image: z.any()
 });
-

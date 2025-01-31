@@ -2,17 +2,31 @@ import { Grid, Skeleton, Stack, Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
-import useApiQuery from "@/hooks/useApiQuery";
 import ProductCard from "@/components/ui/ProductCard";
 import { Product } from "@/types";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/app/store";
+import { useEffect } from "react";
+import { fetchProducts } from "@/app/features/productSlice";
 
 export const Home = ()=>{
 
-    // Queries
-    const { data, error, isLoading } = useApiQuery({
-        queryKey: ["products"],
-        url: `/products?page=1&pageSize=8`
-    });
+    const dispatch = useDispatch<AppDispatch>()
+    const [error, products, isLoading] = useSelector((state:any)=> [
+        state.productRoducer.error,
+        state.productRoducer.products, 
+        state.productRoducer.isLoading,
+    ], shallowEqual)
+
+    useEffect(()=>{
+        dispatch(fetchProducts({
+            pageNumber: "1",
+            category: "",
+            searchKeyword: "",
+            minPrice: "",
+            maxPrice: ""
+        }))
+    },[dispatch])
 
     return (
         <>
@@ -50,10 +64,10 @@ export const Home = ()=>{
                     </Grid> 
                     : 
                     <>
-                        { data && data.items?.length > 0 &&
+                        { products && products.length > 0 &&
                             <Stack spacing={4} alignItems="center" mb={6}>
                                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 6, md: 8 }} justifyContent="center">                
-                                    { data.items.map((product:Product) => ( 
+                                    { products.map((product:Product) => ( 
                                         <Grid item xs={2} sm={2} md={2} key={product.productID}>
                                             <ProductCard product={product} displayButtons={false} /> 
                                         </Grid>
@@ -64,9 +78,7 @@ export const Home = ()=>{
                         }
                     </>
             }
-
-            {error && <p >{error.message}</p>} 
-
+            {error && <p >{error}</p>} 
         </>
     )
 }
