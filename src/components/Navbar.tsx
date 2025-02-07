@@ -1,13 +1,15 @@
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link, NavLink } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 
 import { logoutUser } from "@/app/features/userSlice";
+import { resetCart } from '@/app/features/cartSlice';
 
 const Navbar = ()=>{
-
     const token = useSelector((state:any)=> state.userReducer.token)
     const isAdmin = useSelector((state:any)=> state.userReducer.isAdmin)
     const dispatch = useDispatch()
+    const cartProducts = useSelector((state:any)=> state.cartReducer.cartProducts)
 
     return (
         <>
@@ -25,6 +27,7 @@ const Navbar = ()=>{
                             { token != null && isAdmin == true &&
                                 <NavLink to="/admin/dashboard">Dashboard</NavLink>
                             }
+                            <NavLink to="/cart"><ShoppingCartIcon sx={{color: "rgb(172, 57, 57);"}}/><span className='items--no'>{cartProducts.length}</span></NavLink>
                         </div>
                         <div>
                             {
@@ -36,7 +39,7 @@ const Navbar = ()=>{
                             {
                                 token != null &&
                                 <Link to="/" >
-                                    <button className="button" onClick={()=> dispatch(logoutUser())}>Logout</button>
+                                    <button className="button" onClick={()=>{dispatch(logoutUser()); dispatch(resetCart())}}>Logout</button>
                                 </Link>
                             }
                         </div>

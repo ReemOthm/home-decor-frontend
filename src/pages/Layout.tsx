@@ -1,4 +1,4 @@
-import { Container } from "@mui/material"
+import { Container, Stack } from "@mui/material"
 
 import Navbar from "@/components/Navbar"
 import { Outlet } from "react-router-dom"
@@ -10,11 +10,11 @@ interface RootLayoutProps{
 
 export const RootLayout = ({container}: RootLayoutProps)=>{
     return (
-        <>
+        <Stack sx={{height: "100vh"}}>
             <Navbar />
             {container ?
                 <>
-                    <Container>
+                    <Container sx={{flexGrow: 1, width: "100%"}}>
                         <Outlet />
                     </Container>
                     <Footer />
@@ -23,6 +23,6 @@ export const RootLayout = ({container}: RootLayoutProps)=>{
                 <Outlet />
             }
 
-        </>
+        </Stack>
     )
 }

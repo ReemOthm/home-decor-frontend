@@ -2,10 +2,13 @@ import { Button, Card, CardActions, CardContent, CardMedia, Stack, Typography } 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/app/store";
+import { ReactNode } from "react";
 
 import { Product } from "@/types";
 import ColorCircles from "@/components/ui/ColorCircle";
-import { ReactNode } from "react";
+import { addToCart } from "@/app/features/cartSlice";
 
 interface ProductCardProps {
     product: Product,
@@ -14,7 +17,14 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({product, displayButtons = true, children}:ProductCardProps)=>{
+
+    const dispatch = useDispatch<AppDispatch>()
     
+    const handleAddToCart=(productId:string, productName:string ,image:string, price:number, quantity:number)=> {
+        dispatch(addToCart({
+            productId, productName, image, price, quantity
+        }))
+    }    
     return ( 
         <Card sx={{filter: product.quantity == 0? "grayscale(1)" : "initial"}}> 
             <CardMedia sx={{ height: 194, backgroundSize: "contain"}} 
@@ -42,7 +52,8 @@ const ProductCard = ({product, displayButtons = true, children}:ProductCardProps
                         <Button fullWidth  sx={{fontSize: 11, backgroundColor: "#b85454", "&:hover": {backgroundColor: "#943e3e"}}} variant="contained" endIcon={<VisibilityIcon />} size="small">Deatils</Button>
                     </Link>
                     <Button fullWidth sx={{fontSize: 11, padding: "4px 10px", margin : 0, backgroundColor: "#b85454", "&:hover": {backgroundColor: "#943e3e"}}} variant="contained" endIcon={<ShoppingCartIcon />} 
-                        size="small" disabled = {product.quantity == 0}
+                        size="small" disabled = {product.quantity == 0} 
+                        onClick={()=>handleAddToCart(product.productID, product.productName, product.image, product.price,1)}
                     >
                         Add 
                     </Button>

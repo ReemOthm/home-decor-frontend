@@ -8,6 +8,7 @@ import ProtectedRoute from "./ProtectedRouter";
 import PageNotFound from "@/pages/PageNotFound";
 import AdminRoute from "./AdminRoute";
 import { About } from "@/pages/About";
+import Cart from "@/components/Cart";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
                 <Route path="about" element={  <About />}  />
                 <Route path="login" element={  <Login />}  />
                 <Route path="signup" element={<Signup /> } />
+                <Route path="cart" element={<Cart />}  />
                 <Route path="products" element={<AllProducts />}  />
                 <Route path="products/:slug" element={<ProductDetails />}  />
 

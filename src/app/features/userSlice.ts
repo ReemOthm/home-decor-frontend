@@ -72,8 +72,8 @@ const userSlice = createSlice({
             state.userData = null;
             state.token = null;
             state.isAdmin = false;
-            localStorage.removeItem("cart");//remove
             localStorage.removeItem("loginData");
+            localStorage.removeItem("cart");
         },
     },
     extraReducers: (builder) => {

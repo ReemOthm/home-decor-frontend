@@ -1,11 +1,3 @@
-import { AxiosRequestConfig } from "axios";
-
-export type ApiQuery = {
-  queryKey: string[],
-  url: string,
-  config?: AxiosRequestConfig
-}
-
 export type Product = {
   productID: string
   productName: string,
@@ -89,6 +81,13 @@ export type Order = {
   createdAt: string
 }
 
+export type OrderState = {
+  orders: Order[];
+  error: string | null;
+  isLoading: boolean;
+  totalPages: number
+}
+
 export type Price = {
   maxPrice: "" | number,
   minPrice: "" | number
@@ -139,55 +138,15 @@ export type ProductForm = {
   name: ProductInputs
 } 
 
-export type  CartItemProps = {
-  item: {
-    productId: string;
-    image: string;
-    name: string;
-    price: number;
-    quantity: number;
-  };
-}
 export type CartItem = {
-  cartId: string;
   productId: string;
   productName: string;
-  price: number;
   image: string;
+  price: number;
   quantity: number;
-};
+}
 
 export type CartState = {
-  cartId: string | null;
-  cartItems: CartItem[];
-  error: string | null;
-  isLoading: boolean;
-}
-// export type Order = {
-//   userId: string;
-//   cartId: string;
-//   status: string;
-//   totalPrice: number;
-// }
-
-export type OrderState = {
-  orders: ExtendedOrder[];
-  error: string | null;
-  isLoading: boolean;
-}
-
-export type UserOrder = {
-  orderId: string;
-  userId: string;
-  cartId: string;
-  status: string;
-  totalPrice: number;
-}
-// export type ExtendedOrder = Order & { userId: string };
-export type ExtendedOrder ={
-  orderId: string;
-  userId: string;
-  cartId: string;
-  status: string;
+  cartProducts: CartItem[];
   totalPrice: number;
 }

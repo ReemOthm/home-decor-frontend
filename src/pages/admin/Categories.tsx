@@ -119,10 +119,10 @@ export const Categories = ()=>{
             {
                 name == "description" ? 
                 <textarea     
-                    className='input'            
+                    className='input'
                     id={name}
-                    {...register(name)} 
-                    value={categoryEdit[name]} 
+                    {...register(name)}
+                    value={categoryEdit[name]}
                     onChange={handleUpdateCategory}>
                 </textarea>
                 : 

@@ -150,6 +150,23 @@ nav ul{
     padding: 0 22px;
 }
 
+nav .menu{
+    display: flex;
+    align-items: center;
+}
+
+nav .items--no{
+    background-color: #cf2929;
+    color: white;
+    padding: 2px 5px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    font-size: 14px;
+    position: relative;
+    bottom: 14px;
+}
+
 @media screen and  (max-width: 767px) {
     nav ul{
         flex-wrap: wrap;
@@ -182,7 +199,6 @@ nav ul{
 
 .login{
     color: #943e3e;
-    margin-right: 10px;
 }
 
 .signup{

@@ -1,10 +1,12 @@
-import { TableRow, Typography, TableCell, IconButton, Box , Collapse, TableHead, TableBody, Table, Paper, TableContainer, Avatar } from "@mui/material";
+import { TableRow, Typography, TableCell, IconButton, Box , Collapse, TableHead, TableBody, Table, Paper, TableContainer, Avatar, Skeleton } from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/app/store";
 
-import useApiQuery from "@/hooks/useApiQuery";
 import { Order, Product } from "@/types";
+import { fetchOrders } from "@/app/features/orderSlice";
 
 
 const Row = (props: { row: Order })=>{
@@ -73,15 +75,26 @@ const Row = (props: { row: Order })=>{
 
 export default function UserOrder () {
 
-    const { data: orders} = useApiQuery({
-        queryKey: ["orders"],
-        url: `/orders/my-orders`
-    });
+    const dispatch = useDispatch<AppDispatch>()
+    const [isLoading, orders, error] = useSelector((state:any)=>[
+        state.orderRoducer.isLoading,
+        state.orderRoducer.orders,
+        state.orderRoducer.error
+    ],shallowEqual)
 
+    useEffect(()=>{
+        dispatch(fetchOrders())
+    },[])
+
+    if(isLoading) return <div>
+        <Skeleton variant="rectangular" width="200px" height={30} sx={{m:"40px auto" }}/>
+        <Skeleton variant="rectangular" width="100%" height={118} />
+    </div>
+    
     return (
         <>
             {
-                orders && orders.data.length > 0 && 
+                orders && orders.length > 0 && 
                 <>
                     <TableContainer component={Paper} sx={{margin: "20px"}}>
                         <Table aria-label="collapsible table">
@@ -96,7 +109,7 @@ export default function UserOrder () {
                             </TableRow>
                             </TableHead>
                             <TableBody>
-                            {orders.data.map((row:Order) => (
+                            {orders.map((row:Order) => (
                                 <Row key={row.orderId} row={row} />
                             ))}
                             </TableBody>
@@ -104,6 +117,7 @@ export default function UserOrder () {
                     </TableContainer>
                 </>
             }
+            {error && <p className="no--fpund">{error}</p>}
         </>
 
     );
