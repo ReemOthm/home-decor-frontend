@@ -256,6 +256,9 @@ nav .items--no{
 }
 
 @media screen and  (max-width: 767px) {
+    .about__description{
+        width: 100%;
+    }
     .filter__menu{
         flex-direction: column;
         margin-bottom: 20px;

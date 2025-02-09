@@ -42,10 +42,10 @@ export const ProductDetails = ()=>{
                     <Stack pt={9} alignItems="center" sx={{height: "90vh"}}>
                         <Skeleton variant="rectangular" width="70%" height="200px" />
                         <Stack direction="row" spacing={2} mt={3}>
-                            <Skeleton variant="rectangular" width={120} height={70} />
-                            <Skeleton variant="rectangular" width={120} height={70} />
-                            <Skeleton variant="rectangular" width={120} height={70} />
-                            <Skeleton variant="rectangular" width={120} height={70} />
+                            <Skeleton variant="rectangular" sx={{width: {sm: 65, md:120}, height: {sm:50, md:70}}} />
+                            <Skeleton variant="rectangular" sx={{width: {sm: 65, md:120}, height: {sm:50, md:70}}}  />
+                            <Skeleton variant="rectangular" sx={{width: {sm: 65, md:120}, height: {sm:50, md:70}}}  />
+                            <Skeleton variant="rectangular" sx={{width: {sm: 65, md:120}, height: {sm:50, md:70}}}  />
                         </Stack>
                     </Stack>
                 </>

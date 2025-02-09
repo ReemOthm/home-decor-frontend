@@ -20,8 +20,6 @@ const Cart = ()=>{
     const handleDeleteItem = (id:string)=> dispatch(deleteItem(id))
     const handleResetCart = ()=> dispatch(resetCart())
     const handleCreateOrder = async()=> {
-        console.log(cartProducts)
-        console.log(totalPrice)
         await dispatch(createOrder({items:cartProducts,amount:totalPrice}))
         navigate("../user/profile/order")
         dispatch(resetCart())

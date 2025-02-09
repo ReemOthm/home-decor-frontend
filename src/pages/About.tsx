@@ -5,7 +5,7 @@ export const About = ()=>{
     return (
         <>
             <Helmet title="About" />
-            <Stack spacing={2} sx={{m: "50px 0"}}  alignItems="center">
+            <Stack spacing={2} sx={{m: "30px 0"}}  alignItems="center">
                 <Typography variant="h2">About</Typography>
                 <div className="about__description">
                     <p>

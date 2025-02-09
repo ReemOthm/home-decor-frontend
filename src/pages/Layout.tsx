@@ -10,7 +10,7 @@ interface RootLayoutProps{
 
 export const RootLayout = ({container}: RootLayoutProps)=>{
     return (
-        <Stack sx={{height: "100vh"}}>
+        <Stack sx={{minHeight: "100vh"}}>
             <Navbar />
             {container ?
                 <>

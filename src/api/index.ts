@@ -2,12 +2,11 @@ import { setToken } from '@/app/features/userSlice';
 import axios from 'axios'
 
 const isDevelopment = import.meta.env.MODE === 'development'
-// let baseURL = 'https://home-decor-backend-service.onrender.com'
-const baseURL = import.meta.env.VITE_SERVER_URL
+let baseURL = import.meta.env.VITE_SERVER_URL
 
 if (!isDevelopment) {
   // Update this later when you have a working backend server
-  // baseURL = 'https://home-decor-backend-service.onrender.com'
+  baseURL = import.meta.env.VITE_SERVER_URL
 }
 
 const api = axios.create({

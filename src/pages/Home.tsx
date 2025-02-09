@@ -39,7 +39,7 @@ export const Home = ()=>{
                 </Stack>
             </div>
 
-            <Stack spacing={2} alignItems="center" sx={{mt: "105vh" ,mb: "30px", textAlign: "center"}} >
+            <Stack spacing={2} alignItems="center" sx={{mt: "92vh" ,mb: "30px", textAlign: "center"}} >
                 <Typography variant="h2">About</Typography>
                 <p className="about__description">Lorem ipsum dolor Lorem ipsum dolor sit amet consecvero aliquam esse perspiciatis excepturi, sunt deleniti adipisicing elit. Odit iusto eligendi sed architecto temporibus earum fuga maxime, natus inventore iure. Incidunt ipsa veniam iusto eaque repellendus excepturi cupiditate voluptate corrupti.</p>
                 <Link to="/about" className="button fit--width">Read More</Link>
@@ -50,7 +50,7 @@ export const Home = ()=>{
                     <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 6, md: 8 }} justifyContent="center" mb={6}>
                         { Array.from(new Array(8)).map((e,index) => ( 
                                 <Grid item xs={2} sm={2} md={2}  key={index}>
-                                    <Skeleton variant="rectangular" width={210} height={118} />
+                                    <Skeleton variant="rectangular" width={195} height={118} />
                                     <Skeleton width="80px" />
                                     <Skeleton width="170px" />
                                     <Stack direction="row" spacing={1} >
