@@ -2,7 +2,7 @@
 
 ## Introduction 
 Home-Decor is an ecommerce website that provide a collection of home decoration and accessories products.
-### You can find the website at [HomeDecor](https://main--homedecore-project.netlify.app/) 🌟
+### You can find the website at [HomeDecor](https://homedecore-project.netlify.app/) 🌟
 
 ### Types of Users
 There are two types of users:  Admin and Visitors/Customers. 
