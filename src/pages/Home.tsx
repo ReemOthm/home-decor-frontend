@@ -33,7 +33,7 @@ export const Home = ()=>{
             <Helmet title="Home" />
             <div className="landing">
                 <Stack alignItems="center" sx={{position: "relative", textAlign: "center", mt: 8}} spacing={3}>
-                    <h1>HomeDecore</h1>
+                    <h1>HomeDecor</h1>
                     <p>Discover the latest collections of home decoration and accessories</p>
                     <Link to="/products" className="button fit--width">Shop Now</Link>
                 </Stack>

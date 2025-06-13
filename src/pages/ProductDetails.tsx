@@ -68,10 +68,10 @@ export const ProductDetails = ()=>{
                             </span> 
                         }
                     }
-                    renderDotsItem={({activeIndex})=>{
+                    renderDotsItem={({activeIndex, isActive})=>{
                             return  <div className="related__products">
                                         <div className="image">
-                                            <img src={categories.products[activeIndex].image} alt={categories.products[activeIndex].productName}/>
+                                            <img style={{ opacity: isActive? 1: 0}} src={categories.products[activeIndex].image} alt={categories.products[activeIndex].productName}/>
                                         </div>
                                     </div>
                         }
