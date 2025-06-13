@@ -300,25 +300,23 @@ nav .items--no{
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 5px;
 }
 
-.related__products > div{
+.related__products{
     margin-bottom: 50px;
-}
-
-.related__products .image{
-    width: 100%;
-}
-
-.related__products .image img{
-    width: 100%;
+    width: 100px;
     height: 100px;
+}
+
+.related__products img{
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     aspect-ratio: 1/1;
-    filter: opacity(0.5)
 }
 
-.related__products .image img:hover {
+.related__products img:hover {
     filter: opacity(1);
 }
 /* End Product Description Page */
